@@ -40,7 +40,7 @@ def get_version():
     # Return tag if directory is git controlled
     cmd = 'git describe --tags --match %s[0-9]*' % PREFIX
     try: 
-        version = check_output(cmd.split()).decode().strip()[len(PREFIX):]
+        version = check_output(cmd.split()).strip()[len(PREFIX):]
         # PEP 440 compatibility
         if '-' in version:
             version = '.dev'.join(version.split('-')[:2])
