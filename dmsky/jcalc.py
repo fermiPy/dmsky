@@ -7,7 +7,7 @@
 integral over a spherically symmetric DM distribution.
 
 @author Matthew Wood       <mdwood@slac.stanford.edu>
-@author Alex Drlica-Wagner <kadrlica@stanford.edu>
+@author Alex Drlica-Wagner <kadrlica@fnal.gov>
 """
 
 __author__   = "Matthew Wood"
@@ -451,14 +451,14 @@ class DensityProfile(object):
         return self._name
 
     @staticmethod
-    def create(opts):
+    def create(**kwargs):
         """Method for instantiating a density profile object given the
         profile name and a dictionary."""
 
         o = {}
-        o.update(opts)
+        o.update(kwargs)
 
-        name = opts['type'].lower()
+        name = o['type'].lower()
 
         def extract(keys,d):
             od = {}
@@ -466,7 +466,7 @@ class DensityProfile(object):
                 if k in d: od[k] = d[k]
             return od
 
-        if o['rhos'] is None: o['rhos'] = 1.0
+        o.setdefault('rhos',1.0)
 
         if name == 'nfw':
             dp = NFWProfile(**extract(['rhos','rs','rmin'],o))
@@ -636,6 +636,15 @@ class GeneralNFWProfile(DensityProfile):
         x = r/self._rs
         return self._rhos/(x**self._a*(1+x**self._b)**((self._c-self._a)/self._b))
 
+class NFWcProfile(GNFWProfile):
+    """ Contracted NFW profile
+    ADW: UNTESTED
+    """
+    def __init__(self,rhos=1,rs=1,rmin=None,rhomax=None):
+        gamma = 1.3
+        super(NFWcProfile,self).__init__(rhos,rs,gamma,rmin,rhomax)
+        self._name = 'nfwc'
+    
 
 class UniformProfile(object):
     """ Uniform spherical profile
@@ -683,14 +692,12 @@ if __name__ == '__main__':
 
     dhalo = np.linspace(100,100,500)
     v0 = fn0(dhalo,psi)
-
     v1 = fn1(dhalo,psi)
 
     delta = (v1-v0)/v0
-
     print delta
 
-    plt.hist(delta,range=[min(delta),max(delta)],bins=100)
-
+    plt.ion()
+    plt.hist(delta,bins=100)
     plt.show()
     
