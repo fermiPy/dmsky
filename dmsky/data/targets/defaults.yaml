@@ -1,0 +1,50 @@
+# These are the default keys that must be set for each type of target.
+target: 
+  type:         target
+  name:         Target
+  abbreviation: Tar
+  codename:     target
+  altnames:     []
+  color:        blue
+  references:   []
+  ra:           .nan  #deg
+  dec:          .nan  #deg
+  distance:     .nan  #kpc
+ 
+galactic: 
+  type:         galactic
+  name:         Galactic
+  abbreviation: Gal
+  codename:     galactic
+  altnames:     ['halo']
+  color:        red
+  references:   ['2004ApJ...616..872R','2009ApJ...692.1075G']
+  ra:           266.40510  #deg http://adsabs.harvard.edu/abs/2004ApJ...616..872R
+  dec:          -28.93617  #deg
+  distance:     8.33       #kpc http://adsabs.harvard.edu/abs/2009ApJ...692.1075G
+  dsigma:       0.35       #kpc 
+ 
+dwarf: 
+  type:         dwarf
+  name:         Dwarf
+  abbreviation: Dwf
+  codename:     dwarf
+  altnames:     []
+  color:        green
+  references:   []
+  ra:           .nan  #deg
+  dec:          .nan  #deg
+  distance:     .nan  #kpc
+  dsigma:       .nan  #kpc
+  major_axis:   .nan  #arcmin
+  ellipticity:  .nan  
+ 
+galaxy: 
+  type:         galaxy
+ 
+cluster: 
+  type:         cluster
+ 
+isotropic: 
+  type:         isotropic   
+  

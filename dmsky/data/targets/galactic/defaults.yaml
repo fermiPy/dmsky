@@ -1,0 +1,14 @@
+galactic:
+  default:
+    type:         galactic
+    name:         Galactic Halo
+    abbreviation: Gal
+    codename:     galactic
+    altnames:     ['halo','gc']
+    color:        red
+    references:   ['2004ApJ...616..872R','2009ApJ...692.1075G']
+    ra:           266.40510  #deg http://adsabs.harvard.edu/abs/2004ApJ...616..872R
+    dec:          -28.93617  #deg
+    distance:     8.33       #kpc http://adsabs.harvard.edu/abs/2009ApJ...692.1075G
+    dsigma:       0.35       #kpc 
+    

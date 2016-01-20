@@ -1,0 +1,26 @@
+# Default properties of larger galaxies.
+lmc:
+  default:
+    name:         'LMC'
+    abbreviation: 'LMC'
+    codename:     'lmc'
+    color:        'Peru'
+    ra: 80.89375
+    dec: -69.7561
+    distance: 51.
+    dsigma: 2.
+    major_axis: 322 # From NED (half diameter)
+    ellipticity:  0.15
+
+smc:
+  default:
+    name:         'SMC'
+    abbreviation: 'SMC'
+    codename:     'smc'
+    color:        'Peru'
+    ra: 13.186667
+    dec: -72.82861
+    distance: 64.
+    dsigma: 4.
+    major_axis: 160 # From NED (half diameter)
+    ellipticity: 0.42

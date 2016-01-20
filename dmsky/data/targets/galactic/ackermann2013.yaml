@@ -1,0 +1,37 @@
+# Galactic center profiles from:
+# Ackermann et al. PRD 88, 082002 (2013)
+# http://arxiv.org/abs/1305.5597
+#
+# Values derived from Equations 2-5 with:
+# r_sun = 8.5 kpc
+# rho(r_sun) = 0.4 GeV/cm^3
+# 
+# 1 GeV/cm^3 = 2.633e7 Msun/kpc^3
+
+galactic:
+  ackermann2013_nfw:
+    profile:
+      type: NFW
+      rhos: 0.3452 # GeV/cm^3
+      rs:   20     # kpc
+
+  ackermann2013_einasto:
+    profile:
+      type:  Einasto
+      rhos:  0.08135 # GeV/cm^3
+      rs:    20      # kpc
+      alpha: 0.17
+
+  ackermann2013_isothermal:
+    profile:
+      type:  Isothermal
+      rhos:  0.47225 # GeV/cm^3
+      rs:    5       # kpc
+      alpha: 0.17
+     
+  ackermann2013_gnfw:
+    profile:
+      type:  gNFW
+      rhos:  0.2401 # GeV/cm^3
+      rs:    20     # kpc
+      alpha: 0.17
