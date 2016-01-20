@@ -1,0 +1,5 @@
+default:
+  name: Default
+  ra:  .nan
+  dec: .nan
+  distance: .nan
