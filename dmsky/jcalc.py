@@ -456,7 +456,7 @@ class DensityProfile(object):
         profile name and a dictionary."""
 
         kwargs.setdefault('type','nfw')
-        kwargs.setdefault('rhos','1.0')
+        kwargs.setdefault('rhos',1.0)
 
         o = dict(kwargs)
         name = o['type'].lower()
@@ -563,7 +563,7 @@ class NFWProfile(DensityProfile):
 
     def _rho(self,r):
         x = r/self._rs
-        return self._rhos*np.power(x,-1)*np.power(1+x,-2)        
+        return self._rhos*np.power(x,-1)*np.power(1+x,-2)
     
 class EinastoProfile(DensityProfile):
     """ Einasto profile

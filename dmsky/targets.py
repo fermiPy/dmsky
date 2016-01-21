@@ -9,20 +9,24 @@ can be created with the `factory` function.
 import sys
 import copy
 
-from astropy.coordinates import SkyCoord
+import numpy as np
 
 from jcalc import DensityProfile, LoSIntegralFn
 from utils import coords
 
 class Target(object):
     defaults = (
-        ('title','Target', 'Human-readable name'),
-        ('name', 'target', 'Machine-readable name'),
-        ('ra',        0.0, 'Right Ascension (deg)'),
-        ('dec',       0.0, 'Declination (deg)'),
-        ('distance',  0.0, 'Distance (kpc)'),
-        ('profile',    {}, 'Density Profile (see `jcalc`)')
-        )
+        ('title',     'Target', 'Human-readable name'          ),
+        ('name',      'target', 'Machine-readable name'        ),
+        ('abbr',      'Tar',    'Title abbreviation'           ),
+        ('altnames',   [],      'Alternative names'            ),
+        ('ra',         0.0,     'Right Ascension (deg)'        ),
+        ('dec',        0.0,     'Declination (deg)'            ),
+        ('distance',   0.0,     'Distance (kpc)'               ),
+        ('profile',    {},      'Density Profile (see `jcalc`)'),
+        ('references', [],      'Literature references'        ),
+        ('color',      'k',     'Plotting color'               ),
+    )
 
     def __init__(self, **kwargs):
         self._load(**kwargs)
@@ -31,21 +35,10 @@ class Target(object):
         kw = dict([ (d[0],d[1]) for d in self.defaults])
         kw.update(kwargs)
 
-        ra,dec = kw.pop('ra'),kw.pop('dec')
-        self.coords = SkyCoord(ra,dec,frame='icrs',unit='deg')
-
         self.__dict__.update(kwargs)
         self.density = DensityProfile.create(**vars(self).get('profile',{}))
         self.jlosfn = LoSIntegralFn(self.density, self.distance, ann=True)
         self.dlosfn = LoSIntegralFn(self.density, self.distance, ann=False)
-
-    @property
-    def ra(self):
-        return self.coords.ra.deg
-
-    @property
-    def dec(self):
-        return self.coords.dec.deg
 
     @property
     def glon(self):
@@ -55,34 +48,25 @@ class Target(object):
     def glat(self):
         return self.coords.galactic.b.deg
 
-    def jfactor(ra,dec):
+    def jvalue(self,ra,dec):
         sep = coords.angsep(self.ra,self.dec,ra,dec)
         return self.jlosfn(np.radians(sep))
 
-    def jsigma(ra,dec):
+    def jsigma(self,ra,dec):
         raise Exception('Not implemented')
 
-    def dfactor(ra,dec):
+    def dvalue(self,ra,dec):
         sep = coords.angsep(self.ra,self.dec,ra,dec)
         return self.dlosfn(np.radians(sep))
     
-    def dsigma(ra,dec):
+    def dsigma(self,ra,dec):
         raise Exception('Not implemented')
 
-class Dwarf(Target):
-    pass
-
-class Galaxy(Target):
-    pass
-
-class Galactic(Target):
-    pass
-
-class Cluster(Target):
-    pass
-
-class Isotropic(Target):
-    pass
+class Galactic(Target): pass
+class Dwarf(Target): pass
+class Galaxy(Target): pass
+class Cluster(Target): pass
+class Isotropic(Target): pass
 
 def factory(type, **kwargs):
     """

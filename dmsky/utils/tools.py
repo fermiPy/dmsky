@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 """
+Random python tools
 """
 import os
 import yaml
@@ -92,6 +93,59 @@ def getnest(d, *keys):
     ret = copy.copy(d)
     for arg in args:
         ret = ret[key]
+    return ret
+
+
+def item_prefix(item):
+    """
+    Get the item prefix ('+','++','-','--','').
+    """
+    if item.startswith('++'):
+        prefix = '++'
+    elif item.startswith('+'):
+        prefix = '+'
+    elif item.startswith('--'):
+        prefix = '--'
+    elif item.startswith('-'):
+        prefix = '-'
+    else:
+        prefix = ''
+    return prefix
+
+
+def get_items(items,library):
+    """
+    Grab list items recursing through existing rosters. Careful of
+    recursion traps.
+
+    Some prefix comprehension:
+    '++' = Always add 
+    '+' = Add only if unique
+    '--' = Remove last occurence
+    '-' = Remove all occurences
+
+    """
+    ret = []
+    for item in items:
+        prefix = item_prefix(item)
+        item = item.lstrip(prefix)
+
+        if item in library:
+            new = [i for i in get_items(library[item],library)]
+        else:
+            new = [item]
+
+        if prefix == '--':
+            ret.reverse()
+            [ret.remove(i) for i in new]
+            ret.reverse()
+        if prefix == '-':
+            ret = [i for i in ret if i not in new]
+        if prefix == '++':
+            ret += new
+        if prefix in ['+','']:
+            ret += [i for i in new if i not in ret]
+        
     return ret
 
 if __name__ == "__main__":
