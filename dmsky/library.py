@@ -8,8 +8,8 @@ import glob
 import copy
 
 from collections import defaultdict as ddict
-from utils.tools import update_dict, merge_dict, yaml_load
-import targets
+from dmsky.utils.tools import update_dict, merge_dict, yaml_load
+import dmsky.targets
 
 class TargetLibrary(object):
 
@@ -20,7 +20,6 @@ class TargetLibrary(object):
         self.paths += [join(dirname(abspath(__file__)),'data/targets')]
         self.defaults = self.load_defaults(self.paths)
         self.targets = self.load_targets(self.paths)
-        
 
     @classmethod
     def load_defaults(cls, paths):
@@ -68,9 +67,8 @@ class TargetLibrary(object):
         return ret
 
     def create_target(self, name, version='default', **kwargs):
-        kwargs = self.get_target_dict()
-        ttype = kwargs.get('type','target').lower()
-        return targets.factory(ttype, **kwargs)
+        kw = self.get_target_dict(name,version,**kwargs)
+        return dmsky.targets.factory(**kw)
 
 
 if __name__ == "__main__":

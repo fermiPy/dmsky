@@ -455,9 +455,10 @@ class DensityProfile(object):
         """Method for instantiating a density profile object given the
         profile name and a dictionary."""
 
-        o = {}
-        o.update(kwargs)
+        kwargs.setdefault('type','nfw')
+        kwargs.setdefault('rhos','1.0')
 
+        o = dict(kwargs)
         name = o['type'].lower()
 
         def extract(keys,d):
@@ -465,8 +466,6 @@ class DensityProfile(object):
             for k in keys: 
                 if k in d: od[k] = d[k]
             return od
-
-        o.setdefault('rhos',1.0)
 
         if name == 'nfw':
             dp = NFWProfile(**extract(['rhos','rs','rmin'],o))
@@ -480,7 +479,7 @@ class DensityProfile(object):
             dp = BurkertProfile(**extract(['rhos','rs','rmin'],o))
         else:
             print 'No such halo type: ', name
-            sys.exit(1)
+            #sys.exit(1)
 
         if 'rhor' in o:
             dp.set_rho(o['rhor'][0]*Units.gev_cm3,

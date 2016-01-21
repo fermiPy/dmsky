@@ -3,6 +3,15 @@
 Utilities for working with coordinates.
 """
 import numpy as np
+from  astropy.coordinates import SkyCoord
+
+def gal2cel(glon,glat):
+    coords = SkyCoord(glon,glat,frame='galactic',unit='deg')
+    return coords.icrs.ra.deg,coords.icrs.dec.deg
+
+def cel2gal(ra,dec):
+    coords = SkyCoord(ra,dec,frame='icrs',unit='deg')
+    return coords.galactic.l.deg,coords.galactic.b.deg
 
 def angsep(lon1,lat1,lon2,lat2):
     """
