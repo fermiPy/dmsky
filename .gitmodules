@@ -1,0 +1,3 @@
+[submodule "pymodel"]
+	path = pymodel
+	url = https://github.com/kadrlica/pymodel
