@@ -7,7 +7,7 @@ except ImportError:
     def find_packages():
         return ['dmsky']
 
-from dmsky.get_version import get_version, write_version_py
+import versioneer
 
 NAME = 'dmsky'
 HERE = os.path.abspath(os.path.dirname(__file__))
@@ -19,15 +19,14 @@ Programming Language :: Python
 Natural Language :: English
 Topic :: Scientific/Engineering
 """
-VERSION = get_version()
-write_version_py(version=VERSION)
 
 def read(filename):
     return open(os.path.join(HERE,filename)).read()
 
 setup(
     name=NAME,
-    version=VERSION,
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
     url='',
     author='Alex Drlica-Wagner',
     author_email='kadrlica@fnal.gov',
@@ -39,6 +38,7 @@ setup(
         'healpy >= 1.6.0',
         'pyfits >= 3.1',
         'pyyaml >= 3.10',
+        'pymodel',
     ],
     packages=find_packages(),
     package_data={'dmsky': ['data']},
