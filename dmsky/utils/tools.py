@@ -95,6 +95,19 @@ def getnest(d, *keys):
         ret = ret[key]
     return ret
 
+def item_version(item):
+    """
+    Split the item and version based on sep ':'
+    """
+    sep = ':'
+    count = item.count(sep)
+    if count == 0:
+        return item,None
+    elif count == 1:
+        return item.split(sep)
+    else:
+        msg = "Found multiple instances of '%s'"%sep
+        raise ValueError(msg)
 
 def item_prefix(item):
     """

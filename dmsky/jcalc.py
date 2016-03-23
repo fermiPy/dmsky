@@ -7,7 +7,7 @@
 integral over a spherically symmetric DM distribution.
 
 @author Matthew Wood       <mdwood@slac.stanford.edu>
-@author Alex Drlica-Wagner <kadrlica@fnal.gov>
+@author Alex Drlica-Wagner <kadrlica@stanford.edu>
 """
 
 __author__   = "Matthew Wood"
@@ -173,6 +173,7 @@ class LoSIntegralFnFast(LoSIntegralFn):
     improve the accuracy of the LoS integral.
     """
     def __init__(self, dp, dist, rmax=None, alpha=3.0,ann=True,nstep=400):
+        if rmax is None: rmax = 100*dp._rs
         super(LoSIntegralFnFast,self).__init__(dp,dist,rmax,alpha,ann)
 
         self._nstep = nstep
@@ -451,15 +452,14 @@ class DensityProfile(object):
         return self._name
 
     @staticmethod
-    def create(**kwargs):
+    def create(opts):
         """Method for instantiating a density profile object given the
         profile name and a dictionary."""
 
-        kwargs.setdefault('type','nfw')
-        kwargs.setdefault('rhos',1.0)
+        o = {}
+        o.update(opts)
 
-        o = dict(kwargs)
-        name = o['type'].lower()
+        name = opts['type'].lower()
 
         def extract(keys,d):
             od = {}
@@ -467,7 +467,11 @@ class DensityProfile(object):
                 if k in d: od[k] = d[k]
             return od
 
+        if o['rhos'] is None: o['rhos'] = 1.0
+        if o['rs'] is None: o['rs'] = 1.0
+
         if name == 'nfw':
+            print extract(['rhos','rs','rmin'],o)
             dp = NFWProfile(**extract(['rhos','rs','rmin'],o))
         elif name == 'gnfw':
             dp = GNFWProfile(**extract(['rhos','rs','rmin','gamma'],o))
@@ -479,7 +483,7 @@ class DensityProfile(object):
             dp = BurkertProfile(**extract(['rhos','rs','rmin'],o))
         else:
             print 'No such halo type: ', name
-            #sys.exit(1)
+            sys.exit(1)
 
         if 'rhor' in o:
             dp.set_rho(o['rhor'][0]*Units.gev_cm3,
@@ -563,7 +567,7 @@ class NFWProfile(DensityProfile):
 
     def _rho(self,r):
         x = r/self._rs
-        return self._rhos*np.power(x,-1)*np.power(1+x,-2)
+        return self._rhos*np.power(x,-1)*np.power(1+x,-2)        
     
 class EinastoProfile(DensityProfile):
     """ Einasto profile
@@ -635,15 +639,6 @@ class GeneralNFWProfile(DensityProfile):
         x = r/self._rs
         return self._rhos/(x**self._a*(1+x**self._b)**((self._c-self._a)/self._b))
 
-class NFWcProfile(GNFWProfile):
-    """ Contracted NFW profile
-    ADW: UNTESTED
-    """
-    def __init__(self,rhos=1,rs=1,rmin=None,rhomax=None):
-        gamma = 1.3
-        super(NFWcProfile,self).__init__(rhos,rs,gamma,rmin,rhomax)
-        self._name = 'nfwc'
-    
 
 class UniformProfile(object):
     """ Uniform spherical profile
@@ -659,15 +654,22 @@ class UniformProfile(object):
         return np.where(r<rs,rhos,0)
 
 class Units(object):
+    # Could be replaced by astropy
+
+    # length
+    cm = 1
+    m  = 1e2           # m to cm
+    km = m*1e3         # km to cm
     pc = 3.08568e18   # pc to cm
     kpc = pc*1e3      # kpc to cm
+    m2 = 1e4
+
+    # mass
+    g = 1.0
     msun = 1.98892e33 # solar mass to g
     gev = 1.78266e-24 # gev to g
-    g = 1.0
-    m2 = 1E4
-    hr = 3600.
-    deg2 = np.power(np.pi/180.,2)
 
+    # density
     msun_pc3 = msun*np.power(pc,-3) 
     msun_kpc3 = msun*np.power(kpc,-3)
     msun2_pc5 = np.power(msun,2)*np.power(pc,-5)
@@ -677,6 +679,11 @@ class Units(object):
     gev_cm2 = np.power(gev,1)
     g_cm3 = 1.0
     cm3_s = 1.0
+
+    # random
+    hr = 3600.
+    deg2 = np.power(np.pi/180.,2)
+
 
 if __name__ == '__main__':
     print "Line-of-sight Integral Package..."
@@ -691,12 +698,14 @@ if __name__ == '__main__':
 
     dhalo = np.linspace(100,100,500)
     v0 = fn0(dhalo,psi)
+
     v1 = fn1(dhalo,psi)
 
     delta = (v1-v0)/v0
+
     print delta
 
-    plt.ion()
-    plt.hist(delta,bins=100)
+    plt.hist(delta,range=[min(delta),max(delta)],bins=100)
+
     plt.show()
     

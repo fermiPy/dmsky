@@ -7,12 +7,15 @@ a given sky position. Classes inherit from the `Target` baseclass and
 can be created with the `factory` function.
 """
 import sys
-import copy
+import os, os.path
+from os.path import abspath, dirname, join
 
 import numpy as np
 
-from jcalc import DensityProfile, LoSIntegralFn
-from utils import coords
+from dmsky.jcalc import DensityProfile, LoSIntegralFn, LoSIntegralFnFast, Units
+from dmsky.utils import coords
+from dmsky.utils.tools import update_dict, merge_dict, yaml_load, get_items, item_version
+from dmsky.library import ObjectLibrary
 
 class Target(object):
     defaults = (
@@ -32,13 +35,31 @@ class Target(object):
         self._load(**kwargs)
 
     def _load(self, **kwargs):
-        kw = dict([ (d[0],d[1]) for d in self.defaults])
+        kw = dict([(d[0],d[1]) for d in self.defaults])
         kw.update(kwargs)
 
-        self.__dict__.update(kwargs)
-        self.density = DensityProfile.create(**vars(self).get('profile',{}))
-        self.jlosfn = LoSIntegralFn(self.density, self.distance, ann=True)
-        self.dlosfn = LoSIntegralFn(self.density, self.distance, ann=False)
+        self.__dict__.update(kw)
+        self._load_profile()
+
+    def _load_profile(self):
+        self.density = DensityProfile.create(self.profile)
+
+        #distance = self.distance*Units.kpc
+        distance = self.distance
+        fast = True
+        if fast:
+            self.jlosfn = LoSIntegralFnFast(self.density, distance, ann=True)
+            self.dlosfn = LoSIntegralFnFast(self.density, distance, ann=False)
+        else:
+            self.jlosfn = LoSIntegralFn(self.density, distance, ann=True)
+            self.dlosfn = LoSIntegralFn(self.density, distance, ann=False)
+
+    def __str__(self):
+        ret = self.__class__.__name__
+        for k in ['name','ra','dec','distance','density']:
+            v = self.__dict__[k]
+            ret += '\n  %-15s: %s'%(k,v)
+        return ret
 
     @property
     def glon(self):
@@ -69,55 +90,49 @@ class Cluster(Target): pass
 class Isotropic(Target): pass
 
 def factory(type, **kwargs):
-    """
-    Factory for creating objects. Arguments are passed directly to the
-    constructor of the chosen class.
-    """
-    from collections import OrderedDict as odict
-    import inspect
+    return dmsky.factory.factory(type, module=__name__, **kwargs)
 
-    cls = type
-    fn = lambda member: inspect.isclass(member) and member.__module__==__name__
-    classes = odict(inspect.getmembers(sys.modules[__name__], fn))
-    members = odict([(k.lower(),v) for k,v in classes.items()])
-    
-    lower = cls.lower()
-    if lower not in members.keys():
-        msg = "%s not found in kernels:\n %s"%(cls,classes.keys())
-        #logger.error(msg)
-        print msg
-        msg = "Unrecognized kernel: %s"%cls
-        raise Exception(msg)
- 
-    return members[lower](**kwargs)
+class TargetLibrary(ObjectLibrary):
+    _defaults = (
+        ('path', join(dirname(abspath(__file__)),'data/targets')),
+    )
 
+    def get_target_dict(self, name, version=None, **kwargs):
+        """ Step through the various levels of dependencies to get the
+        full dictionary for a target.
+
+        target: version -> ... -> target: default -> default: type
+        """
+        n,v = item_version(name)
+        if version is not None and v is not None:
+            msg = "Version specified twice: %s, %s"%(name,version)
+            raise ValueError(msg)
+
+        if v is not None:   version = v
+        if version is None: version = 'default'
+        name = n
+
+        # Start with the target:version requested
+        ret = self.library[name][version]
+
+        # Walk down the chain until we either return None or the
+        # 'default' version
+        while (version is not None) and (version != 'default'):
+            version = ret.get('base','default')
+            ret = merge_dict(self.library[name][version], ret)
+        ret['version'] = version
+
+        # And finally, overwrite with kwargs
+        update_dict(ret,kwargs)
+        return ret
+
+    def create_target(self, name, version=None, **kwargs):
+        kw = self.get_target_dict(name,version,**kwargs)
+        return factory(**kw)
 
 if __name__ == "__main__":
     import argparse
     description = __doc__
     parser = argparse.ArgumentParser(description=description)
     args = parser.parse_args()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
