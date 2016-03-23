@@ -1,9 +1,9 @@
 galactic:
   default:
     type:         galactic
-    name:         Galactic Halo
+    title:        Galactic Halo
     abbreviation: Gal
-    codename:     galactic
+    name:         galactic
     altnames:     ['halo','gc']
     color:        red
     references:   ['2004ApJ...616..872R','2009ApJ...692.1075G']

@@ -1,3 +1,7 @@
-ackermann_2015 : ['bootes_I', 'carina', 'canes_venatici_II', 'coma_berenices', 'draco', 'fornax', 'hercules', 'leo_II', 'leo_IV', 'sculptor', 'segue_1', 'sextans', 'ursa_major_II', 'ursa_minor', 'willman_1']
+ackermann2015_dsphs : ['bootes_I', 'carina', 'canes_venatici_II', 'coma_berenices', 'draco', 'fornax', 'hercules', 'leo_II', 'leo_IV', 'sculptor', 'segue_1', 'sextans', 'ursa_major_II', 'ursa_minor', 'willman_1']
 
-test_2015: [ackermann_2015, +bootes_I, +bootes_II, ++sculptor, --sculptor]
+ackermann2013_gc : ['galactic:ackermann2013_nfw']
+
+test2015: [ackermann2015_dsphs, +bootes_I, +bootes_II, ++sculptor, --sculptor]
+
+dsphs_gc : [ackermann2015_dsphs, ackermann2013_gc]

@@ -4,9 +4,9 @@
 bootes_I:
   default:
     type:         dwarf
-    name:         'Bootes I'
-    abbreviation: 'Boo I'
-    codename:     'bootes_I'
+    title:        'Bootes I'
+    abbr:         'Boo I'
+    name:         'bootes_I'
     color:        'blue'
     ra: 210.025
     dec: 14.500
@@ -18,9 +18,9 @@ bootes_I:
 bootes_II:
   default:
     type:         dwarf
-    name:         'Bootes II'
-    abbreviation: 'Boo II'
-    codename:     'bootes_II'
+    title:        'Bootes II'
+    abbr:         'Boo II'
+    name:         'bootes_II'
     color:        'mediumblue'
     ra: 209.50
     dec: 12.85
@@ -32,9 +32,9 @@ bootes_II:
 bootes_III:
   default:
     type:         dwarf
-    name:         'Bootes III'
-    abbreviation: 'Boo III'
-    codename:     'bootes_III'
+    title:        'Bootes III'
+    abbr:         'Boo III'
+    name:         'bootes_III'
     color:        'darkblue'
     ra: 209.30 
     dec: 26.8
@@ -46,9 +46,9 @@ bootes_III:
 canes_venatici_I:
   default:
     type:         dwarf
-    name:         'Canes Venatici I'
-    abbreviation: 'CVn I'
-    codename:     'canes_venatici_I'
+    title:        'Canes Venatici I'
+    abbr:         'CVn I'
+    name:         'canes_venatici_I'
     color:        'dodgerblue'
     ra: 202.01458
     dec: 33.55583
@@ -60,9 +60,9 @@ canes_venatici_I:
 canes_venatici_II:
   default:
     type:         dwarf
-    name:         'Canes Venatici II'
-    abbreviation: 'CVn II'
-    codename:     'canes_venatici_II'
+    title:        'Canes Venatici II'
+    abbr:         'CVn II'
+    name:         'canes_venatici_II'
     nickname:     'CVnII'
     color:        'steelblue'
     ra: 194.29167
@@ -75,9 +75,9 @@ canes_venatici_II:
 canis_major:
   default:
     type:         dwarf
-    name:         'Canis Major'
-    abbreviation: 'CMa'
-    codename:     'canis_major'
+    title:        'Canis Major'
+    abbr:         'CMa'
+    name:         'canis_major'
     color:        'SlateBlue'
     ra: 108.14583
     dec: -27.6667
@@ -89,9 +89,9 @@ canis_major:
 carina:
   default:
     type:         dwarf
-    name:         'Carina'
-    abbreviation: 'Car'
-    codename:     'carina'
+    title:        'Carina'
+    abbr:         'Car'
+    name:         'carina'
     color:        'mediumslateblue'
     ra: 100.4029
     dec: -50.966
@@ -103,9 +103,9 @@ carina:
 coma_berenices:
   default:
     type:         dwarf
-    name:         'Coma Berenices'
-    abbreviation: 'Com'
-    codename:     'coma_berenices'
+    title:        'Coma Berenices'
+    abbr:         'Com'
+    name:         'coma_berenices'
     color:        'green'
     ra: 186.74583
     dec: 23.90417
@@ -117,9 +117,9 @@ coma_berenices:
 draco:
   default:
     type:         dwarf
-    name:         'Draco'
-    abbreviation: 'Dra'
-    codename:     'draco'
+    title:        'Draco'
+    abbr:         'Dra'
+    name:         'draco'
     altnames:     ['draco_I']
     color:        'chartreuse'
     ra: 260.05167
@@ -132,9 +132,9 @@ draco:
 fornax:
   default:
     type:         dwarf
-    name:         'Fornax'
-    abbreviation: 'For'
-    codename:     'fornax'
+    title:        'Fornax'
+    abbr:         'For'
+    name:         'fornax'
     color:        'magenta'
     ra: 39.997
     dec: -34.449
@@ -146,9 +146,9 @@ fornax:
 hercules:
   default:
     type:         dwarf
-    name:         'Hercules'
-    abbreviation: 'Her'
-    codename:     'hercules'
+    title:        'Hercules'
+    abbr:         'Her'
+    name:         'hercules'
     color:        'orchid'
     ra: 247.75833
     dec: 12.79167
@@ -160,9 +160,9 @@ hercules:
 leo_I:
   default:
     type:         dwarf
-    name:         'Leo I'
-    abbreviation: 'Leo I'
-    codename:     'leo_I'
+    title:        'Leo I'
+    abbr:         'Leo I'
+    name:         'leo_I'
     color:        'gold'
     ra: 152.11708
     dec: 12.30639
@@ -174,9 +174,9 @@ leo_I:
 leo_II:
   default:
     type:         dwarf
-    name:         'Leo II'
-    abbreviation: 'Leo II'
-    codename:     'leo_II'
+    title:        'Leo II'
+    abbr:         'Leo II'
+    name:         'leo_II'
     color:        'goldenrod'
     ra: 168.37
     dec: 22.15167
@@ -188,9 +188,9 @@ leo_II:
 leo_IV:
   default:
     type:         dwarf
-    name:         'Leo IV'
-    abbreviation: 'Leo IV'
-    codename:     'leo_IV'
+    title:        'Leo IV'
+    abbr:         'Leo IV'
+    name:         'leo_IV'
     color:        '#C58917'
     ra: 173.23750  #Error in McConnachie Table 2
     dec: -0.53333
@@ -202,9 +202,9 @@ leo_IV:
 leo_T:
   default:
     type:         dwarf
-    name:         'Leo T'
-    abbreviation: 'Leo T'
-    codename:     'leo_T'
+    title:        'Leo T'
+    abbr:         'Leo T'
+    name:         'leo_T'
     color:        'gold2'
     ra: 143.7225
     dec: 17.05139
@@ -216,9 +216,9 @@ leo_T:
 leo_V:
   default:
     type:         dwarf
-    name:         'Leo V'
-    abbreviation: 'Leo V'
-    codename:     'leo_V'
+    title:        'Leo V'
+    abbr:         'Leo V'
+    name:         'leo_V'
     color:        'Peru'
     ra: 172.790
     dec: 2.220
@@ -230,9 +230,9 @@ leo_V:
 pisces_II:
   default:
     type:         dwarf
-    name:         'Pisces II'
-    abbreviation: 'Psc II'
-    codename:     'pisces_II'
+    title:        'Pisces II'
+    abbr:         'Psc II'
+    name:         'pisces_II'
     color:        'chocolate'
     ra: 344.62917
     dec: 5.9525
@@ -244,9 +244,9 @@ pisces_II:
 sagittarius:
   default:
     type:         dwarf
-    name:         'Sagittarius'
-    abbreviation: 'Sgr'
-    codename:     'sagittarius'
+    title:        'Sagittarius'
+    abbr:         'Sgr'
+    name:         'sagittarius'
     altnames:     ['sagittarius_I']
     color:        'BlueViolet'
     ra: 283.831
@@ -259,9 +259,9 @@ sagittarius:
 sculptor:
   default:
     type:         dwarf
-    name:         'Sculptor'
-    abbreviation: 'Scl'
-    codename:     'sculptor'
+    title:        'Sculptor'
+    abbr:         'Scl'
+    name:         'sculptor'
     color:        'sienna'
     ra: 15.039
     dec: -33.709
@@ -273,9 +273,9 @@ sculptor:
 segue_1:
   default:
     type:         dwarf
-    name:         'Segue 1'
-    abbreviation: 'Seg 1'
-    codename:     'segue_1'
+    title:        'Segue 1'
+    abbr:         'Seg 1'
+    name:         'segue_1'
     nickname:     'Segue1'
     color:        'tomato'
     ra: 151.76667
@@ -288,9 +288,9 @@ segue_1:
 segue_2:
   default:
     type:         dwarf
-    name:         'Segue 2'
-    abbreviation: 'Seg 2'
-    codename:     'segue_2'
+    title:        'Segue 2'
+    abbr:         'Seg 2'
+    name:         'segue_2'
     color:        'darkorange'
     ra: 34.81667
     dec: 20.17528
@@ -302,9 +302,9 @@ segue_2:
 sextans:
   default:
     type:         dwarf
-    name:         'Sextans'
-    abbreviation: 'Sex'
-    codename:     'sextans'
+    title:        'Sextans'
+    abbr:         'Sex'
+    name:         'sextans'
     color:        'silver'
     ra: 153.2625
     dec: -1.61472
@@ -316,9 +316,9 @@ sextans:
 ursa_major_I:
   default:
     type:         dwarf
-    name:         'Ursa Major I'
-    abbreviation: 'UMa I'
-    codename:     'ursa_major_I'
+    title:        'Ursa Major I'
+    abbr:         'UMa I'
+    name:         'ursa_major_I'
     nickname:     'UMajorI'
     color:        'purple'
     ra: 158.72
@@ -331,9 +331,9 @@ ursa_major_I:
 ursa_major_II:
   default:
     type:         dwarf
-    name:         'Ursa Major II'
-    abbreviation: 'UMa II'
-    codename:     'ursa_major_II'
+    title:        'Ursa Major II'
+    abbr:         'UMa II'
+    name:         'ursa_major_II'
     nickname:     'UMajorII'
     color:        'indigo'
     ra: 132.875
@@ -346,9 +346,9 @@ ursa_major_II:
 ursa_minor:
   default:
     type:         dwarf
-    name:         'Ursa Minor'
-    abbreviation: 'UMi'
-    codename:     'ursa_minor'
+    title:        'Ursa Minor'
+    abbr:         'UMi'
+    name:         'ursa_minor'
     color:        'red'
     ra: 227.2854
     dec: 67.2225
@@ -360,9 +360,9 @@ ursa_minor:
 willman_1: 
   default:
     type:         dwarf
-    name: 'Willman 1' 
-    abbreviation: 'Wil 1' 
-    codename: 'willman_1' 
+    title:        'Willman 1' 
+    abbr:         'Wil 1' 
+    name:         'willman_1' 
     color: 'cyan' 
     ra: 162.3375 
     dec: 51.050
@@ -374,9 +374,9 @@ willman_1:
 eridanus_II:
   default:
     type:         dwarf
-    name:         'Eridanus II'
-    abbreviation: 'Eri II'
-    codename:     'eridanus_II'
+    title:        'Eridanus II'
+    abbr:         'Eri II'
+    name:         'eridanus_II'
     nickname:     'EriII'
     names:        ['des_j0344.3-4331']
     color:        'crimson'
@@ -392,9 +392,9 @@ eridanus_II:
 eridanus_III:
   default:
     type:         dwarf
-    name:         'Eridanus III'
-    abbreviation: 'Eri III'
-    codename:     'eridanus_III'
+    title:        'Eridanus III'
+    abbr:         'Eri III'
+    name:         'eridanus_III'
     altnames:     ['des_j0222.7-5217']
     color:        'slategrey'
     ra: 35.69
@@ -407,9 +407,9 @@ eridanus_III:
 grus_I:
   default:
     type:         dwarf
-    name:         'Grus I'
-    abbreviation: 'Gru I'
-    codename:     'grus_I'
+    title:        'Grus I'
+    abbr:         'Gru I'
+    name:         'grus_I'
     nickname:     'GruI'
     color:        'purple'
     ra: 344.18
@@ -422,9 +422,9 @@ grus_I:
 horologium_I:
   default:
     type:         dwarf
-    name:         'Horologium I'
-    abbreviation: 'Hor I'
-    codename:     'horologium_I'
+    title:        'Horologium I'
+    abbr:         'Hor I'
+    name:         'horologium_I'
     nickname:     'HorI'
     altnames:     ['des_j0255.4-5406']
     color:        'tan'
@@ -438,9 +438,9 @@ horologium_I:
 horologium_II:
   default:
     type:         dwarf
-    name:         'Horologium II'
-    abbreviation: 'Hor II'
-    codename:     'horologium_II'
+    title:        'Horologium II'
+    abbr:         'Hor II'
+    name:         'horologium_II'
     color:        'gold'
     ra: 49.13
     dec: -50.02
@@ -452,9 +452,9 @@ horologium_II:
 pegasus_III:
   default:
     type:         dwarf
-    name:         'Pegasus III'
-    abbreviation: 'Peg III'
-    codename:     'pegasus_III'
+    title:        'Pegasus III'
+    abbr:         'Peg III'
+    name:         'pegasus_III'
     color:        'black'
     ra: 336.09
     dec: 5.42
@@ -466,9 +466,9 @@ pegasus_III:
 pictor_I:
   default:
     type:         dwarf
-    name:         'Pictor I'
-    abbreviation: 'Pic I'
-    codename:     'pictor_I'
+    title:        'Pictor I'
+    abbr:         'Pic I'
+    name:         'pictor_I'
     color:        'saddlebrown'
     altnames:     ['des_j0443.8-5017']
     ra: 70.95
@@ -481,9 +481,9 @@ pictor_I:
 phoenix_II:
   default:
     type:         dwarf
-    name:         'Phoenix II'
-    abbreviation: 'Phe II'
-    codename:     'phoenix_II'
+    title:        'Phoenix II'
+    abbr:         'Phe II'
+    name:         'phoenix_II'
     color:        'indigo'
     altnames:     ['des_j2339.9-5424']
     ra: 354.99
@@ -496,9 +496,9 @@ phoenix_II:
 hydra_II:
   default:
     type:         dwarf
-    name:         'Hydra II'
-    abbreviation: 'Hya II'
-    codename:     'hydra_II'
+    title:        'Hydra II'
+    abbr:         'Hya II'
+    name:         'hydra_II'
     nickname:     'HyaII'
     color:        'dodgerblue'
     ra: 185.43
@@ -511,9 +511,9 @@ hydra_II:
 reticulum_II:
   default:
     type:         dwarf
-    name:         'Reticulum II'
-    abbreviation: 'Ret II'
-    codename:     'reticulum_II'
+    title:        'Reticulum II'
+    abbr:         'Ret II'
+    name:         'reticulum_II'
     names:       ['reticulum_II','des_j0335.6-5403']
     color:        'violet'
     ra: 53.92
@@ -526,9 +526,9 @@ reticulum_II:
 horologium_I:
   default:
     type:         dwarf
-    name:         'Horologium I'
-    abbreviation: 'Hor I'
-    codename:     'horologium_I'
+    title:        'Horologium I'
+    abbr:         'Hor I'
+    name:         'horologium_I'
     nickname:     'HorI'
     color:        'tan'
     ra: 43.87
@@ -541,9 +541,9 @@ horologium_I:
 triangulum_II:
   default:
     type:         dwarf
-    name:         'Triangulum II'
-    abbreviation: 'Tri II'
-    codename:     'triangulum_II'
+    title:        'Triangulum II'
+    abbr:         'Tri II'
+    name:         'triangulum_II'
     color:        'darkblue'
     ra: 33.32
     dec: 36.18
@@ -555,9 +555,9 @@ triangulum_II:
 laevens_3:
   default:
     type:         dwarf
-    name:         'Laevens 3'
-    abbreviation: 'Lae 3'
-    codename:     'laevens_3'
+    title:        'Laevens 3'
+    abbr:         'Lae 3'
+    name:         'laevens_3'
     color:        'dodgerblue'
     ra: 316.726
     dec: 14.98
@@ -569,9 +569,9 @@ laevens_3:
 draco_II:
   default:
     type:         dwarf
-    name:         'Draco II'
-    abbreviation: 'Dra II'
-    codename:     'draco_II'
+    title:        'Draco II'
+    abbr:         'Dra II'
+    name:         'draco_II'
     color:        'dodgerblue'
     ra: 238.198
     dec: 64.565
@@ -583,9 +583,9 @@ draco_II:
 sagittarius_II:
   default:
     type:         dwarf
-    name:         'Sagittarius II'
-    abbreviation: 'Sgr II'
-    codename:     'sagittarius_II'
+    title:        'Sagittarius II'
+    abbr:         'Sgr II'
+    name:         'sagittarius_II'
     color:        'dodgerblue'
     ra: 298.169    
     dec: -22.068
@@ -597,9 +597,9 @@ sagittarius_II:
 kim_2:
   default:
     type:         dwarf
-    name:         'Kim 2'
-    abbreviation: 'Kim2'
-    codename:     'kim_2'
+    title:        'Kim 2'
+    abbr:         'Kim2'
+    name:         'kim_2'
     altnames:     ['indus_I','des_j2108.8-5109']
     color:        'indianred'
     ra: 317.20
@@ -612,9 +612,9 @@ kim_2:
 tucana_II:
   default:
     type:         dwarf
-    name:         'Tucana II'
-    abbreviation: 'Tuc II'
-    codename:     'tucana_II'
+    title:        'Tucana II'
+    abbr:         'Tuc II'
+    name:         'tucana_II'
     altnames:     ['des_j2251.2-5836']
     color:        'royalblue'
     ra: 343.06
@@ -627,9 +627,9 @@ tucana_II:
 tucana_III:
   default:
     type:         dwarf
-    name:         'Tucana III'
-    abbreviation: 'Tuc III'
-    codename:     'tucana_III'
+    title:        'Tucana III'
+    abbr:         'Tuc III'
+    name:         'tucana_III'
     altnames:     ['des_j2356-5935']
     color:        'red'
     ra: 359.15
@@ -642,9 +642,9 @@ tucana_III:
 tucana_IV:
   default:
     type:         dwarf
-    name:         'Tucana IV'
-    abbreviation: 'Tuc IV'
-    codename:     'tucana_IV'
+    title:        'Tucana IV'
+    abbr:         'Tuc IV'
+    name:         'tucana_IV'
     nickname:     'TucIV'
     altnames:     ['des_j0002-6051']
     color:        'green'
@@ -658,9 +658,9 @@ tucana_IV:
 tucana_V:
   default:
     type:         dwarf
-    name:         'Tucana V'
-    abbreviation: 'Tuc V'
-    codename:     'tucana_V'
+    title:        'Tucana V'
+    abbr:         'Tuc V'
+    name:         'tucana_V'
     altnames:     ['des_j2337-6316']
     color:        'blue'
     ra: 354.35
@@ -673,9 +673,9 @@ tucana_V:
 columba_I:
   default:
     type:         dwarf
-    name:         'Columba I'
-    abbreviation: 'Col I'
-    codename:     'columba_I'
+    title:        'Columba I'
+    abbr:         'Col I'
+    name:         'columba_I'
     nickname:     'ColI'
     altnames:     ['des_j0531-2801']
     color:        'gray'
@@ -689,9 +689,9 @@ columba_I:
 grus_II:
   default:
     type:         dwarf
-    name:         'Grus II'
-    abbreviation: 'Gru II'
-    codename:     'grus_II'
+    title:        'Grus II'
+    abbr:         'Gru II'
+    name:         'grus_II'
     nickname:     'GruII'
     altnames:     ['des_j2204-4626']
     color:        'magenta'
@@ -705,9 +705,9 @@ grus_II:
 reticulum_III:
   default:
     type:         dwarf
-    name:         'Reticulum III'
-    abbreviation: 'Ret III'
-    codename:     'reticulum_III'
+    title:        'Reticulum III'
+    abbr:         'Ret III'
+    name:         'reticulum_III'
     nickname:     'RetIII'
     altnames:     ['des_j0345-6026']
     color:        'red'
@@ -721,9 +721,9 @@ reticulum_III:
 indus_II:
   default:
     type:         dwarf
-    name:         'Indus II'
-    abbreviation: 'Ind II'
-    codename:     'indus_II'
+    title:        'Indus II'
+    abbr:         'Ind II'
+    name:         'indus_II'
     altnames:     ['des_j2038-4609']
     color:        'indigo'
     ra: 309.72
@@ -736,9 +736,9 @@ indus_II:
 cetus_II:
   default:
     type:         dwarf
-    name:         'Cetus II'
-    abbreviation: 'Cet II'
-    codename:     'cetus_II'
+    title:        'Cetus II'
+    abbr:         'Cet II'
+    name:         'cetus_II'
     altnames:     ['des_j0117-1725']
     color:        'cyan'
     ra: 19.47
