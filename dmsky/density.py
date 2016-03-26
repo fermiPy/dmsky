@@ -25,7 +25,7 @@ import scipy.special as spfn
 import scipy.optimize as opt
 
 import dmsky.factory
-from pymodel import Model, Param
+from pymodeler import Model, Param
 
 class DensityProfile(Model):
     _params = (
@@ -46,7 +46,7 @@ class DensityProfile(Model):
         rho = self._rho(r)
 
         if self.rmin:   rho[r < self.rmin] = self._rho(self.rmin)
-        if self.rmax:   rho[r > self.rmax] = self._rho(self.rmax)
+        if self.rmax:   rho[r > self.rmax] = 0
         if self.rhomax: rho[rho > self.rhomax] = self.rhomax
 
         if scalar:
