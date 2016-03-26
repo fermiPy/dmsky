@@ -1,29 +1,19 @@
 #!/usr/bin/env python
-
 """
-@file   jcalc.py
-
-@brief Python modules that are used to compute the line-of-sight
-integral over a spherically symmetric DM distribution.
-
-@author Matthew Wood       <mdwood@slac.stanford.edu>
-@author Alex Drlica-Wagner <kadrlica@stanford.edu>
+Generic python script.
 """
-
-__author__   = "Matthew Wood"
-__date__     = "12/01/2011"
+__author__ = "Alex Drlica-Wagner"
 
 import copy
 import numpy as np
 
 from scipy.integrate import quad
-from scipy.interpolate import bisplrep
-from scipy.interpolate import bisplev
-from scipy.interpolate import interp1d, UnivariateSpline
+from scipy.interpolate import UnivariateSpline
 import scipy.special as spfn
 import scipy.optimize as opt
 
-class LoSFn(object):
+        
+class LoSAnnihilate(object):
     """Integrand function for LoS parameter (J).  The parameter alpha
     introduces a change of coordinates x' = x^(1/alpha).  The change
     of variables means that we need make the substitution:
@@ -32,68 +22,60 @@ class LoSFn(object):
 
     A value of alpha > 1 weights the points at which we sample the
     integrand closer to x = 0 (distance of closest approach).
-
-    Parameters
-    ----------
-    d: Distance to halo center.
-    xi: Offset angle in radians.
-    dp: Density profile.
-    alpha: Rescaling exponent for line-of-sight coordinate.
-    """
-
-    def __init__(self,d,xi,dp,alpha=4.0):
-        self._d = d
-        self._d2 = d*d
-        self._xi = xi
-        self._sinxi = np.sin(xi)
-        self._sinxi2 = np.power(self._sinxi,2)
-        self._dp = dp
-        self._alpha = alpha
-
-    def __call__(self,xp):
-
-        x = np.power(xp,self._alpha)
-        r = np.sqrt(x*x+self._d2*self._sinxi2)
-        rho2 = np.power(self._dp.rho(r),2)
-        return rho2*self._alpha*np.power(xp,self._alpha-1.0)
     
-class LoSFnDecay(LoSFn):
-    def __init__(self,d,xi,dp,alpha=1.0):
-        super(LoSFnDecay,self).__init__(d,xi,dp,alpha)
-        
-    def __call__(self,xp):
-        #xp = np.asarray(xp)
-        #if xp.ndim == 0: xp = np.array([xp])
-
-        x = np.power(xp,self._alpha)
-        r = np.sqrt(x*x+self._d2*self._sinxi2)
-        rho = self._dp.rho(r)
-        return rho*self._alpha*np.power(xp,self._alpha-1.0)
-
-class LoSIntegralFn(object):
-    """Object that computes integral over DM density squared along a
-    line-of-sight offset by an angle psi from the center of the DM
-    halo.  We introduce a change of coordinates so that the integrand
-    is more densely sampled near the distance of closest of approach
-    to the halo center.
-
-    Parameters
-    ----------
-    dist: Distance to halo center.
-    dp: Density profile.
-    alpha: Parameter determining the integration variable: x' = x^(1/alpha)
-    rmax: Radius from center of halo at which LoS integral is truncated.
+    ADW: I think this is a luminosity density...
     """
-    def __init__(self, dp, dist, rmax=None, alpha=3.0,ann=True):
-        if rmax is None: rmax = np.inf
 
-        self._dp = dp
-        self._dist = dist
-        self._rmax = rmax
-        self._alpha = alpha
-        self._ann = ann
+    def __init__(self,dp,d,xi,alpha=4.0):
+        """
+        Parameters
+        ----------
+        d: Distance to halo center.
+        xi: Offset angle in radians.
+        dp: Density profile.
+        alpha: Rescaling exponent for line-of-sight coordinate.
+        """
+        self.dp = dp
+        self.d2 = d**2
+        self.sinxi2 = np.sin(xi)**2
+        self.alpha = alpha
 
-    def __call__(self,psi,dhalo=None):
+    def __call__(self, xp, alpha=None):
+        """
+        xp: Distance along the LoS.
+        """
+        if alpha is None: alpha = self.alpha
+        x = xp**alpha
+        r = np.sqrt(x**2+self.d2*self.sinxi2)
+        return self.func(r)*alpha*xp**(alpha-1.0)
+
+    def func(self, r):
+        return self.dp.rho(r)**2
+
+
+class LoSDecay(LoSAnnihilate):
+    def __init__(self,dp,d,xi,alpha=1.0):
+        super(LoSDecay,self).__init__(dp,d,xi,alpha)
+        
+    def func(self,r):
+        return self.dp.rho(r)
+
+
+class LoSIntegral(object):
+    """
+    Slowest (and most accurate) LoS integral.
+    """
+    def __init__(self, density, distance, alpha=3.0, ann=True):
+        self.dp = density
+        self.dhalo = distance
+        self.alpha = alpha
+        self.ann = ann
+
+    @property
+    def rmax(self):
+        return self.dp.rmax
+
+    def __call__(self, psi, dhalo=None, degrees=False):
         """Evaluate the LoS integral at the offset angle psi for a halo
         located at the distance dhalo.
 
@@ -101,126 +83,135 @@ class LoSIntegralFn(object):
         ----------
         psi : array_like 
         Array of offset angles (in radians)
+        """
+        scalar = np.isscalar(psi)
+        if degrees: psi = np.deg2rad(psi)
+        psi = np.atleast_1d(psi)
+        
+        if dhalo is None: dhalo = self.dhalo
+        dhalo = np.atleast_1d(dhalo)
+            
+        if dhalo.size == 1:
+            dhalo = dhalo * np.ones_like(psi)
+        else: 
+            if dhalo.size != psi.size:
+                msg = "Array sizes must match"
+                raise ValueError(msg)
 
-        dhalo : array_like
-        Array of halo distances.
+        v = self._integrate(psi,dhalo)
+
+        if scalar:
+            return v[0]
+        else:
+            return v
+
+    def _integrate(self, psi, dhalo):
+        """Evaluate the LoS integral at the offset angle psi for a halo
+        located at the distance dhalo.
+
+        Parameters
+        ----------
+        psi:   Array of offset angles (in radians)
+        dhalo: Array of halo distances
+        
         """
 
-        if dhalo is None: dhalo = np.array(self._dist,ndmin=1)
-        else: dhalo = np.array(dhalo,ndmin=1)
+        # Arrays must be the same shape
+        assert (psi.shape == dhalo.shape)
 
-        psi = np.array(psi,ndmin=1)
+        # Output Array
+        v = np.zeros_like(psi)
 
-        if dhalo.shape != psi.shape:
-            dhalo = dhalo*np.ones(shape=psi.shape)
+        # Closest approach to halo center
+        rmin = dhalo*np.sin(psi)
+        #rmin = np.where(psi < np.pi/2, dhalo*np.sin(psi), dhalo)
 
-        v = np.zeros(shape=psi.shape)
-
-        for i, t in np.ndenumerate(psi):
-
-            s0 = 0
-            s1 = 0
-
-            if self._ann:
-                losfn = LoSFn(dhalo[i],t,self._dp,self._alpha)
+        for i, (_psi,_dhalo,_rmin) in enumerate(zip(psi,dhalo,rmin)):
+            s0,s1 = 0,0
+            
+            if self.ann:
+                losfn = LoSAnnihilate(self.dp,_dhalo,_psi,self.alpha)
             else:
-                losfn = LoSFnDecay(dhalo[i],t,self._dp,self._alpha)
+                losfn = LoSDecay(self.dp,_dhalo,_psi,self.alpha)
 
-            # Closest approach to halo center
-            rmin = dhalo[i]*np.sin(psi[i])
-
-            # If observer inside the halo...
-            if self._rmax > dhalo[i]:
-
-                if psi[i] < np.pi/2.:
-
-                    x0 = np.power(dhalo[i]*np.cos(psi[i]),1./self._alpha)
+            # Observer inside the halo...
+            if self.rmax > _dhalo:
+                if _psi < np.pi/2.:
+                    # Distance between observer and point of closest approach
+                    x0 = (self.dhalo*np.cos(_psi))**(1./self.alpha)
                     s0 = 2*quad(losfn,0.0,x0)[0]
 
-                    x1 = np.power(np.sqrt(self._rmax**2 -
-                                          rmin**2),1./self._alpha)
-                
+                    # Distance from point of closest approach to maximum radius
+                    x1 = np.sqrt(self.rmax**2 - _rmin**2)**(1./self.alpha)
                     s1 = quad(losfn,x0,x1)[0]
                 else:
-                    x0 = np.power(np.abs(dhalo[i]*np.cos(psi[i])),
-                                  1./self._alpha)
-
-                    x1 = np.power(np.sqrt(self._rmax**2 -
-                                          rmin**2),1./self._alpha)
+                    x0 = np.abs(self.dhalo*np.cos(_psi))**(1./self.alpha)
+                    x1 = np.sqrt(self.rmax**2 - _rmin**2)**(1./self.alpha)
+                                          
                     s1 = quad(losfn,x0,x1)[0]
-
-            # If observer outside the halo...
-            elif self._rmax > rmin:
-                x0 = np.power(np.sqrt(self._rmax**2 -
-                                      rmin**2),1./self._alpha)
+            # Observer outside the halo...
+            elif (self.rmax > _rmin) & (_psi < np.pi/2.):
+                x0 = np.sqrt(self.rmax**2 - _rmin**2)**(1./self.alpha)
                 s0 = 2*quad(losfn,0.0,x0)[0]
                 
             v[i] = s0+s1
-
         return v
 
-class LoSIntegralFnFast(LoSIntegralFn):
-    """Vectorized version of LoSIntegralFn that performs midpoint
+
+class LoSIntegralFast(LoSIntegral): 
+    """Vectorized version of LoSIntegral that performs midpoint
     integration with a fixed number of steps.
-
-    Parameters
-    ----------
-    dist: Distance to halo center.
-    dp:   Density profile.
-    alpha: Parameter determining the integration variable: x' = x^(1/alpha)
-    rmax: Radius from center of halo at which LoS integral is truncated.
-    nstep: Number of integration steps.  Increase this parameter to
-    improve the accuracy of the LoS integral.
     """
-    def __init__(self, dp, dist, rmax=None, alpha=3.0,ann=True,nstep=400):
-        if rmax is None: rmax = 100*dp._rs
-        super(LoSIntegralFnFast,self).__init__(dp,dist,rmax,alpha,ann)
 
-        self._nstep = nstep
-        xedge = np.linspace(0,1.0,self._nstep+1)
-        self._x = 0.5*(xedge[1:] + xedge[:-1])
-
-    def __call__(self,psi,dhalo=None):
-        """Evaluate the LoS integral at the offset angle psi for a halo
-        located at the distance dhalo.
-
+    def __init__(self, density, distance, alpha=3.0, ann=True, nsteps=400):
+        """
         Parameters
         ----------
-        psi : array_like 
-        Array of offset angles (in radians)
-
-        dhalo : array_like
-        Array of halo distances.
+        dist: Distance to halo center.
+        dp:   Density profile.
+        alpha: Parameter determining the integration variable: x' = x^(1/alpha)
+        rmax: Radius from center of halo at which LoS integral is truncated.
+        nstep: Number of integration steps.  Increase this parameter to
+        improve the accuracy of the LoS integral.
         """
+        super(LoSIntegralFast,self).__init__(density,distance,alpha,ann)
 
-        if dhalo is None: dhalo = np.array(self._dist,ndmin=1)
-        else: dhalo = np.array(dhalo,ndmin=1)
+        self.nsteps = nsteps
+        xedge = np.linspace(0,1.0,self.nsteps+1)
+        self.x = 0.5*(xedge[1:] + xedge[:-1])
 
-        psi = np.array(psi,ndmin=1)
-        v = psi*dhalo
-        v.fill(0)
-        v = v.reshape(v.shape + (1,))
+    @property
+    def rmax(self):
+        if self.dp.rmax < np.inf:
+            return self.dp.rmax
+        else:
+            return 100*self.dp.rs
+
+    def _integrate(self,psi,dhalo):
+        # Arrays must be the same shape
+        assert (psi.shape == dhalo.shape)
+
+        v = np.zeros(psi.shape + (1,))
 
         dhalo = np.ones(v.shape)*dhalo[...,np.newaxis]
         psi = np.ones(v.shape)*psi[...,np.newaxis]
 
-        if self._ann: losfn = LoSFn(dhalo,psi,self._dp,self._alpha)
-        else: losfn = LoSFnDecay(dhalo,psi,self._dp,self._alpha)
-
         # Closest approach to halo center
         rmin = dhalo*np.sin(psi)
 
-        msk0 = self._rmax > dhalo
-        msk1 = self._rmax > rmin
+        if self.ann: losfn = LoSAnnihilate(self.dp,dhalo,psi,self.alpha)
+        else:        losfn = LoSDecay(self.dp,dhalo,psi,self.alpha)
+
+        msk0 = self.rmax > dhalo
+        msk1 = self.rmax > rmin
 
         # Distance between observer and point of closest approach
-        xlim0 = np.power(np.abs(dhalo*np.cos(psi)),1./self._alpha)
+        xlim0 = np.abs(dhalo*np.cos(psi))**(1./self.alpha)
 
         # Distance from point of closest approach to maximum
         # integration radius
         xlim1 = np.zeros(shape=psi.shape)
-        xlim1[msk1] = np.power(np.sqrt(self._rmax**2 - rmin[msk1]**2),
-                               1./self._alpha)
+        xlim1[msk1] = np.sqrt(self.rmax**2 - rmin[msk1]**2)**(1./self.alpha)
 
         # If observer inside the halo...
         if np.any(msk0):
@@ -230,14 +221,14 @@ class LoSIntegralFnFast(LoSIntegralFn):
 
             if np.any(msk01):
 
-                dx0 = xlim0/float(self._nstep)
-                dx1 = (xlim1-xlim0)/float(self._nstep)
+                dx0 = xlim0/float(self.nsteps)
+                dx1 = (xlim1-xlim0)/float(self.nsteps)
 
-                x0 = self._x*xlim0
-                x1 = xlim0 + self._x*(xlim1-xlim0)
+                x0 = self.x*xlim0
+                x1 = xlim0 + self.x*(xlim1-xlim0)
 
-#                s0 = 2*np.sum(losfn(x0)*dx0,axis=0)
-#                s1 = np.sum(losfn(x1)*dx1,axis=0)
+                #s0 = 2*np.sum(losfn(x0)*dx0,axis=0)
+                #s1 = np.sum(losfn(x1)*dx1,axis=0)
                 s0 = 2*np.apply_over_axes(np.sum,losfn(x0)*dx0,axes=[-1])
                 s1 = np.apply_over_axes(np.sum,losfn(x1)*dx1,axes=[-1])
 
@@ -245,467 +236,138 @@ class LoSIntegralFnFast(LoSIntegralFn):
 
             if np.any(msk02):
             
-                dx1 = (xlim1-xlim0)/float(self._nstep)
+                dx1 = (xlim1-xlim0)/float(self.nsteps)
 
-                x1 = xlim0 + self._x*(xlim1-xlim0)
-#                s0 = np.sum(losfn(x1)*dx1,axis=0)
+                x1 = xlim0 + self.x*(xlim1-xlim0)
+                #s0 = np.sum(losfn(x1)*dx1,axis=0)
                 s0 = np.apply_over_axes(np.sum,losfn(x1)*dx1,axes=[-1])
             
                 v[msk02] = s0[msk02]
                 
-        # If observer outside the halo...
-        if np.any(~msk0 & msk1):
-            
-            dx0 = xlim1/float(self._nstep)
-            x0 = xlim1*self._x
+        # Observer outside the halo...
+        # Only calculate integral for psi < pi/2
+        msk11 = (~msk0 & msk1) & (psi < np.pi/2.)
+        if np.any(msk11):
+            dx0 = xlim1/float(self.nsteps)
+            x0 = xlim1*self.x
             s0 = 2*np.apply_over_axes(np.sum,losfn(x0)*dx0,axes=[-1])
+                
+            v[msk11] = s0[msk11]
 
-            v[~msk0 & msk1] = s0[~msk0 & msk1]
+        return v.reshape(v.shape[:-1])
+        
 
-        v = v.reshape(v.shape[:-1])
-        return v
+class LoSIntegralFunc(LoSIntegralFast):
+    """ Subclass for interpolation, spline, and file functions.
+    """
+    def __init__(self, dp, dist, rmax=None, alpha=3.0, ann=True, nstep=400):
+        """Create a fast lookup function"""
+        super(LoSIntegralFunc,self).__init__(dp, dist, rmax, alpha, ann, nstep)
+        self._func = self.create_func(dist)
 
-class LoSIntegralSplineFn(object):
+    def create_profile(self, dhalo, npsi=150):
+        dhalo = np.unique(np.atleast_1d(dhalo))
+        dp = self._dp
 
-    def __init__(self,dp=None,nx=40,ny=20):
-        self.dp = copy.copy(dp)
+        rmin = dp.rmin if dp.rmin else dp.rs*1e-6
+        psimin = np.arctan(rmin/dhalo.max())
+        rmax = dp.rmax if dp.rmax < np.inf else 100*dp.rs
+        psimax = np.arctan(rmax/dhalo.min()) if rmax > dhalo.max() else np.pi
+        psi = np.logspace(np.log10(psimin),np.log10(psimax),npsi)
+        # Pin the last point to 180 deg
+        #psi[-1] = np.pi
+        
+        _dhalo, _psi = np.meshgrid(dhalo,psi)
+        _jval = super(LoSIntegralFunc,self).__call__(_psi,_dhalo)
+        return _dhalo, _psi, _jval
 
-        if self.dp is not None:
-            nx = 40
-            ny = 20
-            dhalo, psi = np.mgrid[1:2:ny*1j,0.001:2.0:nx*1j]
-            dhalo = np.power(10,dhalo)
-            psi = np.radians(psi)            
-            f = LoSIntegralFn(self.dp)
-            self.z = f(dhalo,psi)
-            self.init_spline(dhalo,psi,self.z)
-
-    def init_spline(self,dhalo,psi,z):
-        """Compute knots and coefficients of an interpolating spline
-        given a grid of points in halo distance (dhalo) and offset
-        angle (psi) at which the LoS integral has been computed.
+    def create_func(self, dhalo):
+        """Create the spline function
         """
+        _dhalo,_psi,_jval = self.create_profile(dhalo)
+        log_dhalo,log_psi,log_jval = np.clip(np.log10([_dhalo,_psi,_jval]),-32,None)
+        scalar = (_dhalo.shape[-1] == 1)
 
-        kx = 2
-        ky = 2
-        self._psi_min = psi.min()
-        self._tck = bisplrep(dhalo,psi,np.log10(z),s=0.0,kx=kx,ky=ky,
-                             nxest=int(kx+np.sqrt(len(z.flat))),
-                             nyest=int(ky+np.sqrt(len(z.flat))))
+        #kx = ky = k = 2
+        #s=0
+        if scalar:
+            print "Univariate"
+            spline=UnivariateSpline(log_psi.flat,log_jval.flat,k=2,s=0)
+            fn = lambda psi: 10**(spline(np.log10(psi)))
+        else:
+            print "Bivariate"
+            spline = bisplrep(log_psi,log_dhalo,log_jval,s=0.0,kx=2,ky=2)
+            fn = lambda psi,dhalo: 10**bisplev(np.log10(psi[:,0]),np.log10(dhalo[0,:]),spline)
+            #spline=SmoothBivariateSpline(log_dhalo.flat,log_psi.flat,log_jval.flat,
+            #                             kx=1,ky=1)
+            #fn = lambda dhalo, psi: 10**(spline.ev(np.log10(dhalo),np.log10(psi)))
 
-    def __call__(self,dhalo,psi,rho=1,rs=1):
-        """Compute the LoS integral using a 2D spline table.
+        return fn,spline
+
+    def __call__(self,psi,dhalo=None):
+        """Compute the LoS integral from an interpolating function.
 
         Returns
         -------
-
         vals: LoS amplitude per steradian.
         """
-
-        dhalo = np.asarray(dhalo)
-        psi = np.asarray(psi)
-
-        if dhalo.ndim == 0: dhalo = np.array([dhalo])
-        if psi.ndim == 0: psi = np.array([psi])
-
-        if psi.ndim == 2 and dhalo.ndim == 2:
-            v = np.power(10,bisplev(dhalo[:,0],psi[0,:],self._tck))
+        if dhalo is None or np.all(np.in1d(dhalo,self._dist)):
+            func = self._func
         else:
-            v = np.power(10,bisplev(dhalo,psi,self._tck))
+            func = self.create_func(dhalo)
 
-        v *= rho*rho*rs
+        dhalo = np.atleast_1d(dhalo)
+        psi = np.atleast_1d(psi)
+        if len(dhalo) == 1:
+            return func(psi)
+        else:
+            return func(psi,dhalo)
+
+    def _integrate(self,psi,dhalo):
+        # Arrays must be the same shape
+        if  psi.shape != dhalo.shape:
+            msg = "Shape of psi and dhalo must match"
+            raise ValueError(msg)
+
+        if (np.unique(psi) != psi[:,0]).all():
+            msg = "np.unique(psi) != psi[:,0]"
+            raise ValueError(msg)
+
+        if (np.unique(dhalo) != dhalo[0,:]).all():
+            msg = "np.unique(dhalo) != dhalo[0,:]"
+            raise ValueError(msg)
+            
+        if ((np.max(self.dhalo)>=dhalo) & (np.min(self.dhalo)<=dhalo)).all():
+            func = self._func
+        else:
+            func = self.create_func(dhalo)
+
+        if dhalo.size == 1:
+            v = func(psi)
+        else:
+            v = func(psi,dhalo)
+
+        if v.shape != psi.shape:
+            msg = "Input and output shape do not match"
+            raise ValueError(msg)
+
         return v
 
+class LoSIntegralSpline(LoSIntegralFast): 
+    pass
 
-def SolidAngleIntegral(psi,pdf,angle):
-    """ Compute the solid-angle integrated j-value
-    within a given radius
 
-    Parameters
-    ----------
-    psi : array_like 
-    Array of offset angles (in radians)
+class LoSIntegralFile(LoSIntegral): 
+    def __init__(self, filename):
+        pass
 
-    pdf : array_like
-    Array of j-values at angle psi
-    
-    angle : array_like
-    Maximum integration angle (in degrees)
-    """
-    angle = np.asarray(angle)
-    if angle.ndim == 0: angle = np.array([angle])
+    def __call__(self, psi):
+        pass
 
-    scale=max(pdf)
-    norm_pdf = pdf/scale
-    bad = np.where(norm_pdf <= 0)[0]
-    idx = bad.min() if bad.size else len(pdf)
-    log_spline = UnivariateSpline(psi[:idx],np.log10(norm_pdf[:idx]),k=1,s=0)
-    spline = lambda r: 10**(log_spline(r))
-    integrand = lambda r: spline(r)*2*np.pi*np.sin(r)
 
-    integral = []
-    for a in angle:
-        integral.append(quad(integrand, 0, np.radians(a),full_output=True)[0])
-    integral = np.asarray(integral)
 
-    return integral*scale
-
-class JProfile(object):
-    def __init__(self,losfn):
-
-        log_psi = np.linspace(np.log10(np.radians(1E-5)),
-                              np.log10(np.radians(90.)),1001)
-        self._psi = np.power(10,log_psi)
-        self._psi = np.insert(self._psi,0,0)
-
-        domega = 2*np.pi*(-np.cos(self._psi[1:])+np.cos(self._psi[:-1]))
-        x = 0.5*(self._psi[1:]+self._psi[:-1])
-
-        self._jpsi = losfn(x)
-        self._spline = UnivariateSpline(x,self._jpsi,s=0,k=1)
-        self._jcum = np.cumsum(self._spline(x)*domega)
-        self._jcum = np.insert(self._jcum,0,0)
-
-        self._cum_spline = UnivariateSpline(self._psi,self._jcum,s=0,k=2)
-
-    @staticmethod
-    def create(dp,dist,rmax):
-        losfn = LoSIntegralFn(dp,dist,rmax=rmax)        
-        return JProfile(losfn)
-
-    def __call__(self,psi):
-        return self._spline(psi)
-
-    def integrate(self,psimax):
-
-        xedge = np.linspace(0.0,np.radians(psimax),1001)
-        x = 0.5*(xedge[1:] + xedge[:-1])
-        domega = 2.0*np.pi*(-np.cos(xedge[1:])+np.cos(xedge[:-1]))
-        return np.sum(self._spline(x)*domega)
-
-    def cumsum(self,psi):
-        return self._cum_spline(np.radians(psi))
-
-class DensityProfile(object):
-    """ DM density profile that truncates at a maximum DM density.
-    
-    rho(r) = rho(r) for rho(r) < rhomax AND r > rmin
-           = rhomax for rho(r) >= rhomax
-           = rho(rmin) for r <= rmin
-    
-    Parameters
-    ----------
-    rhos : Density normalization parameter.
-    
-    rmin : Inner radius interior to which the density will be fixed to
-    a constant value. (rhomax = rho(rmin)).
-
-    rhomax : Maximum DM density.  If rhomax and rmin are both defined
-    the maximum DM density will be the lesser of rhomax and rho(rmin).
-    
-    """
-    def __init__(self,rhos,rmin=None,rhomax=None):
-        self._name = 'profile'
-        self._rmin=rmin
-        self._rhomax=rhomax
-        self._rhos = rhos
-
-    def setMassConcentration(self,mvir,c):
-
-        rhoc = 9.9E-30*Units.g_cm3
-        rvir = np.power(mvir*3.0/(177.7*4*np.pi*rhoc*0.27),1./3.)
-        rs = rvir/c
-
-        self._rs = rs
-        mrvir = self.mass(rvir)
-        self._rhos = self._rhos*mvir/mrvir
-
-    def rho(self,r):
-
-        r = np.asarray(r)
-        if r.ndim == 0: r = r.reshape((1))
-
-        if self._rhomax is None and self._rmin is None: 
-            return self._rho(r)
-        elif self._rhomax is None:
-            rho = self._rho(r)        
-            rho[r<self._rmin] = self._rho(self._rmin)
-            return rho
-        elif self._rmin is None:
-            rho = self._rho(r)        
-            rho[rho>self._rhomax] = self._rhomax
-            return rho
-        else:
-            rho = self._rho(r) 
-            rhomax = min(self._rho(self._rmin),self._rhomax)
-            rho[rho>rhomax] = rhomax
-            return rho
-
-#            return np.where(rho>self._rhomax,[self._rhomax],rho)
-        
-    def set_rho(self,rho,r):
-        """Fix the density normalization at a given radius."""
-        rhor = self._rho(r)
-        self._rhos = rho*self._rhos/rhor
-        
-    def name(self):
-        return self._name
-
-    @staticmethod
-    def create(opts):
-        """Method for instantiating a density profile object given the
-        profile name and a dictionary."""
-
-        o = {}
-        o.update(opts)
-
-        name = opts['type'].lower()
-
-        def extract(keys,d):
-            od = {}
-            for k in keys: 
-                if k in d: od[k] = d[k]
-            return od
-
-        if o['rhos'] is None: o['rhos'] = 1.0
-        if o['rs'] is None: o['rs'] = 1.0
-
-        if name == 'nfw':
-            print extract(['rhos','rs','rmin'],o)
-            dp = NFWProfile(**extract(['rhos','rs','rmin'],o))
-        elif name == 'gnfw':
-            dp = GNFWProfile(**extract(['rhos','rs','rmin','gamma'],o))
-        elif name == 'isothermal':
-            dp = IsothermalProfile(**extract(['rhos','rs','rmin'],o))
-        elif name == 'einasto':
-            dp = EinastoProfile(**extract(['rhos','rs','rmin','alpha'],o))
-        elif name == 'burkert':
-            dp = BurkertProfile(**extract(['rhos','rs','rmin'],o))
-        else:
-            print 'No such halo type: ', name
-            sys.exit(1)
-
-        if 'rhor' in o:
-            dp.set_rho(o['rhor'][0]*Units.gev_cm3,
-                       o['rhor'][1]*Units.kpc)
-        elif 'jval' in o:
-            dp.set_jval(o['jval']*Units.gev2_cm5,
-                        o['rs'],
-                        o['dist'])
-
-        return dp
-
-
-class BurkertProfile(DensityProfile):
-    """ Burkert (1995)
-        rho(r) = rhos/( (1+r/rs)(1+(r/rs)**2) )
-    """
-    def __init__(self,rhos=1,rs=1,rmin=None,rhomax=None):        
-        self._rs = rs
-        super(BurkertProfile,self).__init__(rhos,rmin,rhomax)
-        self._name = 'burkert'
-
-    def _rho(self,r):
-        x = r/self._rs
-        return self._rhos*np.power(1+x,-1)*np.power(1+x*x,-1)
-
-    def mass(self,r):
-        x = r/self._rs        
-        return np.pi*self._rhos*(np.log(x**2+1)+2*np.log(x+1)-2*np.arctan(x))
-
-class IsothermalProfile(DensityProfile):
-    """ Isothermal Profile
-        rho(r) = rhos/(1+(r/rs))**2
-    """
-
-    def __init__(self,rhos=1,rs=1,rmin=None,rhomax=None):        
-        self._rs = rs
-        super(IsothermalProfile,self).__init__(rhos,rmin,rhomax)
-        self._name = 'isothermal'
-
-    def _rho(self,r):
-        x = r/self._rs
-        return self._rhos*np.power(1+x,-2)
-
-    def mass(self,r):
-        raise Exception("IsothermalProfile mass not implemented")
-    
-class NFWProfile(DensityProfile):
-    """ Navarro, Frenk, and White (1996)
-        rho(r) = rhos/( (r/rs)(1+r/rs)**2)
-    """
-    def __init__(self,rhos=1,rs=1,rmin=None,rhomax=None):
-        self._rs = rs
-        super(NFWProfile,self).__init__(rhos,rmin,rhomax)
-        self._name = 'nfw'
-
-    def set(self,rhos,rs):
-        self._rs = rs
-        self._rhos = rhos
-
-    def set_jval(self,jval,rs,dist):
-        rhos = np.sqrt(3./(4.*np.pi)*jval*dist**2/rs**3)
-        self._rs = rs
-        self._rhos = rhos
-
-    def mass(self,r):
-        x = r/self._rs
-        return 4*np.pi*self._rhos*np.power(self._rs,3)*(np.log(1+x)-x/(1+x))
-
-    def jval(self,r=None,rhos=None,rs=None):
-
-        if rhos is None: rhos = self._rhos
-        if rs is None: rs = self._rs
-
-        if r is not None:
-            x = r/rs
-            return (4*np.pi/3.)*rhos**2*rs**3*(1.-np.power(1.+x,-3))
-        else:
-            return (4*np.pi/3.)*rhos**2*rs**3
-
-#(4*M_PI/3.)*std::pow(a(0),2)*std::pow(a(1),3)*(1.-std::pow(1+x,-3));
-
-    def _rho(self,r):
-        x = r/self._rs
-        return self._rhos*np.power(x,-1)*np.power(1+x,-2)        
-    
-class EinastoProfile(DensityProfile):
-    """ Einasto profile
-        rho(r) = rhos*exp(-2*((r/rs)**alpha-1)/alpha)
-    """
-    def __init__(self,rhos=1,rs=1,alpha=0.17,rmin=None,rhomax=None):
-        self._rs = rs
-        self._alpha = alpha
-        super(EinastoProfile,self).__init__(rhos,rmin,rhomax)
-        self._name = 'einasto'
-
-    def set(self,rhos,rs):
-        self._rs = rs
-        self._rhos = rhos
-
-    def mass(self,r):
-
-        x = r/self._rs
-        gamma = spfn.gamma(3./self._alpha)
-
-        return 4*np.pi*self._rhos*np.power(self._rs,3)/self._alpha* \
-            np.exp(2./self._alpha)* \
-            np.power(2./self._alpha,-3./self._alpha)* \
-            gamma*spfn.gammainc(3./self._alpha,
-                                (2./self._alpha)*np.power(x,self._alpha))
-
-    def _rho(self,r):
-        x = r/self._rs
-        return self._rhos*np.exp(-2./self._alpha*(np.power(x,self._alpha)-1))
-
-class GNFWProfile(DensityProfile):
-    """ Generalized NFW Profile
-        rho(r) = rhos/( (r/rs)^g(1+r/rs)**(3-g))
-    """
-    def __init__(self,rhos=1,rs=1,gamma=1.0,rmin=None,rhomax=None):
-        self._rs = rs
-        self._gamma = gamma
-        super(GNFWProfile,self).__init__(rhos,rmin,rhomax)
-        self._name = 'nfw'
-
-    def set(self,rhos,rs):
-        self._rs = rs
-        self._rhos = rhos
-
-    def mass(self,r):
-#        x = r/self._rs
-#        return 4*np.pi*self._rhos*np.power(self._rs,3)*(np.log(1+x)-x/(1+x))
-        return 0
-
-    def _rho(self,r):
-        x = r/self._rs
-        return self._rhos*np.power(x,-self._gamma)* \
-            np.power(1+x,-(3-self._gamma))    
-
-class GeneralNFWProfile(DensityProfile):
-    """ Strigari et al. (2007)
-        rho(r) = rhos/( (r/rs)**a (1+(r/rs)**b )**(c-a)/b
-        Default: NFW profile
-    """
-    def __init__(self,rhos=1,rs=1,a=1,b=1,c=3,rmin=None,rhomax=None):
-        self._rs = rs
-        self._a = a
-        self._b = b
-        self._c = c
-        super(GeneralNFWProfile,self).__init__(rhos,rmin,rhomax)
-        self._name = 'general_nfw'
-
-    def _rho(self,r):
-        x = r/self._rs
-        return self._rhos/(x**self._a*(1+x**self._b)**((self._c-self._a)/self._b))
-
-
-class UniformProfile(object):
-    """ Uniform spherical profile
-        rho(r) = rhos for r < rs
-        rho(r) = 0    otherwise
-    """
-    def __init__(self,rhos=1,rs=1):
-        self._name = 'uniform'
-        self._rhos = rhos
-        self._rs = rs
-
-    def _rho(self,r):
-        return np.where(r<rs,rhos,0)
-
-class Units(object):
-    # Could be replaced by astropy
-
-    # length
-    cm = 1
-    m  = 1e2           # m to cm
-    km = m*1e3         # km to cm
-    pc = 3.08568e18   # pc to cm
-    kpc = pc*1e3      # kpc to cm
-    m2 = 1e4
-
-    # mass
-    g = 1.0
-    msun = 1.98892e33 # solar mass to g
-    gev = 1.78266e-24 # gev to g
-
-    # density
-    msun_pc3 = msun*np.power(pc,-3) 
-    msun_kpc3 = msun*np.power(kpc,-3)
-    msun2_pc5 = np.power(msun,2)*np.power(pc,-5)
-    msun2_kpc5 = np.power(msun,2)*np.power(kpc,-5)
-    gev2_cm5 = np.power(gev,2)
-    gev_cm3 = np.power(gev,1)
-    gev_cm2 = np.power(gev,1)
-    g_cm3 = 1.0
-    cm3_s = 1.0
-
-    # random
-    hr = 3600.
-    deg2 = np.power(np.pi/180.,2)
-
-
-if __name__ == '__main__':
-    print "Line-of-sight Integral Package..."
-
-    import matplotlib.pyplot as plt
-
-    psi = np.linspace(0.01,0.1,500)
-    dp = NFWProfile(1,1)
-
-    fn0 = LoSIntegralFnFast(dp,100,10)
-    fn1 = LoSIntegralFn(dp,100,10)
-
-    dhalo = np.linspace(100,100,500)
-    v0 = fn0(dhalo,psi)
-
-    v1 = fn1(dhalo,psi)
-
-    delta = (v1-v0)/v0
-
-    print delta
-
-    plt.hist(delta,range=[min(delta),max(delta)],bins=100)
-
-    plt.show()
-    
+if __name__ == "__main__":
+    import argparse
+    description = __doc__
+    parser = argparse.ArgumentParser(description=description)
+    args = parser.parse_args()
