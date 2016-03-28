@@ -1,12 +1,17 @@
 Dark Matter Sky Maps
 ====================
 
-.. image:: https://img.shields.io/travis/rust-lang/rust.svg   :target: 
+.. image:: https://img.shields.io/travis/kadrlica/dmsky.svg   
+  :target: https://travis-ci.org/kadrlica/dmsky
 
-.. image:: https://img.shields.io/travis/kadrlica/dmsky.svg :target: https://travis-ci.org/kadrlica/dmsky
-.. image:: https://img.shields.io/github/tag/kadrlica/dmsky.svg :target: https://github.com/kadrlica/dmsky/releases
-.. image:: https://img.shields.io/pypi/v/dmsky.svg :target: https://pypi.python.org/pypi/dmsky
-.. image:: https://img.shields.io/badge/license-MIT-blue.svg :target: https://github.com/kadrlica/dmsky
+.. image:: https://img.shields.io/github/tag/kadrlica/dmsky.svg   
+  :target: https://github.com/kadrlica/dmsky/releases
+
+.. image:: https://img.shields.io/pypi/v/dmsky.svg   
+  :target: https://pypi.python.org/pypi/dmsky
+
+.. image:: https://img.shields.io/badge/license-MIT-blue.svg   
+  :target: https://github.com/kadrlica/dmsky
 
 Introduction
 ------------
