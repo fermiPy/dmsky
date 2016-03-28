@@ -85,30 +85,6 @@ class RosterLibrary(ObjectLibrary):
         return factory(*ar)
 
 
-def factory(type, **kwargs):
-    """
-    Factory for creating objects. Arguments are passed directly to the
-    constructor of the chosen class.
-    """
-    from collections import OrderedDict as odict
-    import inspect
-
-    cls = type
-    fn = lambda member: inspect.isclass(member) and member.__module__==__name__
-    classes = odict(inspect.getmembers(sys.modules[__name__], fn))
-    members = odict([(k.lower(),v) for k,v in classes.items()])
-    
-    lower = cls.lower()
-    if lower not in members.keys():
-        msg = "%s not found in:\n %s"%(cls,classes.keys())
-        #logger.error(msg)
-        print msg
-        msg = "Unrecognized class: %s"%cls
-        raise Exception(msg)
- 
-    return members[lower](**kwargs)
-
-
 if __name__ == "__main__":
     import argparse
     description = __doc__
