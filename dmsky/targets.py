@@ -12,10 +12,12 @@ from os.path import abspath, dirname, join
 
 import numpy as np
 
-from dmsky.jcalc import DensityProfile, LoSIntegralFn, LoSIntegralFnFast, Units
+from dmsky.jcalc import LoSIntegral, LoSIntegralFast, LoSIntegralInterp
 from dmsky.utils import coords
+from dmsky.utils.units import Units
 from dmsky.utils.tools import update_dict, merge_dict, yaml_load, get_items, item_version
 from dmsky.library import ObjectLibrary
+from dmsky.density import factory as density_factory
 
 class Target(object):
     defaults = (
@@ -41,18 +43,25 @@ class Target(object):
         self.__dict__.update(kw)
         self._load_profile()
 
-    def _load_profile(self):
-        self.density = DensityProfile.create(self.profile)
+    def _load_profile(self, mode='interp'):
+        # Convert profile units to msun/kpc3
+        units = self.profile.pop('units',None)
+        if units:
+            density,distance = units.rsplit('_',1)
+            self.profile['rhos'] *= getattr(Units,density)/Units.msun_kpc3
+            self.profile['rs']   *= getattr(Units,distance)/Units.kpc
+        self.density = density_factory(**self.profile)
 
-        #distance = self.distance*Units.kpc
         distance = self.distance
-        fast = True
-        if fast:
-            self.jlosfn = LoSIntegralFnFast(self.density, distance, ann=True)
-            self.dlosfn = LoSIntegralFnFast(self.density, distance, ann=False)
+        if mode == 'interp':
+            self.jlosfn = LoSIntegralInterp(self.density, distance, ann=True)
+            self.dlosfn = LoSIntegralInterp(self.density, distance, ann=False)
+        elif mode == 'fast':
+            self.jlosfn = LoSIntegralFast(self.density, distance, ann=True)
+            self.dlosfn = LoSIntegralFast(self.density, distance, ann=False)
         else:
-            self.jlosfn = LoSIntegralFn(self.density, distance, ann=True)
-            self.dlosfn = LoSIntegralFn(self.density, distance, ann=False)
+            self.jlosfn = LoSIntegral(self.density, distance, ann=True)
+            self.dlosfn = LoSIntegral(self.density, distance, ann=False)
 
     def __str__(self):
         ret = self.__class__.__name__
@@ -63,11 +72,11 @@ class Target(object):
 
     @property
     def glon(self):
-        return self.coords.galactic.l.deg
+        return coords.cel2gal(self.ra,self.dec)[0]
 
     @property
     def glat(self):
-        return self.coords.galactic.b.deg
+        return coords.cel2gal(self.ra,self.dec)[1]
 
     def jvalue(self,ra,dec):
         sep = coords.angsep(self.ra,self.dec,ra,dec)
@@ -90,7 +99,8 @@ class Cluster(Target): pass
 class Isotropic(Target): pass
 
 def factory(type, **kwargs):
-    return dmsky.factory.factory(type, module=__name__, **kwargs)
+    import dmsky.factory
+    return dmsky.factory.factory(type, module=__name__,**kwargs)
 
 class TargetLibrary(ObjectLibrary):
     _defaults = (
