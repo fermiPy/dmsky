@@ -16,25 +16,19 @@ import copy
 from collections import OrderedDict as odict
 
 import numpy as np
-
-from scipy.integrate import quad
-from scipy.interpolate import bisplrep
-from scipy.interpolate import bisplev
-from scipy.interpolate import interp1d, UnivariateSpline
 import scipy.special as spfn
-import scipy.optimize as opt
 
-import dmsky.factory
 from pymodeler import Model, Param
+from dmsky.utils.units import Units
 
 class DensityProfile(Model):
-    _params = (
-        ('rs',     Param(1.0),    'Scale radius  [kpc]'),
-        ('rhos',   Param(1.0),    'Scale density [msun/kpc3]'),
-        ('rmin',   Param(0.0),    'Minimum radius'),
-        ('rmax',   Param(np.inf), 'Maximum radius'),
-        ('rhomax', Param(np.inf), 'Maximum density'),
-    )
+    _params = odict([
+        ('rs',     Param(1.0)   ),
+        ('rhos',   Param(1.0)   ),
+        ('rmin',   Param(0.0)   ),
+        ('rmax',   Param(np.inf)),
+        ('rhomax', Param(np.inf)),
+    ])
 
     def __call__(self,r):
         return self.rho(r)
@@ -98,7 +92,7 @@ class UniformProfile(DensityProfile):
 
     def _mass(self,r):
         return 4*np.pi/3 * self.rhos * np.where(r < rs, r**3, self.rs**3)
-    
+   
 class IsothermalProfile(DensityProfile):
     """ Non-Singular Isothermal Profile:
     Begeman et al. MNRAS 249, 523 (1991)
@@ -129,8 +123,7 @@ class BurkertProfile(DensityProfile):
     def mass(self,r):
         x = r/self.rs     
         return np.pi*self.rhos*(np.log(x**2+1)+2*np.log(x+1)-2*np.arctan(x))
-
-    
+   
 class NFWProfile(DensityProfile):
     """Navarro, Frenk, and White, ApJ 462, 563 (1996)
     http://arxiv.org/abs/astro-ph/9508025
@@ -165,9 +158,11 @@ class EinastoProfile(DensityProfile):
     ==>
     
     """
-    _params = DensityProfile._params + (
-        ('alpha',     Param(0.17),      'Slope'),
-    )
+    _params = odict(
+        DensityProfile._params.items() + 
+        [
+            ('alpha',     Param(0.17)),
+        ])
     
     def _mass(self,r):
         """ Analytic mass calculation.
@@ -193,9 +188,12 @@ class GNFWProfile(DensityProfile):
     http://arxiv.org/abs/0709.1510
     rho(r) = rhos / ( (r/rs)**gamma * (1+r/rs)**(3-gamma))
     """
-    _params = DensityProfile._params + (
-        ('gamma',     Param(1),      'Inner Slope'),
-    )
+    _params = odict(
+        DensityProfile._params.items() + 
+        [
+            ('gamma',     Param(1)),
+        ])
+
 
     def _rho(self,r):
         x = r/self.rs
@@ -214,15 +212,26 @@ class ZhouProfile(DensityProfile):
     Strigari et al., Nature 454 (2008) [Eqn. 8]
     http://arxiv.org/abs/0808.3772
     """
-    _params = DensityProfile._params + (
-        ('alpha',     Param(1),       'Width of transition region'),
-        ('beta',      Param(3),       'Outer slope'),
-        ('gamma',     Param(1),      'Inner slope'),
-    )
+    _params = odict(
+        DensityProfile._params.items() + 
+        [
+            ('alpha',     Param(1)),
+            ('beta',      Param(3)),
+            ('gamma',     Param(1)),
+        ])
 
     def _rho(self,r):
         x = r/self.rs
         return self.rhos * x**-self.gamma * (1+x**(1/self.alpha))**(-(self.beta-self.gamma)*self.alpha)
 
+Uniform = UniformProfile
+Isothermal = IsothermalProfile
+Burkert = BurkertProfile
+NFW = NFWProfile
+Einasto = EinastoProfile
+gNFW = GNFWProfile
+Zhou = ZhouProfile
+
 def factory(type, **kwargs):
+    import dmsky.factory
     return dmsky.factory.factory(type, module=__name__,**kwargs)
