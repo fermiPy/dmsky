@@ -1,0 +1,147 @@
+# Dwarf characterisitcs from:
+# Martinez MNRAS 2524 (2015) (arXiv:1309.2641)
+# Values have been converted from Table 2 according to Kuehlen et al (2008):
+#  rs = Rvmax / 2.163
+#  rhos = 4.625 / 4*pi*G (Vmax/rhos)**2
+# $Format:%d$
+
+bootes_I:
+  martinez2015_nfw:
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.27
+      rhos:  2.64e+08
+canes_venatici_I:
+  martinez2015_nfw:
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.22
+      rhos:  3.49e+08
+canes_venatici_II:
+  martinez2015_nfw:
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.19
+      rhos:  3.65e+08
+carina:
+  martinez2015_nfw:
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.21
+      rhos:  3.04e+08
+coma_berenices:
+  martinez2015_nfw:
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.18
+      rhos:  3.82e+08
+draco:
+  martinez2015_nfw:
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.35
+      rhos:  2.30e+08
+fornax:
+  martinez2015_nfw:
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.47
+      rhos:  1.33e+08
+hercules:
+  martinez2015_nfw:
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.20
+      rhos:  3.65e+08
+leo_I:
+  martinez2015_nfw:
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.40
+      rhos:  1.59e+08
+leo_II:
+  martinez2015_nfw:
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.31
+      rhos:  1.83e+08
+leo_IV:
+  martinez2015_nfw:
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.20
+      rhos:  3.65e+08
+leo_T:
+  martinez2015_nfw:
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.29
+      rhos:  2.53e+08
+sculptor:
+  martinez2015_nfw:
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.39
+      rhos:  1.67e+08
+segue_1:
+  martinez2015_nfw:
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.15
+      rhos:  5.53e+08
+segue_2:
+  martinez2015_nfw:
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.16
+      rhos:  4.39e+08
+sextans:
+  martinez2015_nfw:
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.20
+      rhos:  3.82e+08
+ursa_major_I:
+  martinez2015_nfw:
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.19
+      rhos:  4.00e+08
+ursa_major_II:
+  martinez2015_nfw:
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.19
+      rhos:  4.19e+08
+ursa_minor:
+  martinez2015_nfw:
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.47
+      rhos:  1.45e+08
+willman_1:
+  martinez2015_nfw:
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.16
+      rhos:  4.60e+08
