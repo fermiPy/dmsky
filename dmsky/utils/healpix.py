@@ -99,7 +99,7 @@ def index_pixels(lon,lat,pixels,nside):
 
 ############################################################
 
-def query_disc(nside, vec, radius, inclusive=False, fact=4, nest=False):
+def query_disc(nside, lon, lat, radius, **kwargs):
     """
     Wrapper around healpy.query_disc to deal with old healpy implementation.
 
@@ -121,21 +121,8 @@ def query_disc(nside, vec, radius, inclusive=False, fact=4, nest=False):
       if True, assume NESTED pixel ordering, otherwise, RING pixel ordering
 
     """
-    try: 
-        # New-style call (healpy 1.6.3)
-        return healpy.query_disc(nside, vec, np.radians(radius), inclusive, fact, nest)
-    except: 
-        # Old-style call (healpy 0.10.2)
-        return healpy.query_disc(nside, vec, np.radians(radius), nest, deg=False)
-
-def ang2disc(nside, lon, lat, radius, inclusive=False, fact=4, nest=False):
-    """
-    Wrap `query_disc` to use lon, lat, and radius in degrees.
-    """
     vec = ang2vec(lon,lat)
-    return query_disc(nside,vec,radius,inclusive,fact,nest)
-
-angToDisc = ang2disc
+    return healpy.query_disc(nside, vec, np.radians(radius), **kwargs)
 
 ############################################################
 
