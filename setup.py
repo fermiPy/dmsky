@@ -42,7 +42,7 @@ setup(
     packages=find_packages(),
     package_data={'dmsky': ['data']},
     description="Dark matter skymaps.",
-    long_description=read('README.md'),
+    long_description="Map the distribution of dark matter on the sky",
     platforms='any',
     classifiers = [_f for _f in CLASSIFIERS.split('\n') if _f]
 )
