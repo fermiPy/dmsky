@@ -1,6 +1,3 @@
-# Export the versioning string when archiving
-dmsky/get_version.py export-subst
-
 # These are binary files
 *.gz binary
 *.tgz binary
