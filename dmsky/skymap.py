@@ -6,12 +6,14 @@ import healpy as hp
 import numpy as np
 
 from dmsky.utils.healpix import pix2ang
+from dmsky.utils.coords import gal2cel
 from dmsky.roster import Roster
 
 class Skymap(object):
     _defaults = (
         # 512 has a pixel size of ~0.11 deg
-        ('nside',     64, 'Healpix nside'          ),
+        ('nside',    128, 'Healpix nside'          ),
+        ('coord',  'gal', 'Coordinate frame'       ),
     )
 
     def __init__(self, *args, **kwargs):
@@ -30,7 +32,11 @@ class Skymap(object):
         
         for target in self.roster.values():
             print target
-            self.values += target.jvalue(self.lon,self.lat)
+            if self.coord == 'gal':
+                lon,lat = gal2cel(self.lon,self.lat)
+            else:
+                lon,lat = self.lon,self.lat
+            self.values += target.jvalue(lon,lat)
             
         
 if __name__ == "__main__":
