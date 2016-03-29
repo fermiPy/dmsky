@@ -78,6 +78,13 @@ class Target(object):
     def glat(self):
         return coords.cel2gal(self.ra,self.dec)[1]
 
+    @property
+    def psimax(self):
+        if self.density.rmax > self.distance:
+            return 180.
+        else:
+            return np.degrees(np.arcsin(self.density.rmax/self.distance))
+
     def jvalue(self,ra,dec):
         sep = coords.angsep(self.ra,self.dec,ra,dec)
         return self.jlosfn(np.radians(sep))

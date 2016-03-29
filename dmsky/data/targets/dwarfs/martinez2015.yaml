@@ -12,6 +12,7 @@ bootes_I:
       units: 'msun_kpc3_kpc'
       rs:    0.27
       rhos:  2.64e+08
+      rmax:  1.0       # naively set to 1 kpc
 canes_venatici_I:
   martinez2015_nfw:
     profile:
@@ -19,6 +20,7 @@ canes_venatici_I:
       units: 'msun_kpc3_kpc'
       rs:    0.22
       rhos:  3.49e+08
+      rmax:  1.0       # naively set to 1 kpc
 canes_venatici_II:
   martinez2015_nfw:
     profile:
@@ -26,6 +28,7 @@ canes_venatici_II:
       units: 'msun_kpc3_kpc'
       rs:    0.19
       rhos:  3.65e+08
+      rmax:  1.0       # naively set to 1 kpc
 carina:
   martinez2015_nfw:
     profile:
@@ -33,6 +36,7 @@ carina:
       units: 'msun_kpc3_kpc'
       rs:    0.21
       rhos:  3.04e+08
+      rmax:  1.0       # naively set to 1 kpc
 coma_berenices:
   martinez2015_nfw:
     profile:
@@ -40,6 +44,7 @@ coma_berenices:
       units: 'msun_kpc3_kpc'
       rs:    0.18
       rhos:  3.82e+08
+      rmax:  1.0       # naively set to 1 kpc
 draco:
   martinez2015_nfw:
     profile:
@@ -47,6 +52,7 @@ draco:
       units: 'msun_kpc3_kpc'
       rs:    0.35
       rhos:  2.30e+08
+      rmax:  1.0       # naively set to 1 kpc
 fornax:
   martinez2015_nfw:
     profile:
@@ -54,6 +60,7 @@ fornax:
       units: 'msun_kpc3_kpc'
       rs:    0.47
       rhos:  1.33e+08
+      rmax:  1.0       # naively set to 1 kpc
 hercules:
   martinez2015_nfw:
     profile:
@@ -61,6 +68,7 @@ hercules:
       units: 'msun_kpc3_kpc'
       rs:    0.20
       rhos:  3.65e+08
+      rmax:  1.0       # naively set to 1 kpc
 leo_I:
   martinez2015_nfw:
     profile:
@@ -68,6 +76,7 @@ leo_I:
       units: 'msun_kpc3_kpc'
       rs:    0.40
       rhos:  1.59e+08
+      rmax:  1.0       # naively set to 1 kpc
 leo_II:
   martinez2015_nfw:
     profile:
@@ -75,6 +84,7 @@ leo_II:
       units: 'msun_kpc3_kpc'
       rs:    0.31
       rhos:  1.83e+08
+      rmax:  1.0       # naively set to 1 kpc
 leo_IV:
   martinez2015_nfw:
     profile:
@@ -82,6 +92,7 @@ leo_IV:
       units: 'msun_kpc3_kpc'
       rs:    0.20
       rhos:  3.65e+08
+      rmax:  1.0       # naively set to 1 kpc
 leo_T:
   martinez2015_nfw:
     profile:
@@ -89,6 +100,7 @@ leo_T:
       units: 'msun_kpc3_kpc'
       rs:    0.29
       rhos:  2.53e+08
+      rmax:  1.0       # naively set to 1 kpc
 sculptor:
   martinez2015_nfw:
     profile:
@@ -96,6 +108,7 @@ sculptor:
       units: 'msun_kpc3_kpc'
       rs:    0.39
       rhos:  1.67e+08
+      rmax:  1.0       # naively set to 1 kpc
 segue_1:
   martinez2015_nfw:
     profile:
@@ -103,6 +116,7 @@ segue_1:
       units: 'msun_kpc3_kpc'
       rs:    0.15
       rhos:  5.53e+08
+      rmax:  1.0       # naively set to 1 kpc
 segue_2:
   martinez2015_nfw:
     profile:
@@ -110,6 +124,7 @@ segue_2:
       units: 'msun_kpc3_kpc'
       rs:    0.16
       rhos:  4.39e+08
+      rmax:  1.0       # naively set to 1 kpc
 sextans:
   martinez2015_nfw:
     profile:
@@ -117,6 +132,7 @@ sextans:
       units: 'msun_kpc3_kpc'
       rs:    0.20
       rhos:  3.82e+08
+      rmax:  1.0       # naively set to 1 kpc
 ursa_major_I:
   martinez2015_nfw:
     profile:
@@ -124,6 +140,7 @@ ursa_major_I:
       units: 'msun_kpc3_kpc'
       rs:    0.19
       rhos:  4.00e+08
+      rmax:  1.0       # naively set to 1 kpc
 ursa_major_II:
   martinez2015_nfw:
     profile:
@@ -131,6 +148,7 @@ ursa_major_II:
       units: 'msun_kpc3_kpc'
       rs:    0.19
       rhos:  4.19e+08
+      rmax:  1.0       # naively set to 1 kpc
 ursa_minor:
   martinez2015_nfw:
     profile:
@@ -138,6 +156,7 @@ ursa_minor:
       units: 'msun_kpc3_kpc'
       rs:    0.47
       rhos:  1.45e+08
+      rmax:  1.0       # naively set to 1 kpc
 willman_1:
   martinez2015_nfw:
     profile:
@@ -145,3 +164,4 @@ willman_1:
       units: 'msun_kpc3_kpc'
       rs:    0.16
       rhos:  4.60e+08
+      rmax:  1.0       # naively set to 1 kpc

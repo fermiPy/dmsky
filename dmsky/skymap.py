@@ -5,7 +5,7 @@ Module for creating HEALPix skymaps.
 import healpy as hp
 import numpy as np
 
-from dmsky.utils.healpix import pix2ang
+from dmsky.utils.healpix import pix2ang, query_disc
 from dmsky.utils.coords import gal2cel
 from dmsky.roster import Roster
 
@@ -33,10 +33,13 @@ class Skymap(object):
         for target in self.roster.values():
             print target
             if self.coord == 'gal':
-                lon,lat = gal2cel(self.lon,self.lat)
+                idx = query_disc(self.nside,target.glon,target.glat,target.psimax)
+                lon,lat = gal2cel(self.lon[idx],self.lat[idx])
             else:
-                lon,lat = self.lon,self.lat
-            self.values += target.jvalue(lon,lat)
+                idx = query_disc(self.nside,target.ra,target.dec,target.psimax)
+                lon,lat = self.lon[idx],self.lat[idx]
+
+            self.values[idx] += target.jvalue(lon,lat)
             
         
 if __name__ == "__main__":
