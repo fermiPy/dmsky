@@ -50,6 +50,8 @@ class Target(object):
             density,distance = units.rsplit('_',1)
             self.profile['rhos'] *= getattr(Units,density)/Units.msun_kpc3
             self.profile['rs']   *= getattr(Units,distance)/Units.kpc
+            #self.profile['rhos']     *= getattr(Units,density)
+            #self.profile['rs']       *= getattr(Units,distance)
         self.density = density_factory(**self.profile)
 
         distance = self.distance
