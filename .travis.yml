@@ -29,3 +29,6 @@ install:
 script: 
   - python -c "import numpy; import scipy; import pylab"
   - python -c "import dmsky"
+  - python tests/test_skymap.py
+  - python tests/test_density.py
+  - python tests/test_jcalc.py
