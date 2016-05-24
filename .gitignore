@@ -6,5 +6,4 @@
 *.pyc
 build/
 dist/
-ugali.egg-info/
-
+dmsky.egg-info/
