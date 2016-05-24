@@ -3,6 +3,7 @@ import os
 
 import healpy as hp
 import numpy as np
+import matplotlib
 try:             os.environ['DISPLAY']
 except KeyError: matplotlib.use('Agg')
 import pylab as plt

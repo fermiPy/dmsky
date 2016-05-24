@@ -8,6 +8,7 @@ from collections import OrderedDict as odict
 import inspect
 
 import numpy as np
+import matplotlib
 try:             os.environ['DISPLAY']
 except KeyError: matplotlib.use('Agg')
 import pylab as plt

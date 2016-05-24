@@ -8,6 +8,7 @@ import os
 from dmsky.jcalc import *
 from dmsky.density import NFWProfile
 
+import matplotlib
 try:             os.environ['DISPLAY']
 except KeyError: matplotlib.use('Agg')
 import pylab as plt
