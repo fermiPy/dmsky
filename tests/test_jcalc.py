@@ -6,6 +6,9 @@ dmsky.jcalc.py
 
 from dmsky.jcalc import *
 from dmsky.density import NFWProfile
+
+try:             os.environ['DISPLAY']
+except KeyError: matplotlib.use('Agg')
 import pylab as plt
 
 rhos = 1

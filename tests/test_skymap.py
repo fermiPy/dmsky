@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 import healpy as hp
-import pylab as plt
 import numpy as np
+try:             os.environ['DISPLAY']
+except KeyError: matplotlib.use('Agg')
+import pylab as plt
 
 import dmsky.targets
 import dmsky.roster

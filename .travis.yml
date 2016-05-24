@@ -21,7 +21,7 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   - conda info -a
-  - conda create -q -n dmsky-env python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib astropy healpy pyyaml pytest -c zonca
+  - conda create -q -n dmsky-env python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib astropy healpy pyyaml pytest -c fermipy
   - source activate dmsky-env
   - python setup.py install
   
