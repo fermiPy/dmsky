@@ -9,6 +9,8 @@ except ImportError:
 
 import versioneer
 
+ 
+
 NAME = 'dmsky'
 HERE = os.path.abspath(os.path.dirname(__file__))
 CLASSIFIERS = """\
@@ -22,6 +24,13 @@ Topic :: Scientific/Engineering
 
 def read(filename):
     return open(os.path.join(HERE,filename)).read()
+
+def find_data():
+    # Copy the data files
+    datadir = os.path.join('dmsky','data')
+    datafiles = [(d, [os.path.join(d,f) for f in files])
+                 for d, folders, files in os.walk(datadir)]
+    return datafiles
 
 setup(
     name=NAME,
@@ -40,7 +49,7 @@ setup(
         'pymodeler',
     ],
     packages=find_packages(),
-    package_data={'dmsky': ['data']},
+    data_files=find_data(),
     description="Dark matter skymaps.",
     long_description="Map the distribution of dark matter on the sky",
     platforms='any',
