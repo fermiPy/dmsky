@@ -23,9 +23,10 @@ install:
   - conda info -a
   - conda create -q -n dmsky-env python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib astropy pytest pyyaml
   - source activate dmsky-env
-  - pip install healpy
+  - conda install healpy -c zonca
+  - pip install pymodeler
   - python setup.py install
   
 # command to run tests
 script: 
-  - nosetests
+  - python -c "import dmsky"
