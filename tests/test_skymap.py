@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+import os
+
 import healpy as hp
 import numpy as np
 try:             os.environ['DISPLAY']

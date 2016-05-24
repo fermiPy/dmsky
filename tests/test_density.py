@@ -3,7 +3,7 @@
 Generic python script.
 """
 __author__ = "Alex Drlica-Wagner"
-import sys
+import os,sys
 from collections import OrderedDict as odict
 import inspect
 

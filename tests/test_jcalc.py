@@ -3,6 +3,7 @@
 Tests for J-factor calculations:
 dmsky.jcalc.py
 """
+import os
 
 from dmsky.jcalc import *
 from dmsky.density import NFWProfile
