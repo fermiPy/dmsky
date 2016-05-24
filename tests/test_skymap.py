@@ -37,6 +37,7 @@ dsphs_skymap = dmsky.skymap.Skymap(dsphs, nside=nside)
 dsphs_skymap.fill()
 
 hp.mollview(np.log10(skymap.values))
+plt.savefig('dsphs_gc_skymap.png',bbox_inches='tight')
 #hp.mollview(np.log10(dsphs_skymap.values))
 #hp.mollview(np.log10(gc_skymap.values))
 #hp.mollview(np.log10(dsphs_skymap.values+gc_skymap.values))
@@ -47,6 +48,7 @@ mask[query_disc(nside,gc[0].glon,gc[0].glat,radius=41)] = True
 mask[(np.abs(skymap.lon-360.*(skymap.lon>180))>6) & (np.abs(skymap.lat)<5)] = False
 
 hp.mollview(np.log10(skymap.values*mask))
+plt.savefig('gc_region.png',bbox_inches='tight')
 
 jfactor = gc_skymap.values[~mask].sum() * hp.nside2pixarea(nside) * Units.msun2_kpc5/Units.gev2_cm5
 
