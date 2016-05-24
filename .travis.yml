@@ -21,12 +21,10 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   - conda info -a
-  - conda create -q -n dmsky-env python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib astropy pytest pyyaml
+  - conda create -q -n dmsky-env python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib astropy healpy pyyaml pytest -c zonca
   - source activate dmsky-env
-  - conda install healpy -c zonca
-  - pip install pymodeler
-  - python setup.py install
+  #- python setup.py install
   
 # command to run tests
 script: 
-  - python -c "import dmsky"
+  - python -c "import numpy"
