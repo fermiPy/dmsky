@@ -179,7 +179,7 @@ class Target(Model):
     def __str__(self):
         ret = self.__class__.__name__
         for k in ['name','ra','dec','distance','density']:
-            v = self.__dict__[k]
+            v = getattr(self,k)
             ret += '\n  %-15s: %s'%(k,v)
         return ret
 
