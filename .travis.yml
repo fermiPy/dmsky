@@ -21,11 +21,15 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   - conda info -a
-  - conda create -q -n dmsky-env python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib astropy pytest pyyaml
+  - conda create -q -n dmsky-env python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib astropy healpy pyyaml pytest -c fermipy
   - source activate dmsky-env
-  - pip install healpy
   - python setup.py install
   
 # command to run tests
 script: 
-  - nosetests
+  #- nosetests
+  #- python -c "import numpy; import scipy; import pylab"
+  #- python -c "import dmsky"
+  - python tests/test_skymap.py
+  - python tests/test_density.py
+  - python tests/test_jcalc.py
