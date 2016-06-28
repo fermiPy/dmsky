@@ -33,10 +33,10 @@ class Skymap(object):
         for target in self.roster.values():
             print target
             if self.coord == 'gal':
-                idx = query_disc(self.nside,target.glon,target.glat,target.psimax)
+                idx = query_disc(self.nside,np.radians(target.glon),np.radians(target.glat),target.psi_max)
                 lon,lat = gal2cel(self.lon[idx],self.lat[idx])
             else:
-                idx = query_disc(self.nside,target.ra,target.dec,target.psimax)
+                idx = query_disc(self.nside,np.radians(target.ra),np.radians(target.dec),target.psi_max)
                 lon,lat = self.lon[idx],self.lat[idx]
 
             self.values[idx] += target.jvalue(lon,lat)
