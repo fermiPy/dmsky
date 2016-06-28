@@ -2,7 +2,7 @@ galactic:
   default:
     type:         galactic
     title:        Galactic Halo
-    abbreviation: Gal
+    abbr:         Gal
     name:         galactic
     altnames:     ['halo','gc']
     color:        red
