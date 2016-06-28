@@ -12,59 +12,170 @@ from os.path import abspath, dirname, join
 
 import numpy as np
 
+from collections import OrderedDict as odict
+
 from dmsky.jcalc import LoSIntegral, LoSIntegralFast, LoSIntegralInterp
 from dmsky.utils import coords
 from dmsky.utils.units import Units
 from dmsky.utils.tools import update_dict, merge_dict, yaml_load, get_items, item_version
 from dmsky.library import ObjectLibrary
 from dmsky.density import factory as density_factory
+from dmsky.density import DensityProfile
 
-class Target(object):
-    defaults = (
-        ('title',     'Target', 'Human-readable name'          ),
-        ('name',      'target', 'Machine-readable name'        ),
-        ('abbr',      'Tar',    'Title abbreviation'           ),
-        ('altnames',   [],      'Alternative names'            ),
-        ('ra',         0.0,     'Right Ascension (deg)'        ),
-        ('dec',        0.0,     'Declination (deg)'            ),
-        ('distance',   0.0,     'Distance (kpc)'               ),
-        ('profile',    {},      'Density Profile (see `jcalc`)'),
-        ('references', [],      'Literature references'        ),
-        ('color',      'k',     'Plotting color'               ),
-    )
+
+from pymodeler.model import Model
+from pymodeler.parameter import *
+
+
+class Target(Model):
+    _params = odict([('title'      ,Property(dtype=str   ,required=True , comment='Human-readable name')),
+                     ('name'       ,Property(dtype=str   ,required=True , comment='Machine-readable name')),
+                     ('abbr'       ,Property(dtype=str   ,required=True , comment='Title abbreviation')),
+                     ('profile'    ,Property(dtype=dict  ,required=True , comment='Density Profile (see `jcalc`)')),
+                     ('version'    ,Property(dtype=str   ,default=None,   comment='Which version of this target?')),
+                     ('nickname'   ,Property(dtype=str   ,default=None,   comment='Do we need this?')),
+                     ('altnames'   ,Property(dtype=list  ,default=[],     comment='Alternative names')),
+                     ('ra'         ,Property(dtype=float ,format='%.3f', default=0.0     ,unit='deg', 
+                                             comment='Right Ascension')),
+                     ('dec'        ,Property(dtype=float ,format='%.3f', default=0.0     ,unit='deg',
+                                             comment='Declination')),
+                     ('distance'   ,Property(dtype=float ,format='%.1f', default=0.0     ,unit='kpc',
+                                             comment='Distance')),
+                     ('dist_err'   ,Property(dtype=float ,format='%.1f', default=0.0     ,unit='kpc',
+                                             comment='Distance Uncertainty')),
+                     ('major_axis' ,Property(dtype=float ,format='%.3f', default=np.nan  ,unit='kpc',
+                                             comment='Major axis')),
+                     ('ellipticity',Property(dtype=float ,format='%.3f', default=np.nan  ,unit='kpc',
+                                             comment='Major axis')),
+                     ('references' ,Property(dtype=list  ,default=[],
+                                             comment='Literature references')),
+                     ('color'      ,Property(dtype=str   ,default='k',
+                                             comment='Plotting color')),
+                     ('mode'       ,Property(dtype=str   ,default='fast',
+                                             comment='L.o.S. Integration mode')),
+                     ('density'    ,Derived(dtype=DensityProfile ,comment='Density profile object')),
+                     ('proftype'   ,Derived(dtype=str            ,comment='Profile type (see `jcalc`)')), 
+                     ('prof_par'   ,Derived(dtype=np.ndarray     ,comment='Profile parameters')),
+                     ('prof_err'   ,Derived(dtype=np.ndarray     ,comment='Profile uncertainties')),
+                     ('glat'       ,Derived(dtype=float, format='%.3f', unit='deg', 
+                                            comment='Galactic Longitude')),
+                     ('glon'       ,Derived(dtype=float, format='%.3f', unit='deg',         
+                                            comment='Galactic Latitude')),
+                     ('rad_max'    ,Derived(dtype=float, format='%.1f', unit='kpc',         
+                                            comment='Maximum integration radius')),
+                     ('psi_max'    ,Derived(dtype=float, format='%.3f', unit='deg'
+                                            ,comment='Maximum integration angle')),
+                     ('j_integ'    ,Derived(dtype=float, format='%.2e', unit='GeV2 cm-5',
+                                            comment='Integrated J factor')),
+                     ('j_sigma'    ,Derived(dtype=float, format='%.2e', unit='GeV2 cm-5',
+                                            comment='Uncertainty on integ. J factor')),
+                     ('d_integ'    ,Derived(dtype=float, format='%.2e', unit='GeV cm-2',
+                                            comment='Integrated D factor')),
+                     ('d_sigma'    ,Derived(dtype=float, format='%.2e', unit='GeV cm-2',
+                                            comment='Uncertainty on integ. D factor')),
+                     ('j_profile'  ,Derived(dtype=LoSIntegral, comment='J factor profile')),
+                     ('j_derivs'   ,Derived(dtype=dict,        comment='J factor profile derivatives')),
+                     ('j_map_file' ,Derived(dtype=str,         comment='File with J factor map')),
+                     ('d_profile'  ,Derived(dtype=LoSIntegral, comment='D factor profile')),
+                     ('d_derivs'   ,Derived(dtype=dict,        comment='D factor profile derivatives')),
+                     ('d_map_file' ,Derived(dtype=str,         comment='File with D factor map'))])                    
+
 
     def __init__(self, **kwargs):
-        self._load(**kwargs)
+        super(Target,self).__init__(**kwargs)    
 
-    def _load(self, **kwargs):
-        kw = dict([(d[0],d[1]) for d in self.defaults])
-        kw.update(kwargs)
+    def _density(self):
+        prof_copy = self.profile.copy()
+        ptype = prof_copy.pop('type',"NFW")
+        return density_factory(ptype,**prof_copy)
 
-        self.__dict__.update(kw)
-        self._load_profile()
+    def _proftype(self):
+        return self.profile.get('type')
 
-    def _load_profile(self, mode='interp'):
-        # Convert profile units to msun/kpc3
-        units = self.profile.pop('units',None)
-        if units:
-            density,distance = units.rsplit('_',1)
-            self.profile['rhos'] *= getattr(Units,density)/Units.msun_kpc3
-            self.profile['rs']   *= getattr(Units,distance)/Units.kpc
-            #self.profile['rhos']     *= getattr(Units,density)
-            #self.profile['rs']       *= getattr(Units,distance)
-        self.density = density_factory(**self.profile)
+    def _prof_par(self):
+        return self.density.param_values()
+  
+    def _prof_err(self):
+        return self.density.param_errors()
 
-        distance = self.distance
-        if mode == 'interp':
-            self.jlosfn = LoSIntegralInterp(self.density, distance, ann=True)
-            self.dlosfn = LoSIntegralInterp(self.density, distance, ann=False)
-        elif mode == 'fast':
-            self.jlosfn = LoSIntegralFast(self.density, distance, ann=True)
-            self.dlosfn = LoSIntegralFast(self.density, distance, ann=False)
+    def _glat(self):
+        return coords.cel2gal(self.ra,self.dec)[0]
+
+    def _glon(self):
+        return coords.cel2gal(self.ra,self.dec)[1]
+
+    def _rad_max(self):
+        return self.density.rmax
+
+    def _psi_max(self):
+        rmax = self.rad_max
+        if rmax > self.distance:
+            return 180.
         else:
-            self.jlosfn = LoSIntegral(self.density, distance, ann=True)
-            self.dlosfn = LoSIntegral(self.density, distance, ann=False)
+            return np.degrees(np.arcsin(rmax/self.distance))
+      
+    def _j_integ(self):
+        jprof = self.j_profile        
+        return jprof.angularIntegral(self.psi_max)[0]
+ 
+    def _j_sigma(self):
+        jd = self.j_derivs
+        den = self.density
+        dv = np.matrix(np.zeros((len(den.deriv_params))))
+        for i,pname in enumerate(den.deriv_params):
+            dv[0,i] = jd[pname].angularIntegral(self.psi_max)[0]
+        return np.sqrt((dv * self.density.covar * dv.T)[0,0])
 
+    def _j_map_file(self):
+        raise Exception('Not implemented')
+
+    def _d_integ(self):
+        dprof = self.d_profile
+        return dprof.angularIntegral(self.psi_max)[0]
+ 
+    def _d_sigma(self):
+        dd = self.d_derivs
+        den = self.density
+        dv = np.matrix(np.zeros((len(den.deriv_params))))
+        for i,pname in enumerate(den.deriv_params):
+            dv[i] = dd[pname].angularIntegral(self.psi_max)[0]
+        return np.sqrt((dv.T * self.density.covar * dv)[0,0])
+
+    def _d_map_file(self):
+        raise Exception('Not implemented')
+
+
+    def _density_integral(self,ann=True,derivPar=None):
+        """ return a functor that calculates the LoS integral for various cases
+
+        ann      : build the functor for annihilation (i.e., integrate density^2 instead of density)
+        derivPar : build the functor for the derivative w.r.t. this parameter 
+        """
+        if self.mode  == 'interp':
+            return LoSIntegralInterp(self.density, self.distance*Units.kpc, ann=True, derivPar=derivPar)
+        elif self.mode == 'fast':
+            return LoSIntegralFast(self.density, self.distance*Units.kpc, ann=True, derivPar=derivPar)
+        else:
+            return LoSIntegral(self.density, self.distance*Units.kpc, ann=True, derivPar=derivPar)
+   
+    def _j_profile(self):
+        return self._density_integral(ann=True,derivPar=None)
+
+    def _j_derivs(self):
+        retDict = {}
+        for pname in self.density.deriv_params:            
+            retDict[pname] = self._density_integral(ann=True,derivPar=pname)
+        return retDict
+
+    def _d_profile(self):
+        return self._density_integral(ann=False,derivPar=None)
+
+    def _d_derivs(self):
+        retDict = {}
+        for pname in self.density.deriv_params:
+            retDict[pname] = self._density_integral(ann=False,derivPar=pname)
+        return retDict
+      
     def __str__(self):
         ret = self.__class__.__name__
         for k in ['name','ra','dec','distance','density']:
@@ -72,34 +183,20 @@ class Target(object):
             ret += '\n  %-15s: %s'%(k,v)
         return ret
 
-    @property
-    def glon(self):
-        return coords.cel2gal(self.ra,self.dec)[0]
-
-    @property
-    def glat(self):
-        return coords.cel2gal(self.ra,self.dec)[1]
-
-    @property
-    def psimax(self):
-        if self.density.rmax > self.distance:
-            return 180.
-        else:
-            return np.degrees(np.arcsin(self.density.rmax/self.distance))
-
     def jvalue(self,ra,dec):
         sep = coords.angsep(self.ra,self.dec,ra,dec)
-        return self.jlosfn(np.radians(sep))
+        return self.j_profile(np.radians(sep))
 
     def jsigma(self,ra,dec):
         raise Exception('Not implemented')
 
     def dvalue(self,ra,dec):
         sep = coords.angsep(self.ra,self.dec,ra,dec)
-        return self.dlosfn(np.radians(sep))
+        return self.d_profile(np.radians(sep))
     
     def dsigma(self,ra,dec):
         raise Exception('Not implemented')
+
 
 class Galactic(Target): pass
 class Dwarf(Target): pass
@@ -140,7 +237,7 @@ class TargetLibrary(ObjectLibrary):
             version = ret.get('base','default')
             ret = merge_dict(self.library[name][version], ret)
         ret['version'] = version
-
+        kwargs['name'] = name    
         # And finally, overwrite with kwargs
         update_dict(ret,kwargs)
         return ret
@@ -155,3 +252,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=description)
     args = parser.parse_args()
 
+    
+    prof_dict = dict(type='NFW',
+                     units='msun_kpc3_kpc',
+                     rs=0.27,
+                     rhos=2.64e+08,
+                     rmax=1.0)
+    targ = Target(distance=50.,profile=prof_dict)

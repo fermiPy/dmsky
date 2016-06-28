@@ -23,7 +23,7 @@ def factory(type, module=None, **kwargs):
         #logging.error(msg)
         msg = "Unrecognized class: %s"%cls
         raise Exception(msg)
- 
+
     return members[lower](**kwargs)
 
 

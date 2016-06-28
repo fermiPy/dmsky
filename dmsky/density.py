@@ -18,22 +18,34 @@ from collections import OrderedDict as odict
 import numpy as np
 import scipy.special as spfn
 
-from pymodeler import Model, Param
+from pymodeler.model import Model
+from pymodeler.parameter import *
+
 from dmsky.utils.units import Units
 
 class DensityProfile(Model):
     _params = odict([
-        ('rs',     Param(1.0)   ),
-        ('rhos',   Param(1.0)   ),
-        ('rmin',   Param(0.0)   ),
-        ('rmax',   Param(np.inf)),
-        ('rhomax', Param(np.inf)),
+        ('rs',     Parameter(default=1.0)   ),
+        ('rhos',   Parameter(default=1.0)   ),
+        ('rmin',   Parameter(default=0.0)   ),
+        ('rmax',   Parameter(default=np.inf)),
+        ('rhomax', Parameter(default=np.inf)),
+        ('covar',  Derived(dtype=np.ndarray     ,comment='Covariance matrix for parameters')),
     ])
 
     def __call__(self,r):
+        """ return the denisty at a given radius
+        """
         return self.rho(r)
 
+    @property 
+    def deriv_params(self):
+        return ["rs","rhos"]
+
+
     def rho(self, r):
+        """ return the denisty at a given radius
+        """
         scalar = np.isscalar(r)
         r = np.atleast_1d(r)
 
@@ -47,6 +59,57 @@ class DensityProfile(Model):
             return np.asscalar(rho)
         else:
             return rho
+
+    def rho_deriv(self, r, paramNames):
+        """ return the deirvatives of the density as a function of radius, 
+            w.r.t. a list of parameters
+
+            This will return an n x m array, where
+            n is the number of radii
+            m is the number of parameters              
+        """
+        if np.isscalar(r):
+            nr = 1
+        else:
+            nr = len(r)
+        
+        npar = len(paramNames)
+        
+        initParVals = np.array([ self.__getattr__(pName) for pName in paramNames])
+        deltaParVals = initParVals * 0.001
+        
+        init_r = self._rho(r)
+
+        derivs = []
+
+        # loop over parameters and take the numerical derivatives
+        for initPar,deltaPar,parName in zip(initParVals,deltaParVals,paramNames):
+            par = self.getp(parName)
+            newParVal = initPar+deltaPar
+            par.set_value(newParVal)
+            new_r = self._rho(r)
+            dr_dp = (new_r - init_r) / ( newParVal -  initPar)
+            derivs.append(dr_dp)
+            par.set_value(initPar)
+
+        ret = np.vstack(derivs)
+        return ret
+
+    def rho_uncertainty(self, r):
+        """
+        """
+        cov_mat = self.covar
+        if np.isscalar(r):
+            nr = 1
+            deriv_vect = np.matrix(self.rho_deriv(r,self.deriv_params))
+            err2 = (deriv_vect.T * cov_mat * deriv_vect)[0,0]
+        else:
+            nr = len(r)
+            err2 = np.zeros((nr))
+            for i,r_i in enumerate(r):
+                deriv_vect = np.matrix(self.rho_deriv(r_i,self.deriv_params))
+                err2[i] = deriv_vect * cov_mat * deriv_vect.T
+        return np.sqrt(err2)
 
     def _rho(self, r):
         msg = "%s._rho not implemented"%(self.__class__.__name__)
@@ -76,6 +139,18 @@ class DensityProfile(Model):
 
         mrvir = self.mass(rvir)
         self.rhos *= mvir/mrvir
+    
+    def _covar(self):
+        """ Default implementation of covariance matrix, 
+        
+        This just uses the parameter errors and ignores the off-diagonal terms
+        """
+        npar = len(self.deriv_params)
+        m = np.matrix(np.zeros((npar,npar)))
+        for i,pname in enumerate(self.deriv_params):
+            par_err = self.getp(pname).symmetric_error
+            m[i,i] = par_err*par_err
+        return m 
 
     def _cache(self,name=None):
         pass
@@ -149,6 +224,7 @@ class NFWProfile(DensityProfile):
     def _rho(self,r):
         x = r/self.rs
         return self.rhos * x**-1 * (1+x)**-2
+
     
 class EinastoProfile(DensityProfile):
     """ Einasto profile
@@ -161,8 +237,12 @@ class EinastoProfile(DensityProfile):
     _params = odict(
         DensityProfile._params.items() + 
         [
-            ('alpha',     Param(0.17)),
+            ('alpha',     Parameter(value=0.17)),
         ])
+
+    @property 
+    def deriv_params(self):
+        return ["rs","rhos","alpha"]
     
     def _mass(self,r):
         """ Analytic mass calculation.
@@ -191,9 +271,12 @@ class GNFWProfile(DensityProfile):
     _params = odict(
         DensityProfile._params.items() + 
         [
-            ('gamma',     Param(1)),
+            ('gamma',     Parameter(value=1.)),
         ])
 
+    @property 
+    def deriv_params(self):
+        return ["rs","rhos","gamma"]  
 
     def _rho(self,r):
         x = r/self.rs
@@ -215,10 +298,14 @@ class ZhouProfile(DensityProfile):
     _params = odict(
         DensityProfile._params.items() + 
         [
-            ('alpha',     Param(1)),
-            ('beta',      Param(3)),
-            ('gamma',     Param(1)),
+            ('alpha',     Parameter(value=1.)),
+            ('beta',      Parameter(value=3.)),
+            ('gamma',     Parameter(value=1.)),
         ])
+
+    @property 
+    def deriv_params(self):
+        return ["rs","rhos","alpha","beta","gamma"]
 
     def _rho(self,r):
         x = r/self.rs
@@ -232,6 +319,51 @@ Einasto = EinastoProfile
 gNFW = GNFWProfile
 Zhou = ZhouProfile
 
-def factory(type, **kwargs):
+
+
+def scale_list(l,scale_value):
+    for i,v in enumerate(l):
+        l[i] = v*scale_value
+    return l
+
+def scale_dict(d,scale_value):
+    for k,v in d.items():
+        if isinstance(v,list):
+            d[k] = scale_list(v,scale_value)
+        else:
+            d[k] = v*scale_value
+    return d
+
+def scale_param(p,scale_value):
+    if isinstance(p,dict):
+        return scale_dict(p,scale_value)
+    elif isinstance(p,list):
+        return scale_list(p,scale_value)
+    else:
+        return p*scale_value
+
+def scale_dict_param(d,k,scale_value, default_value):
+    try: 
+        d[k] = scale_param( d[k], scale_value )
+    except KeyError:
+        d[k] = scale_value * default_value
+
+
+def factory(ptype, **kwargs):
     import dmsky.factory
-    return dmsky.factory.factory(type, module=__name__,**kwargs)
+
+    prof_copy = kwargs.copy()
+    units = prof_copy.pop('units',None)
+    if units:
+        density,distance = units.rsplit('_',1)      
+        scale_density = getattr(Units,density)
+        scale_distance = getattr(Units,distance)
+
+        scale_dict_param( prof_copy, 'rhos', scale_density, DensityProfile._params['rhos'].default )
+        scale_dict_param( prof_copy, 'rs',   scale_distance, DensityProfile._params['rs'].default )
+        scale_dict_param( prof_copy, 'rmin', scale_distance, DensityProfile._params['rmin'].default )
+        scale_dict_param( prof_copy, 'rmax', scale_distance, DensityProfile._params['rmax'].default )
+        scale_dict_param( prof_copy, 'rhomax', scale_density, DensityProfile._params['rhomax'].default )
+            
+    return dmsky.factory.factory(ptype, module=__name__,**prof_copy)
+

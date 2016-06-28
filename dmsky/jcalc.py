@@ -57,6 +57,7 @@ class LoSFn(object):
     def func(self, r):
         return self.dp.rho(r)**2
 
+
 class LoSAnnihilate(LoSFn):
     """Integrand function for LoS annihilation (J-factor)."""
 
@@ -66,7 +67,17 @@ class LoSAnnihilate(LoSFn):
     def func(self, r):
         return self.dp.rho(r)**2
 
-class LoSDecay(LoSAnnihilate):
+class LoSAnnihilate_Deriv(LoSFn):
+    """Integrand function for LoS annihilation (J-factor)."""
+
+    def __init__(self,dp,d,xi,paramNames,alpha=3.0):
+        super(LoSAnnihilate_Deriv,self).__init__(dp,d,xi,alpha)
+        self.__paramNames = paramNames
+
+    def func(self, r):
+        return 2.*self.dp.rho(r)*self.dp.rho_deriv(r,self.__paramNames)
+
+class LoSDecay(LoSFn):
     """Integrand function for LoS decay (D-factor)."""
 
     def __init__(self,dp,d,xi,alpha=1.0):
@@ -74,6 +85,17 @@ class LoSDecay(LoSAnnihilate):
         
     def func(self,r):
         return self.dp.rho(r)
+  
+class LoSDecay_Deriv(LoSFn):
+    """Integrand function for LoS decay (D-factor)."""
+
+    def __init__(self,dp,d,xi,paramNames,alpha=1.0):
+        super(LoSDecay_Deriv,self).__init__(dp,d,xi,alpha)
+        self.__paramNames = paramNames
+
+    def func(self,r):
+        return self.dp.rho(r)*self.dp.rho_deriv(r,self.__paramNames)
+ 
 
 class LoSIntegral(object):
     """Slowest (and most accurate?) LoS integral. Uses
@@ -81,19 +103,21 @@ class LoSIntegral(object):
     the LoS close to the halo center.
     """
     
-    def __init__(self, density, dhalo, alpha=3.0, ann=True):
+    def __init__(self, density, dhalo, alpha=3.0, ann=True, derivPar=None):
         """
         Parameters
         ----------
-        density: Density profile.
-        dhalo:   Distance to halo center.
-        alpha:   Parameter determining the integration variable: x' = x^(1/alpha)
-        ann:     Annihilation or decay
+        density:   Density profile.
+        dhalo:     Distance to halo center.
+        alpha:     Parameter determining the integration variable: x' = x^(1/alpha)
+        ann:       Annihilation or decay
+        derivPar : Integrate the derivative w.r.t. this parameter 
         """
         self.dp = density
         self.dhalo = dhalo
         self.alpha = float(alpha)
         self.ann = ann
+        self.derivPar = derivPar
 
     @property
     def rmax(self):
@@ -102,6 +126,22 @@ class LoSIntegral(object):
     @property
     def name(self):
         return self.__class__.__name__
+
+    def _make_losfn(self,dhalo,psi):
+        """
+        """
+        if self.ann:
+            if self.derivPar is None:
+                losfn = LoSAnnihilate(self.dp,dhalo,psi,self.alpha)
+            else:
+                losfn = LoSAnnihilate_Deriv(self.dp,dhalo,psi,[self.derivPar],self.alpha)
+        else:
+            if self.derivPar is None:
+                losfn = LoSDecay(self.dp,dhalo,psi,self.alpha)
+            else:
+                losfn = LoSDecay_Deriv(self.dp,dhalo,psi,[self.derivPar],self.alpha)
+        return losfn
+        
 
     def __call__(self, psi, dhalo=None, degrees=False):
         """Evaluate the LoS integral at the offset angle psi for a halo
@@ -161,10 +201,7 @@ class LoSIntegral(object):
         for i, t in np.ndenumerate(psi):
             s0,s1 = 0,0
             
-            if self.ann:
-                losfn = LoSAnnihilate(self.dp,dhalo[i],psi[i],self.alpha)
-            else:
-                losfn = LoSDecay(self.dp,dhalo[i],psi[i],self.alpha)
+            losfn = self._make_losfn(dhalo[i],psi[i])
 
             # Closest approach to halo center
             #rmin = dhalo[i]*np.sin(psi[i])
@@ -194,13 +231,38 @@ class LoSIntegral(object):
         return v
 
 
+    def angularIntegral(self,angle=None):
+        """ Compute the solid-angle integrated j-value
+        within a given radius
+        
+        Parameters
+        ----------
+        angle : array_like or None
+        Maximum integration angle (in degrees)
+        """
+        if angle is None:
+            angle = np.degrees(np.arctan2(self.rmax,self.dhalo))
+
+        angle = np.asarray(angle)
+        if angle.ndim == 0: angle = np.array([angle])
+        
+        integrand = lambda r: self(r)*2*np.pi*np.sin(r)
+        
+        integral = []
+        for a in angle:
+            integral.append(quad(integrand, 0, np.radians(a),full_output=True)[0])
+        integral = np.asarray(integral)
+        
+        return integral
+ 
+
 class LoSIntegralFast(LoSIntegral): 
     """
     Vectorized version of LoSIntegral that performs midpoint
     integration with a fixed number of steps.
     """
 
-    def __init__(self, density, dhalo, alpha=3.0, ann=True, nsteps=400):
+    def __init__(self, density, dhalo, alpha=3.0, ann=True, nsteps=400, derivPar=None):
         """
         Parameters
         ----------
@@ -210,8 +272,9 @@ class LoSIntegralFast(LoSIntegral):
         ann:     Annihilation or decay
         nsteps:  Number of integration steps.  Increase this parameter to
                  improve the accuracy of the LoS integral.
+        derivPar : Integrate the derivative w.r.t. this parameter 
         """
-        super(LoSIntegralFast,self).__init__(density,dhalo,alpha,ann)
+        super(LoSIntegralFast,self).__init__(density,dhalo,alpha,ann,derivPar)
 
         self.nsteps = nsteps
         xedge = np.linspace(0,1.0,self.nsteps+1)
@@ -236,8 +299,7 @@ class LoSIntegralFast(LoSIntegral):
         # Closest approach to halo center
         rmin = dhalo*np.sin(psi)
 
-        if self.ann: losfn = LoSAnnihilate(self.dp,dhalo,psi,self.alpha)
-        else:        losfn = LoSDecay(self.dp,dhalo,psi,self.alpha)
+        losfn = self._make_losfn(dhalo,psi)
 
         msk0 = self.rmax > dhalo
         msk1 = self.rmax > rmin
@@ -292,7 +354,7 @@ class LoSIntegralFast(LoSIntegral):
 class LoSIntegralInterp(LoSIntegralFast):
     """ Interpolate fast integral a for even faster look-up. """
     
-    def __init__(self, density, dhalo, alpha=3.0, ann=True, nsteps=400):
+    def __init__(self, density, dhalo, alpha=3.0, ann=True, nsteps=400, derivPar=None):
         """
         Parameters
         ----------
@@ -302,8 +364,9 @@ class LoSIntegralInterp(LoSIntegralFast):
         ann:     Annihilation or decay
         nsteps:  Number of integration steps.  Increase this parameter to
                  improve the accuracy of the LoS integral.
+        derivPar : Integrate the derivative w.r.t. this parameter 
         """
-        super(LoSIntegralInterp,self).__init__(density, dhalo, alpha, ann, nsteps)
+        super(LoSIntegralInterp,self).__init__(density, dhalo, alpha, ann, nsteps, derivPar)
         self.func = self.create_func(self.dhalo)
 
     def create_profile(self, dhalo, nsteps=None):
@@ -374,6 +437,7 @@ class LoSIntegralInterp(LoSIntegralFast):
 
         return v
 
+ 
 class LoSIntegralFile(LoSIntegralInterp): 
     """
     Interpolate over a pre-generated file.
@@ -388,6 +452,8 @@ class LoSIntegralFile(LoSIntegralInterp):
     def create_profile(self, dhalo, npsi=300):
         log_psi,log_jval = np.loadtxt(filename,unpack=True)
         return self.dhalo, log_psi, log_jval
+
+
 
 
 class ROIIntegrator(object):

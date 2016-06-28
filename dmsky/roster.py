@@ -90,3 +90,13 @@ if __name__ == "__main__":
     description = __doc__
     parser = argparse.ArgumentParser(description=description)
     args = parser.parse_args()
+
+    rl = RosterLibrary()
+    ro = rl.create_roster('martinez2015_nfw')
+
+    draco = ro['draco']
+    
+    colNames = ['name','ra','dec','distance','proftype','glat','glon','j_integ','d_integ']
+
+    from dmsky.file_io import table as table_io    
+    tab = table_io.make_table_for_roster(colNames,ro)
