@@ -237,7 +237,7 @@ class EinastoProfile(DensityProfile):
     _params = odict(
         DensityProfile._params.items() + 
         [
-            ('alpha',     Parameter(value=0.17)),
+            ('alpha',     Parameter(default=0.17)),
         ])
 
     @property 
@@ -271,7 +271,7 @@ class GNFWProfile(DensityProfile):
     _params = odict(
         DensityProfile._params.items() + 
         [
-            ('gamma',     Parameter(value=1.)),
+            ('gamma',     Parameter(default=1.)),
         ])
 
     @property 
@@ -298,9 +298,9 @@ class ZhouProfile(DensityProfile):
     _params = odict(
         DensityProfile._params.items() + 
         [
-            ('alpha',     Parameter(value=1.)),
-            ('beta',      Parameter(value=3.)),
-            ('gamma',     Parameter(value=1.)),
+            ('alpha',     Parameter(default=1.)),
+            ('beta',      Parameter(default=3.)),
+            ('gamma',     Parameter(default=1.)),
         ])
 
     @property 
