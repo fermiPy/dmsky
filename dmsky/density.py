@@ -162,11 +162,11 @@ class UniformProfile(DensityProfile):
     """
     
     def _rho(self,r):
-        x = r/self.rs
+        x = r/self.rs        
         return np.where(x<=1,self.rhos,0.0)
 
     def _mass(self,r):
-        return 4*np.pi/3 * self.rhos * np.where(r < rs, r**3, self.rs**3)
+        return 4*np.pi/3 * self.rhos * np.where(r < self.rs, r**3, self.rs**3)
    
 class IsothermalProfile(DensityProfile):
     """ Non-Singular Isothermal Profile:
@@ -222,7 +222,7 @@ class NFWProfile(DensityProfile):
         return (4*np.pi/3.)*self.rhos**2*self.rs**3*(1-(1+x)**-3)
 
     def _rho(self,r):
-        x = r/self.rs
+        x = r/self.rs        
         return self.rhos * x**-1 * (1+x)**-2
 
     
