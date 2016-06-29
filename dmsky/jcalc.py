@@ -334,8 +334,9 @@ class LoSIntegralFast(LoSIntegral):
                 dx1 = (xlim1-xlim0)/float(self.nsteps)
 
                 x1 = xlim0 + self.x*(xlim1-xlim0)
+
                 s0 = np.apply_over_axes(np.sum,losfn(x1)*dx1,axes=[-1])
-            
+
                 v[msk02] = s0[msk02]
                 
         # Observer outside the halo...
@@ -372,8 +373,6 @@ class LoSIntegralInterp(LoSIntegralFast):
     def create_profile(self, dhalo, nsteps=None):
         if not nsteps: nsteps = self.nsteps
         dhalo = np.unique(np.atleast_1d(dhalo))
-        dp = self.dp
-
         psi = np.logspace(np.log10(1e-7),np.log10(np.pi),nsteps)
 
         _dhalo, _psi = np.meshgrid(dhalo,psi)
