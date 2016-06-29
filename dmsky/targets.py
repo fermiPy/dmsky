@@ -109,10 +109,11 @@ class Target(Model):
 
     def _psi_max(self):
         rmax = self.rad_max
-        if rmax > self.distance:
+        dist_kpc = self.distance * Units.kpc
+        if rmax > dist_kpc:
             return 180.
         else:
-            return np.degrees(np.arcsin(rmax/self.distance))
+            return np.degrees(np.arcsin(rmax/dist_kpc))
       
     def _j_integ(self):
         jprof = self.j_profile        
