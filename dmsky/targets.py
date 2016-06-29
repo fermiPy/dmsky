@@ -51,7 +51,7 @@ class Target(Model):
                                              comment='Literature references')),
                      ('color'      ,Property(dtype=str   ,default='k',
                                              comment='Plotting color')),
-                     ('mode'       ,Property(dtype=str   ,default='fast',
+                     ('mode'       ,Property(dtype=str   ,default='interp',
                                              comment='L.o.S. Integration mode')),
                      ('density'    ,Derived(dtype=DensityProfile ,comment='Density profile object')),
                      ('proftype'   ,Derived(dtype=str            ,comment='Profile type (see `jcalc`)')), 
@@ -99,10 +99,10 @@ class Target(Model):
         return self.density.param_errors()
 
     def _glat(self):
-        return coords.cel2gal(self.ra,self.dec)[0]
+        return coords.cel2gal(self.ra,self.dec)[1]
 
     def _glon(self):
-        return coords.cel2gal(self.ra,self.dec)[1]
+        return coords.cel2gal(self.ra,self.dec)[0]
 
     def _rad_max(self):
         return self.density.rmax
@@ -192,7 +192,7 @@ class Target(Model):
         raise Exception('Not implemented')
 
     def dvalue(self,ra,dec):
-        sep = coords.angsep(self.ra,self.dec,ra,dec)
+        sep = coords.angsep(self.ra,self.dec,ra,dec)        
         return self.d_profile(np.radians(sep))
     
     def dsigma(self,ra,dec):
