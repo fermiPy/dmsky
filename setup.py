@@ -22,6 +22,13 @@ URL = 'https://github.com/kadrlica/dmsky'
 DESC = "Dark matter skymaps."
 LONG_DESC = "See %s"%URL
 
+def find_data():
+    # Copy the data files
+    datadir = os.path.join('dmsky','data')
+    datafiles = [(d, [os.path.join(d,f) for f in files])
+                 for d, folders, files in os.walk(datadir)]
+    return datafiles
+
 setup(
     name=NAME,
     version=versioneer.get_version(),
@@ -40,6 +47,7 @@ setup(
         'pymodeler >= 0.1.0',
     ],
     packages=find_packages(),
+    data_files=find_data(),
     description=DESC,
     long_description=LONG_DESC,
     platforms='any',
