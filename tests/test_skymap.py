@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import os
 
-import healpy as hp
 import numpy as np
 import matplotlib
 try:             os.environ['DISPLAY']

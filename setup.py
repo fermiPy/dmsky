@@ -9,8 +9,6 @@ except ImportError:
 
 import versioneer
 
- 
-
 NAME = 'dmsky'
 HERE = os.path.abspath(os.path.dirname(__file__))
 CLASSIFIERS = """\
@@ -21,6 +19,9 @@ Programming Language :: Python
 Natural Language :: English
 Topic :: Scientific/Engineering
 """
+URL = 'https://github.com/kadrlica/dmsky'
+DESC = "Dark matter skymaps."
+LONG_DESC = "Map the distribution of dark matter on the sky"
 
 def read(filename):
     return open(os.path.join(HERE,filename)).read()
@@ -36,7 +37,7 @@ setup(
     name=NAME,
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
-    url='https://github.com/kadrlica/dmsky',
+    url=URL,
     author='Alex Drlica-Wagner',
     author_email='kadrlica@fnal.gov',
     scripts = [],
@@ -46,12 +47,12 @@ setup(
         'scipy >= 0.14.0',
         'healpy >= 1.6.0',
         'pyyaml >= 3.10',
-        'pymodeler',
+        'pymodeler >= 0.1.0',
     ],
     packages=find_packages(),
     data_files=find_data(),
-    description="Dark matter skymaps.",
-    long_description="Map the distribution of dark matter on the sky",
+    description=DESC,
+    long_description=LONG_DESC,
     platforms='any',
     classifiers = [_f for _f in CLASSIFIERS.split('\n') if _f]
 )
