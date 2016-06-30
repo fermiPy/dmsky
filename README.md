@@ -1,17 +1,10 @@
 Dark Matter Sky Maps
 ====================
 
-.. image:: https://img.shields.io/travis/kadrlica/dmsky.svg   
-  :target: https://travis-ci.org/kadrlica/dmsky
-
-.. image:: https://img.shields.io/github/tag/kadrlica/dmsky.svg   
-  :target: https://github.com/kadrlica/dmsky/releases
-
-.. image:: https://img.shields.io/pypi/v/dmsky.svg   
-  :target: https://pypi.python.org/pypi/dmsky
-
-.. image:: https://img.shields.io/badge/license-MIT-blue.svg   
-  :target: https://github.com/kadrlica/dmsky
+[![Build](https://img.shields.io/travis/kadrlica/dmsky.svg)](https://travis-ci.org/kadrlica/dmsky)
+[![Release](https://img.shields.io/github/release/kadrlica/dmsky.svg)](../../releases)
+[![PyPI](https://img.shields.io/pypi/v/dmsky.svg)](https://pypi.python.org/pypi/dmsky)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](../../)
 
 Introduction
 ------------
@@ -21,6 +14,7 @@ Installation
 ------------
 
 The easiest way to install ``dmsky`` is with ``pip``:
+
 ```
 # For an initial installation
 pip install dmsky
@@ -33,6 +27,7 @@ pip install dmsky --upgrade
 ```
 
 You can also download the latest release or the bleeding edge of the source code from github:
+
 ```
 git clone https://github.com/kadrlica/dmsky.git
 cd dmsky
@@ -41,17 +36,7 @@ python setup.py install
 
 Usage
 ------------
-The hope is that ``dmsky`` will provide a simple and transparent interface towards making dark matter sky maps. Currently, functionality is provided through the Python API, though there should eventually be a simple command-line interface.
-
-```
-
-# Load dmsky's library of pre-defined rosters
-rosters = dmsky.roster.RosterLibrary()
-
-
-```
-
-Several more involved examples can be found the ``test`` directory.
+The hope is that ``dmsky`` will provide a simple and transparent interface towards making dark matter sky maps. Functionality is provided through the Python API, though there should eventually be a simple command-line interface. Several examples can be found in the [examples](../../examples) and [tests](../../tests) directories.
 
 Want to Help?
 -------------
