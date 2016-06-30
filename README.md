@@ -36,7 +36,7 @@ python setup.py install
 
 Usage
 ------------
-The hope is that ``dmsky`` will provide a simple and transparent interface towards making dark matter sky maps. Functionality is provided through the Python API, though there should eventually be a simple command-line interface. Several examples can be found in the [examples](../../examples) and [tests](../../tests) directories.
+The hope is that ``dmsky`` will provide a simple and transparent interface towards making dark matter sky maps. Functionality is provided through the Python API, though there should eventually be a simple command-line interface. Several examples can be found in the [examples](examples/) and [tests](tests/) directories.
 
 Want to Help?
 -------------
