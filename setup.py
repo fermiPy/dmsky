@@ -21,7 +21,7 @@ Topic :: Scientific/Engineering
 """
 URL = 'https://github.com/kadrlica/dmsky'
 DESC = "Dark matter skymaps."
-LONG_DESC = "Map the distribution of dark matter on the sky"
+LONG_DESC = "See %s"%URL
 
 def read(filename):
     return open(os.path.join(HERE,filename)).read()
