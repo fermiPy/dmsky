@@ -1,3 +1,3 @@
 include versioneer.py
 include dmsky/_version.py
-include dmsky/data
+recursive-include dmsky/data *.yaml
