@@ -31,7 +31,7 @@ class Skymap(object):
         self.lon,self.lat = pix2ang(self.nside,self.pix)
         
         for target in self.roster.values():
-            print target
+            print(target)
             if self.coord == 'gal':
                 idx = query_disc(self.nside,target.glon,target.glat,target.psi_max)
                 lon,lat = gal2cel(self.lon[idx],self.lat[idx])

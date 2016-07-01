@@ -388,7 +388,7 @@ class LoSIntegralInterp(LoSIntegralFast):
         log_jval[np.where(log_jval==-np.inf)] = zeroval
 
         if log_dhalo.shape[-1] == 1:
-            #print 'interp1d'
+            #print('interp1d')
             #spline=UnivariateSpline(log_psi.flat,log_jval.flat,k=2,s=0)
             #fn = lambda psi: 10**(spline(np.log10(psi)))
             interp = interp1d(log_psi.flat,log_jval.flat,kind='linear')
@@ -397,7 +397,7 @@ class LoSIntegralInterp(LoSIntegralFast):
                 log_jval[np.where(log_jval < zeroval+1)] = -np.inf
                 return 10**log_jval
         else:
-            #print 'interp2d'
+            #print('interp2d')
             #spline = bisplrep(log_psi,log_dhalo,log_jval,s=0.0,kx=2,ky=2)
             #fn = lambda psi,dhalo: 10**bisplev(np.log10(psi[:,0]),np.log10(dhalo[0,:]),spline)
             interp = interp2d(log_psi,log_dhalo,log_jval,kind='linear')
@@ -559,9 +559,9 @@ class ROIIntegrator(object):
             domega = -(np.cos(np.radians(rgc[1])) - 
                        np.cos(np.radians(rgc[0])))*2*np.pi/Units.deg2
 
-        print '%20.6g %20.6g %20.6g %20.6g'%(jv, 
+        print('%20.6g %20.6g %20.6g %20.6g'%(jv, 
                                              jv/units0, 
-                                             jv/units1,domega)
+                                             jv/units1,domega))
 
 
     def print_profile(self,decay=False):
@@ -578,10 +578,10 @@ class ROIIntegrator(object):
 
             jv = self._jv_cum[i]
 
-            print '%10.2f %20.6g %20.6g %20.6g %20.6g'%(th, jv, 
+            print('%10.2f %20.6g %20.6g %20.6g %20.6g'%(th, jv, 
                                                         jv/units0, 
                                                         jv/units1,
-                                                        self._domega_cum[i])
+                                                        self._domega_cum[i]))
 
 
 if __name__ == "__main__":

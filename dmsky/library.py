@@ -32,7 +32,8 @@ class ObjectLibrary(object):
     def load_library(cls, paths):
         library = dict()
         for path in paths:
-            print path
+            # Should use logging
+            print(path)
             subdirs = [path] + os.walk(path).next()[1]
             for subdir in subdirs:
                 infiles = glob.glob(join(path,subdir)+'/*.yaml')

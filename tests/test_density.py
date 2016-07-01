@@ -32,12 +32,12 @@ def test_densities():
         if cls == 'DensityProfile': continue
         dp = dmsky.density.factory(cls)
         dp.set_rho_r(1,dp.rs)
-        print dp
+        print(dp)
         # Small offset for visualization
         epsilon = i*0.2e-1
         #epsilon = 0
         plt.plot(radius,dp(radius) * (1+epsilon),'-',label=cls)
-        print
+        print('')
     plt.xlabel("Radius")
     plt.ylabel("Density")
     plt.legend()
@@ -50,17 +50,17 @@ def test_min_max():
     ax.set_xscale('log')
      
     dp = dmsky.density.factory('NFWProfile',rmin=0.1)
-    print dp
+    print(dp)
     epsilon = 0*2e-2
     plt.plot(radius,dp(radius) * (1+epsilon),'-',label='rmin=%g'%dp.rmin)
      
     dp = dmsky.density.factory('NFWProfile',rmax=2)
-    print dp
+    print(dp)
     epsilon = 1*2e-2
     plt.plot(radius,dp(radius) * (1+epsilon),'-',label='rmax=%g'%dp.rmax)
      
     dp = dmsky.density.factory('NFWProfile',rhomax=100)
-    print dp
+    print(dp)
     epsilon = 2*2e-2
     plt.plot(radius,dp(radius) * (1+epsilon),'-',label='rhomax=%g'%dp.rhomax)
      

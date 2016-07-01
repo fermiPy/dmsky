@@ -10,6 +10,8 @@ Development Status :: 2 - Pre-Alpha
 Intended Audience :: Science/Research
 Intended Audience :: Developers
 Programming Language :: Python
+Programming Language :: Python :: 2
+Programming Language :: Python :: 2.7
 Natural Language :: English
 Topic :: Scientific/Engineering
 Topic :: Scientific/Engineering :: Physics
@@ -21,6 +23,9 @@ License :: OSI Approved :: MIT License
 URL = 'https://github.com/kadrlica/dmsky'
 DESC = "Dark matter skymaps."
 LONG_DESC = "See %s"%URL
+
+if sys.version_info[:2] < (2, 7):
+    raise RuntimeError("Python version >= 2.7 required.")
 
 def find_data_files(datadir=None):
     """
@@ -53,7 +58,6 @@ setup(
     author_email='kadrlica@fnal.gov',
     scripts = [],
     install_requires=[
-        'python >= 2.7.0',
         'setuptools',
         'numpy >= 1.9.0',
         'scipy >= 0.14.0',
