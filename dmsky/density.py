@@ -235,7 +235,7 @@ class EinastoProfile(DensityProfile):
     
     """
     _params = odict(
-        DensityProfile._params.items() + 
+        list(DensityProfile._params.items()) + 
         [
             ('alpha',     Parameter(default=0.17)),
         ])
@@ -269,7 +269,7 @@ class GNFWProfile(DensityProfile):
     rho(r) = rhos / ( (r/rs)**gamma * (1+r/rs)**(3-gamma))
     """
     _params = odict(
-        DensityProfile._params.items() + 
+        list(DensityProfile._params.items()) + 
         [
             ('gamma',     Parameter(default=1.)),
         ])
@@ -296,7 +296,7 @@ class ZhouProfile(DensityProfile):
     http://arxiv.org/abs/0808.3772
     """
     _params = odict(
-        DensityProfile._params.items() + 
+        list(DensityProfile._params.items()) + 
         [
             ('alpha',     Parameter(default=1.)),
             ('beta',      Parameter(default=3.)),
