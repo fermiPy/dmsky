@@ -2,9 +2,6 @@ language: python
 
 python:
   - "2.7"
-  - "3.4"
-#  - "3.2"
-#  - "3.3"
 #  - "3.4"
 #  - "nightly" # currently points to 3.6-dev
 
@@ -21,7 +18,7 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   - conda info -a
-  - conda create -q -n dmsky-env python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib astropy healpy pyyaml nose -c zonca
+  - conda create -q -n dmsky-env python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib astropy healpy pyyaml nose -c fermipy
   - source activate dmsky-env
   - git clone https://github.com/kadrlica/pymodeler.git
   - cd pymodeler; python setup.py install; cd -
