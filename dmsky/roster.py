@@ -53,7 +53,7 @@ class Roster(odict):
     def __getitem__(self, key):
         try:
             return super(Roster,self).__getitem__(key)
-        except KeyError, e:
+        except KeyError as e:
             if isinstance(key,int):
                 return self.values()[key]
             else:
