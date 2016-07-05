@@ -30,7 +30,7 @@ class DensityProfile(Model):
         ('rmin',   Parameter(default=0.0)   ),
         ('rmax',   Parameter(default=np.inf)),
         ('rhomax', Parameter(default=np.inf)),
-        ('covar',  Derived(dtype=np.ndarray     ,comment='Covariance matrix for parameters')),
+        ('covar',  Derived(dtype=np.ndarray     ,help='Covariance matrix for parameters')),
     ])
 
     def __call__(self,r):
