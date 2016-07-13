@@ -37,6 +37,78 @@ class Units(object):
     hr = 3600.
     deg2 = np.power(np.pi/180.,2)
 
+    # This is to convert stuff to strings that astropy units understands
+    map_to_astropy = {'gev2_cm5':'GeV2 / cm5',
+                      'gev_cm3':'GeV / cm3',
+                      'gev_cm2':'GeV / cm2',
+                      'g_cm3':'g / cm3',
+                      'cm3_s':'cm3 / s'}
+    map_from_astropy = {}
+    for k,v in map_to_astropy.items():
+        map_from_astropy[v] = k
+                      
+
+    @staticmethod
+    def get_value(key):
+        """ Get a conversion value based on a key
+
+        This is here to make it easy to automate unit conversion
+
+        Parameters
+        ----------
+        key   : str, a key corresponding to one of the globals defined above
+
+        Returns
+        -------
+        the conversion constant
+        """ 
+        if key is None:
+            return None
+        try:
+            return getattr(Units,key)
+        except:
+            try:
+                getattr(Units,map_from_astropy[key])
+            except:
+                raise KeyError("Did not recoginze units %s"%key)
+
+    @staticmethod
+    def convert_to(value,key):
+        """ Convert from cgs units to a different type of units 
+
+        Parameters
+        ----------
+        value : scalar or array-like, the input value(s)
+        key   : str, a key corresponding to one of the globals defined above       
+
+        Returns
+        -------
+        the input values, converted to requested units
+        """
+        conv = Units.get_value(key)
+        if conv is None:
+            return value
+        return value / conv
+
+    @staticmethod
+    def convert_from(value,key):
+        """ Convert to cgs units from a different type of units 
+
+        Parameters
+        ----------
+        value : scalar or array-like, the input value(s)
+        key   : str, a key corresponding to one of the globals defined above       
+
+        Returns
+        -------
+        the input values, converted to cgs units
+        """
+        conv = Units.get_value(key)
+        if conv is None:
+            return value
+        return value * conv
+    
+
 
 if __name__ == "__main__":
     import argparse
