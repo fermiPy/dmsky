@@ -65,13 +65,13 @@ class Target(Model):
                                             help='Maximum integration radius')),
                      ('psi_max'    ,Derived(dtype=float, format='%.3f', unit='deg'
                                             ,help='Maximum integration angle')),
-                     ('j_integ'    ,Derived(dtype=float, format='%.2e', unit='GeV2 cm-5',
+                     ('j_integ'    ,Derived(dtype=float, format='%.2e', unit='gev2_cm5',
                                             help='Integrated J factor')),
-                     ('j_sigma'    ,Derived(dtype=float, format='%.2e', unit='GeV2 cm-5',
+                     ('j_sigma'    ,Derived(dtype=float, format='%.2e', unit='gev2_cm5',
                                             help='Uncertainty on integ. J factor')),
-                     ('d_integ'    ,Derived(dtype=float, format='%.2e', unit='GeV cm-2',
+                     ('d_integ'    ,Derived(dtype=float, format='%.2e', unit='gev_cm2',
                                             help='Integrated D factor')),
-                     ('d_sigma'    ,Derived(dtype=float, format='%.2e', unit='GeV cm-2',
+                     ('d_sigma'    ,Derived(dtype=float, format='%.2e', unit='gev_cm2',
                                             help='Uncertainty on integ. D factor')),
                      ('j_profile'  ,Derived(dtype=LoSIntegral, help='J factor profile')),
                      ('j_derivs'   ,Derived(dtype=dict,        help='J factor profile derivatives')),
@@ -105,19 +105,21 @@ class Target(Model):
         return coords.cel2gal(self.ra,self.dec)[0]
 
     def _rad_max(self):
-        return self.density.rmax
+        units = self.getp('rad_max').unit
+        return Units.convert_to(self.density.rmax,units)
 
-    def _psi_max(self):
+    def _psi_max(self):        
         rmax = self.rad_max
-        dist_kpc = self.distance * Units.kpc
+        dist_kpc = self.distance
         if rmax > dist_kpc:
             return 180.
         else:
             return np.degrees(np.arcsin(rmax/dist_kpc))
       
     def _j_integ(self):
-        jprof = self.j_profile        
-        return jprof.angularIntegral(self.psi_max)[0]
+        jprof = self.j_profile    
+        units = self.getp('j_integ').unit
+        return Units.convert_to(jprof.angularIntegral(self.psi_max)[0],units)
  
     def _j_sigma(self):
         jd = self.j_derivs
@@ -132,15 +134,16 @@ class Target(Model):
 
     def _d_integ(self):
         dprof = self.d_profile
-        return dprof.angularIntegral(self.psi_max)[0]
+        units = self.getp('j_integ').unit
+        return Units.convert_to(dprof.angularIntegral(self.psi_max)[0],units)
  
     def _d_sigma(self):
         dd = self.d_derivs
         den = self.density
         dv = np.matrix(np.zeros((len(den.deriv_params))))
         for i,pname in enumerate(den.deriv_params):
-            dv[i] = dd[pname].angularIntegral(self.psi_max)[0]
-        return np.sqrt((dv.T * self.density.covar * dv)[0,0])
+            dv[0,i] = dd[pname].angularIntegral(self.psi_max)[0]
+        return np.sqrt((dv * self.density.covar * dv.T)[0,0])
 
     def _d_map_file(self):
         raise Exception('Not implemented')
