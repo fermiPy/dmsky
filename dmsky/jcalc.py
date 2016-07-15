@@ -250,7 +250,7 @@ class LoSIntegral(object):
         
         integral = []
         for a in angle:
-            integral.append(quad(integrand, 0, np.radians(a),full_output=True)[0])
+            integral.append(quad(integrand, 1e-7, np.radians(a),full_output=True)[0])
         integral = np.asarray(integral)
         
         return integral
