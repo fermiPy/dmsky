@@ -94,9 +94,9 @@ if __name__ == "__main__":
     rl = RosterLibrary()
     ro = rl.create_roster('martinez2015_nfw')
 
-    draco = ro['draco']
-    
     colNames = ['name','ra','dec','distance','proftype','glat','glon','j_integ','d_integ']
 
     from dmsky.file_io import table as table_io    
     tab = table_io.make_table_for_roster(colNames,ro)
+
+    
