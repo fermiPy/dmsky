@@ -2,6 +2,8 @@ ackermann2015_dsphs : ['bootes_I', 'carina', 'canes_venatici_II', 'coma_berenice
 
 martinez2015_nfw : ['bootes_I:martinez2015_nfw', 'carina:martinez2015_nfw', 'canes_venatici_II:martinez2015_nfw', 'coma_berenices:martinez2015_nfw', 'draco:martinez2015_nfw', 'fornax:martinez2015_nfw', 'hercules:martinez2015_nfw', 'leo_II:martinez2015_nfw', 'leo_IV:martinez2015_nfw', 'sculptor:martinez2015_nfw', 'segue_1:martinez2015_nfw', 'segue_2:martinez2015_nfw', 'sextans:martinez2015_nfw', 'ursa_major_II:martinez2015_nfw', 'ursa_minor:martinez2015_nfw', 'willman_1:martinez2015_nfw']
 
+geringer-sameth2015_nfw : ['bootes_I:geringer-sameth2015_nfw', 'carina:geringer-sameth2015_nfw', 'canes_venatici_I:geringer-sameth2015_nfw', 'coma_berenices:geringer-sameth2015_nfw', 'draco:geringer-sameth2015_nfw', 'fornax:geringer-sameth2015_nfw', 'hercules:geringer-sameth2015_nfw', 'leo_II:geringer-sameth2015_nfw', 'leo_IV:geringer-sameth2015_nfw', 'sculptor:geringer-sameth2015_nfw', 'segue_1:geringer-sameth2015_nfw', 'segue_2:geringer-sameth2015_nfw', 'sextans:geringer-sameth2015_nfw', 'ursa_major_II:geringer-sameth2015_nfw', 'ursa_minor:geringer-sameth2015_nfw', 'willman_1:geringer-sameth2015_nfw']
+
 ackermann2013_gc : ['galactic:ackermann2013_nfw']
 
 test2015: [ackermann2015_dsphs, +bootes_I, +bootes_II, ++sculptor, --sculptor]

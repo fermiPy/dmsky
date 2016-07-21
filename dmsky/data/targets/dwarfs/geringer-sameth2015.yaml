@@ -1,3 +1,165 @@
 # Dwarf characterisitcs from:
 # Geringer-Sameth et al. ApJ 801:74, 2015 (arXiv:)
 # $Format:%d$
+# Only the J-factors and J-sigma are corrent, the profiles are just placeholders for now.
+
+bootes_I:
+  geringer-sameth2015_nfw:
+    j_integ   : 1.74e+18
+    j_sigma   : 0.39
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.27      # Not Correct, just a placeholder
+      rhos:  2.64e+08  # Not Correct, just a placeholder
+      rmax:  1.0       # naively set to 1 kpc
+canes_venatici_I:
+  geringer-sameth2015_nfw:
+    j_integ   : 2.69e+17
+    j_sigma   : 0.33
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.22      # Not Correct, just a placeholder
+      rhos:  3.49e+08  # Not Correct, just a placeholder
+      rmax:  1.0       # naively set to 1 kpc
+carina:
+  geringer-sameth2015_nfw:
+    j_integ   : 7.41e+17
+    j_sigma   : 0.10
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.21      # Not Correct, just a placeholder
+      rhos:  3.04e+08  # Not Correct, just a placeholder
+      rmax:  1.0       # naively set to 1 kpc
+coma_berenices:
+  geringer-sameth2015_nfw:
+    j_integ   : 1.05e+19
+    j_sigma   : 0.39
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.18      # Not Correct, just a placeholder
+      rhos:  3.82e+08  # Not Correct, just a placeholder
+      rmax:  1.0       # naively set to 1 kpc
+draco:
+  geringer-sameth2015_nfw:
+    j_integ   : 6.92e+18
+    j_sigma   : 0.13
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.35      # Not Correct, just a placeholder
+      rhos:  2.30e+08  # Not Correct, just a placeholder
+      rmax:  1.0       # naively set to 1 kpc
+fornax:
+  geringer-sameth2015_nfw:
+    j_integ  : 6.76e+17
+    j_sigma  : 0.09
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.47      # Not Correct, just a placeholder
+      rhos:  1.33e+08  # Not Correct, just a placeholder
+      rmax:  1.0       # naively set to 1 kpc
+hercules:
+  geringer-sameth2015_nfw:
+    j_integ   : 7.24e+16
+    j_sigma   : 0.71
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.20      # Not Correct, just a placeholder
+      rhos:  3.65e+08  # Not Correct, just a placeholder
+      rmax:  1.0       # naively set to 1 kpc
+leo_II:
+  geringer-sameth2015_nfw:
+    j_integ  : 9.33e+17
+    j_sigma : 0.19
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.31      # Not Correct, just a placeholder
+      rhos:  1.83e+08  # Not Correct, just a placeholder
+      rmax:  1.0       # naively set to 1 kpc
+leo_IV:
+  geringer-sameth2015_nfw:
+    j_integ   : 2.09e+16
+    j_sigma   : 1.38
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.20      # Not Correct, just a placeholder
+      rhos:  3.65e+08  # Not Correct, just a placeholder
+      rmax:  1.0       # naively set to 1 kpc
+sculptor:
+  geringer-sameth2015_nfw:
+    j_integ   : 3.47e+18
+    j_sigma   : 0.06
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.39      # Not Correct, just a placeholder
+      rhos:  1.67e+08  # Not Correct, just a placeholder
+      rmax:  1.0       # naively set to 1 kpc
+segue_1:
+  geringer-sameth2015_nfw:
+    j_integ   : 2.29e+19
+    j_sigma   : 0.34
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.15      # Not Correct, just a placeholder
+      rhos:  5.53e+08  # Not Correct, just a placeholder
+      rmax:  1.0       # naively set to 1 kpc
+segue_2:
+  geringer-sameth2015_nfw:
+    j_integ   : 1.02e+19
+    j_sigma   : 0.6
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.16      # Not Correct, just a placeholder
+      rhos:  4.39e+08  # Not Correct, just a placeholder
+      rmax:  1.0       # naively set to 1 kpc
+sextans:
+  geringer-sameth2015_nfw:
+    j_integ   : 3.31e+17
+    j_sigma   : 0.23
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.20      # Not Correct, just a placeholder
+      rhos:  3.82e+08  # Not Correct, just a placeholder
+      rmax:  1.0       # naively set to 1 kpc
+ursa_major_II:
+  geringer-sameth2015_nfw:
+    j_integ   : 2.63e+19
+    j_sigma   : 0.43
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.19      # Not Correct, just a placeholder
+      rhos:  4.19e+08  # Not Correct, just a placeholder
+      rmax:  1.0       # naively set to 1 kpc
+ursa_minor:
+  geringer-sameth2015_nfw:
+    j_integ   : 8.51e+18
+    j_sigma   : 0.23
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.47      # Not Correct, just a placeholder
+      rhos:  1.45e+08  # Not Correct, just a placeholder
+      rmax:  1.0       # naively set to 1 kpc
+willman_1:
+  geringer-sameth2015_nfw:
+    j_integ   : 8.71e+18
+    j_sigma   : 0.60
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.16      # Not Correct, just a placeholder
+      rhos:  4.60e+08  # Not Correct, just a placeholder
+      rmax:  1.0       # naively set to 1 kpc
