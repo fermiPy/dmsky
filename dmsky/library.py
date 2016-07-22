@@ -13,16 +13,18 @@ from collections import defaultdict as ddict, OrderedDict as odict
 from dmsky.utils.tools import update_dict, merge_dict, yaml_load, get_items
 
 class ObjectLibrary(object):
+
+    _suffix = ''
+
     _defaults = (
         ('path', join(dirname(abspath(__file__)),'data')),
     )
 
     def __init__(self, path=None):
         self.defaults = odict([(d[0],d[1]) for d in self._defaults])
-
         self.paths = [self.defaults['path']]
         if os.getenv('DMSKY_PATH') is not None:
-            self.paths += os.getenv('DMSKY_PATH').split(':')[::-1]
+            self.paths += [join(p,self._suffix) for p in os.getenv('DMSKY_PATH').split(':')]
         if path is not None: self.paths += [path]
         logging.debug('PATHS: %s'%self.paths)
 
@@ -33,7 +35,7 @@ class ObjectLibrary(object):
         library = dict()
         for path in paths:
             # Should use logging
-            print(path)
+            print("Using %s for %s"%(path,cls.__name__))
             subdirs = [path] + os.walk(path).next()[1]
             for subdir in subdirs:
                 infiles = glob.glob(join(path,subdir)+'/*.yaml')

@@ -66,8 +66,11 @@ def factory(*args, **kwargs):
     return Roster(*args, **kwargs)
 
 class RosterLibrary(ObjectLibrary):
+
+    _suffix = 'rosters'
+
     _defaults = (
-        ('path', join(dirname(abspath(__file__)),'data/rosters')),
+        ('path', join(dirname(abspath(__file__)),'data',_suffix)),
     )
 
     def get_roster_list(self, name, *args):

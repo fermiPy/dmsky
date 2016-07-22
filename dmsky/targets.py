@@ -213,8 +213,11 @@ def factory(type, **kwargs):
     return dmsky.factory.factory(type, module=__name__,**kwargs)
 
 class TargetLibrary(ObjectLibrary):
+
+    _suffix = 'targets'
+
     _defaults = (
-        ('path', join(dirname(abspath(__file__)),'data/targets')),
+        ('path', join(dirname(abspath(__file__)),'data',_suffix)),
     )
 
     def get_target_dict(self, name, version=None, **kwargs):
