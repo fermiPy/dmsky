@@ -68,7 +68,8 @@ class Units(object):
             return getattr(Units,key)
         except:
             try:
-                getattr(Units,map_from_astropy[key])
+                newkey = Units.map_from_astropy[key]
+                return getattr(Units,newkey)
             except:
                 raise KeyError("Did not recoginze units %s"%key)
 
