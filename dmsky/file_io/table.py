@@ -24,9 +24,9 @@ def get_column_kwargs(name,prop):
             d[k] = getattr(prop,k)
         except AttributeError:
             pass
-    # FIXME, force strings to 16 characters
+    # FIXME, force strings to 20 characters
     if d['dtype'] == type(""):
-        d['dtype'] =  'S16' 
+        d['dtype'] =  'S20' 
     return d
 
 def get_row_values(model,keys):
