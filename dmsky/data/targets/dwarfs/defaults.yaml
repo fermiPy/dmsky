@@ -747,7 +747,37 @@ cetus_II:
     dsigma: 3.
     major_axis: 1.9
     ellipticity: .nan
-    references: []
+
+crater_II:
+  default:
+    type:       dwarf
+    title:      'Crater II'
+    abbr:       'Crt II'
+    name:       'crater_II'
+    altnames:   ['crater_II']
+    color:      'cyan'
+    ra: 177.31
+    dec: -18.413
+    distance: 117.5
+    dsigma: 1.1
+    major_axis: 31.2
+    ellipticity: .nan
+    abs_mag: -8.2
+  
+aquarius_II:
+  default:
+    type:       dwarf
+    title:      'Aquarius II'
+    abbr:       'Aqr II'
+    name:       'aquarius_II'
+    color:      'cyan'
+    ra: 338.4831
+    dec: -9.3274
+    distance: 107.9
+    dsigma: 3.3
+    major_axis: 5.1
+    ellipticity: 0.4
+    abs_mag: -4.2
       
 # NED object query names
 #bootes I
