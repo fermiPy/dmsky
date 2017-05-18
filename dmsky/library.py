@@ -36,7 +36,7 @@ class ObjectLibrary(object):
         for path in paths:
             # Should use logging
             print("Using %s for %s"%(path,cls.__name__))
-            subdirs = [path] + os.walk(path).next()[1]
+            subdirs = [path] + next(os.walk(path))[1]
             for subdir in subdirs:
                 infiles = glob.glob(join(path,subdir)+'/*.yaml')
                 for f in infiles:
