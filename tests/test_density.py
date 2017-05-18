@@ -26,8 +26,6 @@ radius = np.linspace(0.001,5,1000)
 # Plot the different profiles
 def test_densities():
     fig,ax = plt.subplots()
-    ax.set_yscale('log')
-    ax.set_xscale('log')
     for i,cls in enumerate(classes):
         if cls == 'DensityProfile': continue
         dp = dmsky.density.factory(cls)
@@ -38,6 +36,8 @@ def test_densities():
         #epsilon = 0
         plt.plot(radius,dp(radius) * (1+epsilon),'-',label=cls)
         print('')
+    ax.set_yscale('log')
+    ax.set_xscale('log')
     plt.xlabel("Radius")
     plt.ylabel("Density")
     plt.legend()
@@ -46,9 +46,7 @@ test_densities()
 
 def test_min_max():
     fig,ax = plt.subplots()
-    ax.set_yscale('log')
-    ax.set_xscale('log')
-     
+
     dp = dmsky.density.factory('NFWProfile',rmin=0.1)
     print(dp)
     epsilon = 0*2e-2
@@ -68,8 +66,10 @@ def test_min_max():
     plt.ylabel("Density")
     plt.legend()
      
-     
-    plt.ion()
-    plt.show()
+    ax.set_yscale('log')
+    ax.set_xscale('log')
 
 test_min_max()
+
+plt.ion()
+plt.show()
