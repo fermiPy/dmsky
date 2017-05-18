@@ -56,7 +56,7 @@ def update_dict(d0,d1,add_keys=True,append=False):
         d0 = copy.copy(d1)
         return
     
-    for k, v in d0.iteritems():
+    for k, v in d0.items():
         if not k in d1: continue
 
         if isinstance(v,dict) and isinstance(d1[k],dict):
@@ -68,7 +68,7 @@ def update_dict(d0,d1,add_keys=True,append=False):
         else: d0[k] = d1[k]
 
     if add_keys:
-        for k, v in d1.iteritems(): 
+        for k, v in d1.items():
             if not k in d0: d0[k] = d1[k]
 
 def merge_dict(d0,d1,add_keys=True,append=False):
