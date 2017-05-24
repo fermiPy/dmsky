@@ -201,6 +201,75 @@ class Target(Model):
     def dsigma(self,ra,dec):
         raise Exception('Not implemented')
 
+    def create_map(self,func,npix=150,subsample=4,coordsys='CEL',projection='AIT'):
+        from dmsky.utils.wcs import create_image_wcs, get_pixel_skydirs
+        from  astropy.coordinates import SkyCoord
+        import astropy.units as u
+
+        skydir = SkyCoord(self.ra*u.deg,self.dec*u.deg)
+
+        cdelt = 2*self.psi_max/npix
+        subnpix = npix * subsample
+        subcdelt = cdelt / subsample
+
+        subimage,wcs = create_image_wcs(skydir,subcdelt,subnpix,coordsys,projection)
+        pix = get_pixel_skydirs(subimage.shape,wcs)
+        subimage = func(pix.ra,pix.dec).reshape(subimage.shape)
+
+        # Take the mean of the subsampled pixels
+        if subsample > 1:
+            image,wcs = create_image_wcs(skydir,cdelt,npix,coordsys,projection)
+            pix = get_pixel_skydirs(image.shape,wcs)
+            image = (subimage.reshape(npix, subsample, npix, subsample)).mean(axis=3).mean(axis=1)
+        else:
+            image = subimage
+
+        return image,pix,wcs
+
+    def create_jmap(self, npix=150, subsample=4, coordsys='CEL', projection='AIT'):
+        return self.create_map(self.jvalue,npix,subsample,coordsys,projection)
+
+    def create_dmap(self, npix=150, subsample=4, coordsys='CEL', projection='AIT'):
+        return self.create_map(self.dvalue,npix,subsample,coordsys,projection)
+
+    def write_jmap_wcs(self, filename, npix=150, clobber=False,
+                       map_kwargs = dict(), file_kwargs = dict()):
+        """ Write the J-factor to a template map.
+        """
+        from dmsky.utils.wcs import write_image_hdu, create_image_hdu
+
+        image,pix,wcs = self.create_jmap(npix=npix, **map_kwargs)
+
+        # This assumes square pixels.
+        norm = np.sum(image) * np.radians(wcs.wcs.cdelt[0])**2
+        norm_comment = "[%s] Normalization factor."%(self.getp('j_integ').unit)
+        normerr = self.j_sigma
+        normerr_comment = "[%s] Normalization uncertainty."%(self.getp('j_sigma').unit)
+
+        # Create the HDU
+        hdu = create_image_hdu(image/norm,wcs)
+        hdu.header.set('NORM',value=norm,comment=norm_comment)
+        hdu.header.set('NORMERR',value=normerr,comment=normerr_comment)
+
+        return hdu.writeto(filename, clobber=clobber, **file_kwargs)
+
+    def write_jmap_hpx(filename):
+        msg = "Not implemented."
+        raise Exception(msg)
+
+    write_jmap = write_jmap_wcs
+
+    def write_dmap_wcs(self, filename, npix=150, clobber=False,
+                       map_kwargs = dict(), file_kwargs = dict()):
+        from utils.wcs import write_image_hdu
+        im,pix,wcs = self.create_dmap(npix=npix, **map_kwargs)
+        return write_image_hdu(filename, im, wcs, clobber=clobber, **file_kwargs)
+
+    def write_dmap_hpx(filename):
+        msg = "Not implemented."
+        raise Exception(msg)
+
+    write_dmap = write_dmap_wcs
 
 class Galactic(Target): pass
 class Dwarf(Target): pass
