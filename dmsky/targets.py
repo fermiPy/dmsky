@@ -53,6 +53,8 @@ class Target(Model):
                                              help='Plotting color')),
                      ('mode'       ,Property(dtype=str   ,default='interp',
                                              help='L.o.S. Integration mode')),
+                     ('j_map_file' ,Property(dtype=str   ,default=None, help='File with J factor map')),
+                     ('d_map_file' ,Property(dtype=str   ,default=None, help='File with D factor map')),               
                      ('density'    ,Derived(dtype=DensityProfile ,help='Density profile object')),
                      ('proftype'   ,Derived(dtype=str            ,help='Profile type (see `jcalc`)')), 
                      ('prof_par'   ,Derived(dtype=np.ndarray     ,help='Profile parameters')),
@@ -75,10 +77,8 @@ class Target(Model):
                                             help='Uncertainty on integ. D factor')),
                      ('j_profile'  ,Derived(dtype=LoSIntegral, help='J factor profile')),
                      ('j_derivs'   ,Derived(dtype=dict,        help='J factor profile derivatives')),
-                     ('j_map_file' ,Derived(dtype=str,         help='File with J factor map')),
                      ('d_profile'  ,Derived(dtype=LoSIntegral, help='D factor profile')),
-                     ('d_derivs'   ,Derived(dtype=dict,        help='D factor profile derivatives')),
-                     ('d_map_file' ,Derived(dtype=str,         help='File with D factor map'))])                    
+                     ('d_derivs'   ,Derived(dtype=dict,        help='D factor profile derivatives'))])
 
 
     def __init__(self, **kwargs):
@@ -129,9 +129,6 @@ class Target(Model):
             dv[0,i] = jd[pname].angularIntegral(self.psi_max)[0]
         return np.sqrt((dv * self.density.covar * dv.T)[0,0])
 
-    def _j_map_file(self):
-        raise Exception('Not implemented')
-
     def _d_integ(self):
         dprof = self.d_profile
         units = self.getp('j_integ').unit
@@ -144,9 +141,6 @@ class Target(Model):
         for i,pname in enumerate(den.deriv_params):
             dv[0,i] = dd[pname].angularIntegral(self.psi_max)[0]
         return np.sqrt((dv * self.density.covar * dv.T)[0,0])
-
-    def _d_map_file(self):
-        raise Exception('Not implemented')
 
 
     def _density_integral(self,ann=True,derivPar=None):
@@ -251,6 +245,8 @@ class Target(Model):
         hdu.header.set('NORM',value=norm,comment=norm_comment)
         hdu.header.set('NORMERR',value=normerr,comment=normerr_comment)
 
+        self.setp('j_map_file', value=filename)
+
         return hdu.writeto(filename, clobber=clobber, **file_kwargs)
 
     def write_jmap_hpx(filename):
@@ -263,6 +259,7 @@ class Target(Model):
                        map_kwargs = dict(), file_kwargs = dict()):
         from utils.wcs import write_image_hdu
         im,pix,wcs = self.create_dmap(npix=npix, **map_kwargs)
+        self.setp('d_map_file', value=filename)
         return write_image_hdu(filename, im, wcs, clobber=clobber, **file_kwargs)
 
     def write_dmap_hpx(filename):
