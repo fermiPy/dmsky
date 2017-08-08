@@ -239,6 +239,10 @@ reticulum_II:
     j_integ: 1.259e+19
     j_sigma: 0.6
     profile: {type: NFW}
+  simon2015_nfw:
+    j_integ: 7.943e+18
+    j_sigma: 0.6
+    profile: {type: NFW}
 reticulum_III:
   ackermann2016_photoj_0.6_nfw:
     extension: -0.5

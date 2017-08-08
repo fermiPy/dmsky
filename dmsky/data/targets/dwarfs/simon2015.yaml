@@ -1,5 +1,0 @@
-reticulum_II:
-  simon2015_nfw:
-    j_integ: 7.943e+18
-    j_sigma: 0.6
-    profile: {type: NFW}
