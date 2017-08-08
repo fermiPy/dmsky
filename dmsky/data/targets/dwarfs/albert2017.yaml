@@ -1,3 +1,6 @@
+# Dwarf characteristics from:
+# Albert et al. ApJ 834:110, 2017 (arXiv:1611.03184)
+
 bootes_I:
   ackermann2016_photoj_0.6_nfw:
     extension: -0.64
