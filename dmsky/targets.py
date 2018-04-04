@@ -21,7 +21,8 @@ from dmsky.utils.tools import update_dict, merge_dict, yaml_load, get_items, ite
 from dmsky.library import ObjectLibrary
 from dmsky.density import factory as density_factory
 from dmsky.density import DensityProfile
-
+from dmksy.priors import PriorFunctor
+from dmksy.priors import factory as prior_factory
 
 from pymodeler.model import Model
 from pymodeler.parameter import *
@@ -54,7 +55,9 @@ class Target(Model):
                      ('mode'       ,Property(dtype=str   ,default='interp',
                                              help='L.o.S. Integration mode')),
                      ('j_map_file' ,Property(dtype=str   ,default=None, help='File with J factor map')),
-                     ('d_map_file' ,Property(dtype=str   ,default=None, help='File with D factor map')),               
+                     ('d_map_file' ,Property(dtype=str   ,default=None, help='File with D factor map')),
+                     ('j_prior_def',Property(dtype=dict  , help='Details of J-factor prior distribution')),
+                     ('d_prior_def',Property(dtype=dict  , help='Details of D-factor prior distribution')),
                      ('density'    ,Derived(dtype=DensityProfile ,help='Density profile object')),
                      ('proftype'   ,Derived(dtype=str            ,help='Profile type (see `jcalc`)')), 
                      ('prof_par'   ,Derived(dtype=np.ndarray     ,help='Profile parameters')),
@@ -77,8 +80,11 @@ class Target(Model):
                                             help='Uncertainty on integ. D factor')),
                      ('j_profile'  ,Derived(dtype=LoSIntegral, help='J factor profile')),
                      ('j_derivs'   ,Derived(dtype=dict,        help='J factor profile derivatives')),
+                     ('j_prior'    ,Derived(dtype=PriorFunctor,help='J factor likelihood prior distribution')),
                      ('d_profile'  ,Derived(dtype=LoSIntegral, help='D factor profile')),
-                     ('d_derivs'   ,Derived(dtype=dict,        help='D factor profile derivatives'))])
+                     ('d_derivs'   ,Derived(dtype=dict,        help='D factor profile derivatives')),
+                     ('d_prior'    ,Derived(dtype=PriorFunctor,help='D factor likelihood prior distribution')),
+                     ])
 
 
     def __init__(self, **kwargs):
@@ -174,6 +180,19 @@ class Target(Model):
             retDict[pname] = self._density_integral(ann=False,derivPar=pname)
         return retDict
       
+    def _j_prior(self):
+        prior_copy = self.j_like_def.copy()
+        prior_type = prior_copy.pop('type', 'l')
+        the_prior = prior_factory(prior_type, prior_copy)
+        return the_prior
+
+    def _d_prior(self):
+        prior_copy = self.d_like_def.copy()
+        prior_type = prior_copy.pop('type', 'l')
+        the_prior = prior_factory(prior_type, prior_copy)
+        return the_prior
+
+
     def __str__(self):
         ret = self.__class__.__name__
         for k in ['name','ra','dec','distance','density']:
