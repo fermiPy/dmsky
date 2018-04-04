@@ -23,6 +23,16 @@ canes_venatici_I:
       rs:    0.22      # Not Correct, just a placeholder
       rhos:  3.49e+08  # Not Correct, just a placeholder
       rmax:  1.0       # naively set to 1 kpc
+canes_venatici_II:
+  geringer-sameth2015_nfw:
+    j_integ   : 4.47e+17
+    j_sigma   : 0.44
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.22      # Not Correct, just a placeholder
+      rhos:  3.49e+08  # Not Correct, just a placeholder
+      rmax:  1.0       # naively set to 1 kpc
 carina:
   geringer-sameth2015_nfw:
     j_integ   : 7.41e+17
@@ -73,6 +83,16 @@ hercules:
       rs:    0.20      # Not Correct, just a placeholder
       rhos:  3.65e+08  # Not Correct, just a placeholder
       rmax:  1.0       # naively set to 1 kpc
+leo_I:
+  geringer-sameth2015_nfw:
+    j_integ  : 6.918e+17
+    j_sigma : 0.18
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.31      # Not Correct, just a placeholder
+      rhos:  1.83e+08  # Not Correct, just a placeholder
+      rmax:  1.0       # naively set to 1 kpc
 leo_II:
   geringer-sameth2015_nfw:
     j_integ  : 9.33e+17
@@ -87,6 +107,16 @@ leo_IV:
   geringer-sameth2015_nfw:
     j_integ   : 2.09e+16
     j_sigma   : 1.38
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.20      # Not Correct, just a placeholder
+      rhos:  3.65e+08  # Not Correct, just a placeholder
+      rmax:  1.0       # naively set to 1 kpc
+leo_V:
+  geringer-sameth2015_nfw:
+    j_integ   : 2.344e+16
+    j_sigma   : 0.91
     profile:
       type: NFW
       units: 'msun_kpc3_kpc'
@@ -132,6 +162,16 @@ sextans:
       units: 'msun_kpc3_kpc'
       rs:    0.20      # Not Correct, just a placeholder
       rhos:  3.82e+08  # Not Correct, just a placeholder
+      rmax:  1.0       # naively set to 1 kpc
+ursa_major_I:
+  geringer-sameth2015_nfw:
+    j_integ   : 7.413e+17
+    j_sigma   : 0.45
+    profile:
+      type: NFW
+      units: 'msun_kpc3_kpc'
+      rs:    0.19      # Not Correct, just a placeholder
+      rhos:  4.19e+08  # Not Correct, just a placeholder
       rmax:  1.0       # naively set to 1 kpc
 ursa_major_II:
   geringer-sameth2015_nfw:

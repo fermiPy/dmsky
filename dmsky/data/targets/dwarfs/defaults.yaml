@@ -414,7 +414,7 @@ grus_I:
     color:        'purple'
     ra: 344.18
     dec: -50.16
-    distance: 120
+    distance: 120.
     dsigma: 12
     major_axis: 2.23
     ellipticity: 0.41
@@ -444,7 +444,7 @@ horologium_II:
     color:        'gold'
     ra: 49.13
     dec: -50.02
-    distance: 78
+    distance: 78.
     dsigma: 8.
     major_axis: 2.09
     ellipticity: 0.52
@@ -458,7 +458,7 @@ pegasus_III:
     color:        'black'
     ra: 336.09
     dec: 5.42
-    distance: 205
+    distance: 205.
     dsigma: 20.
     major_axis: 1.30
     ellipticity: 0.46
@@ -503,7 +503,7 @@ hydra_II:
     color:        'dodgerblue'
     ra: 185.43
     dec: -31.99
-    distance: 134
+    distance: 134.
     dsigma: 10
     major_axis: 1.70
     ellipticity: 0.01
@@ -561,7 +561,7 @@ laevens_3:
     color:        'dodgerblue'
     ra: 316.726
     dec: 14.98
-    distance: 67
+    distance: 67.
     dsigma: 3
     major_axis: 0.40
     ellipticity: 0.21
@@ -575,7 +575,7 @@ draco_II:
     color:        'dodgerblue'
     ra: 238.198
     dec: 64.565
-    distance: 24 # Derived from m-M = 16.9
+    distance: 24. # Derived from m-M = 16.9
     dsigma: 3
     major_axis: 2.70
     ellipticity: 0.24
@@ -589,7 +589,7 @@ sagittarius_II:
     color:        'dodgerblue'
     ra: 298.169    
     dec: -22.068
-    distance: 67
+    distance: 67.
     dsigma: 5
     major_axis: 2.00
     ellipticity: 0.23
@@ -681,7 +681,7 @@ columba_I:
     color:        'gray'
     ra: 82.86
     dec: -28.03
-    distance: 182
+    distance: 182.
     dsigma: 18.
     major_axis: 1.90
     ellipticity: .nan
@@ -713,7 +713,7 @@ reticulum_III:
     color:        'red'
     ra: 56.36
     dec: -60.45
-    distance: 92
+    distance: 92.
     dsigma: 13.
     major_axis: 2.40
     ellipticity: .nan
@@ -728,7 +728,7 @@ indus_II:
     color:        'indigo'
     ra: 309.72
     dec: -46.16
-    distance: 214
+    distance: 214.
     dsigma: 16.
     major_axis: 2.90
     ellipticity: .nan
@@ -743,7 +743,7 @@ cetus_II:
     color:        'cyan'
     ra: 19.47
     dec: -17.42
-    distance: 30
+    distance: 30.
     dsigma: 3.
     major_axis: 1.9
     ellipticity: .nan
