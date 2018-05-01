@@ -155,6 +155,21 @@ class DensityProfile(Model):
     def _cache(self,name=None):
         pass
 
+
+class PointProfile(DensityProfile):
+    """ Pointlike profile.
+    This is a bookkeeping tool for 
+    where we want to use a point like source.
+    """
+    
+    def _rho(self,r):
+        x = r/self.rs        
+        return np.where(x<=1,self.rhos,0.0)
+
+    def _mass(self,r):
+         return 4*np.pi/3 * self.rhos * np.where(r < self.rs, r**3, self.rs**3)
+
+
 class UniformProfile(DensityProfile):
     """ Uniform spherical profile
     rho(r) = rhos for r <= rs
@@ -312,6 +327,7 @@ class ZhouProfile(DensityProfile):
         return self.rhos * x**-self.gamma * (1+x**(1/self.alpha))**(-(self.beta-self.gamma)*self.alpha)
 
 Uniform = UniformProfile
+Point = PointProfile
 Isothermal = IsothermalProfile
 Burkert = BurkertProfile
 NFW = NFWProfile
