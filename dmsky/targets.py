@@ -21,8 +21,8 @@ from dmsky.utils.tools import update_dict, merge_dict, yaml_load, get_items, ite
 from dmsky.library import ObjectLibrary
 from dmsky.density import factory as density_factory
 from dmsky.density import DensityProfile
-from dmksy.priors import PriorFunctor
-from dmksy.priors import factory as prior_factory
+from dmsky.priors import PriorFunctor
+from dmsky.priors import factory as prior_factory
 
 from pymodeler.model import Model
 from pymodeler.parameter import *
@@ -34,6 +34,7 @@ class Target(Model):
                      ('abbr'       ,Property(dtype=str   ,required=True , help='Title abbreviation')),
                      ('profile'    ,Property(dtype=dict  ,required=True , help='Density Profile (see `jcalc`)')),
                      ('version'    ,Property(dtype=str   ,default=None,   help='Which version of this target?')),
+                     ('ver_key'    ,Property(dtype=str   ,default=None,   help='Short key for the version?')),
                      ('nickname'   ,Property(dtype=str   ,default=None,   help='Do we need this?')),
                      ('altnames'   ,Property(dtype=list  ,default=[],     help='Alternative names')),
                      ('ra'         ,Property(dtype=float ,format='%.3f', default=0.0     ,unit='deg', 
@@ -54,6 +55,8 @@ class Target(Model):
                                              help='Plotting color')),
                      ('mode'       ,Property(dtype=str   ,default='interp',
                                              help='L.o.S. Integration mode')),
+                     ('j_rad_file' ,Property(dtype=str   ,default=None, help='File with J factor radial profile')),
+                     ('d_rad_file' ,Property(dtype=str   ,default=None, help='File with D factor radial profile')),
                      ('j_map_file' ,Property(dtype=str   ,default=None, help='File with J factor map')),
                      ('d_map_file' ,Property(dtype=str   ,default=None, help='File with D factor map')),
                      ('j_prior_def',Property(dtype=dict  , help='Details of J-factor prior distribution')),
@@ -245,6 +248,48 @@ class Target(Model):
     def create_dmap(self, npix=150, subsample=4, coordsys='CEL', projection='AIT'):
         return self.create_map(self.dvalue,npix,subsample,coordsys,projection)
 
+    def write_j_rad_file(self, j_rad_file=None, npts=50, minpsi=1e-4):
+        if j_rad_file is None:
+            j_rad_file = self.j_rad_file
+        self._write_radial_profile(j_rad_file, self.j_profile, npts, minpsi)
+  
+    def write_d_rad_file(self, d_rad_file=None, npts=50, minpsi=1e-4):
+        if d_rad_file is None:
+            d_rad_file = self.d_rad_file
+        self._write_radial_profile(d_rad_file, self.d_profile, npts, minpsi)
+
+    def _write_radial_profile(self, filepath, profile, npts=50, minpsi=1e-4):
+        """ Write radial profile to a text file 
+
+        The Fermi-LAT science tools expect a file two columns:
+        Column 1: Angular offset in degrees
+        Column 2: Profile value
+
+        Column 2 should be normalized so that the angular integral 
+        over the sphere is 1.
+        """
+
+        psi_vals = np.zeros((npts))
+        prof_vals = np.zeros((npts))
+        psi_vals[0:-1] = np.logspace(np.log10(minpsi), np.log10(self.psi_max), npts-1)
+        psi_vals[-1] = 180.
+        prof_vals[0:-1] = profile(np.radians(psi_vals[0:-1]))
+
+        x_vals = np.radians(psi_vals)
+        y_vals = 2. * np.pi * x_vals * prof_vals
+        
+        # Trapezoid summation
+        norm = ((x_vals[1:] - x_vals[0:-1]) * (y_vals[1:] + y_vals[0:-1]) / 2. ).sum()
+
+        prof_vals /= norm
+
+        if filepath is None:
+            fout = sys.stdout
+        else:
+            fout = open(filepath, 'w!')
+        for psi, prof in zip(psi_vals, prof_vals):
+            fout.write("%0.3e %0.3e\n"%(psi, prof))
+
     def write_jmap_wcs(self, filename, npix=150, clobber=False,
                        map_kwargs = dict(), file_kwargs = dict()):
         """ Write the J-factor to a template map.
@@ -325,10 +370,10 @@ class TargetLibrary(ObjectLibrary):
 
         # Walk down the chain until we either return None or the
         # 'default' version
+        ret['version'] = version
         while (version is not None) and (version != 'default'):
             version = ret.get('base','default')
             ret = merge_dict(self.library[name][version], ret)
-        ret['version'] = version
         kwargs['name'] = name    
         # And finally, overwrite with kwargs
         update_dict(ret,kwargs)
