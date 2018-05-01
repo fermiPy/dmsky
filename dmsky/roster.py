@@ -28,7 +28,7 @@ class Roster(odict):
         
     def _parse_args(self, args):
         for arg in args:
-            if isinstance(arg,basestring):
+            if isinstance(arg,str):
                 target = targetlib.create_target(arg)
                 self[target.name] = target
             elif isinstance(arg,Target):
