@@ -47,7 +47,9 @@ class Roster(odict):
         if isinstance(other,Target):
             items = self.values() + [other]
         elif isinstance(other,Roster):
-            items = self.values() + other.values()
+            items = []
+            items += self.values() 
+            items += other.values()
         return self.__class__(*items)
 
     def __getitem__(self, key):
