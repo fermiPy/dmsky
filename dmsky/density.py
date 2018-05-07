@@ -155,6 +155,7 @@ class DensityProfile(Model):
     def _cache(self,name=None):
         pass
 
+
 class UniformProfile(DensityProfile):
     """ Uniform spherical profile
     rho(r) = rhos for r <= rs
@@ -318,8 +319,6 @@ NFW = NFWProfile
 Einasto = EinastoProfile
 gNFW = GNFWProfile
 Zhou = ZhouProfile
-
-
 
 def scale_list(l,scale_value):
     for i,v in enumerate(l):

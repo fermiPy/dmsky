@@ -60,8 +60,6 @@ def test_profiles_1d():
         plt.sca(ax[1]); plt.legend(fontsize=10,loc='lower left',ncol=3)
         ax[1].set_ylim(-0.005,0.005)
 
-test_profiles_1d()
-
 # Now test 2D integrals
 def test_profiles_2d():
     dhalo = np.logspace(1,3,5)
@@ -92,7 +90,9 @@ def test_profiles_2d():
         im = ax[1][1].imshow(itrp_vs_slow,**dict(kwargs,vmin=-0.01,vmax=0.01))
         plt.colorbar(im)
 
-test_profiles_2d()
 
-plt.ion()
-plt.show()
+if __name__ == '__main__':
+    test_profiles_1d()
+    test_profiles_2d()
+    plt.ion()
+    plt.show()

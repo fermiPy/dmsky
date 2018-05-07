@@ -28,7 +28,7 @@ class Roster(odict):
         
     def _parse_args(self, args):
         for arg in args:
-            if isinstance(arg,basestring):
+            if isinstance(arg,str):
                 target = targetlib.create_target(arg)
                 self[target.name] = target
             elif isinstance(arg,Target):
@@ -47,7 +47,9 @@ class Roster(odict):
         if isinstance(other,Target):
             items = self.values() + [other]
         elif isinstance(other,Roster):
-            items = self.values() + other.values()
+            items = []
+            items += self.values() 
+            items += other.values()
         return self.__class__(*items)
 
     def __getitem__(self, key):
@@ -55,7 +57,7 @@ class Roster(odict):
             return super(Roster,self).__getitem__(key)
         except KeyError as e:
             if isinstance(key,int):
-                return self.values()[key]
+                return list(self.values())[key]
             else:
                 raise e
 
