@@ -320,12 +320,6 @@ Einasto = EinastoProfile
 gNFW = GNFWProfile
 Zhou = ZhouProfile
 
-# These are for bookkeeping
-MapProfile = UniformProfile
-PointProfile = UniformProfile
-Map = MapProfile
-Point = PointProfile
-
 def scale_list(l,scale_value):
     for i,v in enumerate(l):
         l[i] = v*scale_value

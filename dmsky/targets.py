@@ -34,7 +34,6 @@ class Target(Model):
                      ('abbr'       ,Property(dtype=str   ,required=True , help='Title abbreviation')),
                      ('profile'    ,Property(dtype=dict  ,required=True , help='Density Profile (see `jcalc`)')),
                      ('version'    ,Property(dtype=str   ,default=None,   help='Which version of this target?')),
-                     ('ver_key'    ,Property(dtype=str   ,default=None,   help='Short key for the version?')),
                      ('nickname'   ,Property(dtype=str   ,default=None,   help='Do we need this?')),
                      ('altnames'   ,Property(dtype=list  ,default=[],     help='Alternative names')),
                      ('ra'         ,Property(dtype=float ,format='%.3f', default=0.0     ,unit='deg', 
