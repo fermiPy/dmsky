@@ -80,8 +80,11 @@ def get_pixel_skydirs(npix,wcs):
                                np.ravel(xypix[1]), wcs)
 
 def create_image_hdu(data, wcs, name=None, **kwargs):
-    return fits.ImageHDU(data, header=wcs.to_header(),
-                         name=name)
+    if name is None:
+        return fits.PrimaryHDU(data, header=wcs.to_header())
+    else:
+        return fits.ImageHDU(data, header=wcs.to_header(),
+                             name=name)
 
 def write_image_hdu(filename,data,wcs,name=None,clobber=False,**kwargs):
     hdu = create_image_hdu(data,wcs,name,**kwargs)
