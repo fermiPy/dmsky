@@ -7,9 +7,11 @@ from __future__ import absolute_import, division, print_function
 import numpy as np
 import scipy.stats as stats
 from scipy.interpolate import interp1d
+from scipy.integrate import quad
 
 from dmsky.utils import stat_funcs
 from dmsky.utils import tools
+
 
 class PriorFunctor(object):
     """A functor class that wraps simple functions we use to
@@ -17,7 +19,52 @@ class PriorFunctor(object):
     """
 
     def __init__(self, funcname):
+        """C'tor
+
+        Parameters
+        ----------
+
+        funcname : str
+            Name for this function, used for bookeeping
+
+        """
         self._funcname = funcname
+
+    def __call__(self, x):
+        """Return the Prior value
+
+        Parameters
+        ----------
+
+        x :`numpy.ndarray`
+            Input values
+
+        Returns
+        -------
+
+        y : `numpy.ndarray`
+            Output values, same shape as x
+
+        """
+        raise NotImplementedError("PriorFunctor.__call__")
+
+    def log_value(self, x):
+        """Return the log of the function value
+
+        Parameters
+        ----------
+
+        x :`numpy.ndarray`
+            Input values
+
+        Returns
+        -------
+
+        y : `numpy.ndarray`
+            Output values, same shape as x
+
+        """
+        return np.log(self.__call__(x))
 
     def normalization(self):
         """Normalization, i.e. the integral of the function
@@ -50,36 +97,53 @@ class PriorFunctor(object):
 
     def marginalization_bins(self):
         """Binning to use to do the marginalization integrals
+
+        Default is to marginalize over two decades,
+        centered on mean, using 1000 bins
         """
         log_mean = np.log10(self.mean())
-        # Default is to marginalize over two decades,
-        # centered on mean, using 1000 bins
         return np.logspace(-1. + log_mean, 1. + log_mean, 1001)
 
     def profile_bins(self):
-        """ The binning to use to do the profile fitting
+        """The binning to use to do the profile fitting
+
+        Default is to profile over +-5 sigma,
+        Centered on mean, using 100 bins
         """
         log_mean = np.log10(self.mean())
         log_half_width = max(5. * self.sigma(), 3.)
-        # Default is to profile over +-5 sigma,
-        # centered on mean, using 100 bins
         return np.logspace(log_mean - log_half_width,
                            log_mean + log_half_width, 101)
 
-    def log_value(self, x):
-        """
-        """
-        return np.log(self.__call__(x))
 
 
 class FunctionPrior(PriorFunctor):
-    """
+    """Implementation of a prior that simply wraps an existing function
     """
 
     def __init__(self, funcname, mu, sigma, fn, lnfn=None):
+        """C'tor
+
+        Parameters
+        ----------
+
+        funcname : str
+            Name for this function, used for bookeeping
+
+        mu : float
+            Central value of the Prior, used to get scan ranges
+
+        sigma : float
+             Width of the Prior, used to get scan ranges
+
+        fn : function
+             Function that returns the Prior value
+
+        lnfn : function or None
+             Optional function that returns the log of the Prior value
+
         """
-        """
-        # FIXME, why doesn't super(function_prior,self) work here?
+        # FIXME, why doesn't super(FunctionPrior, self) work here?
         PriorFunctor.__init__(self, funcname)
         self._mu = mu
         self._sigma = sigma
@@ -87,102 +151,191 @@ class FunctionPrior(PriorFunctor):
         self._lnfn = lnfn
 
     def normalization(self):
-        """ The normalization 
-        i.e., the intergral of the function over the normalization_range 
+        """The normalization
+        i.e., the intergral of the function over the normalization_range
         """
         norm_r = self.normalization_range()
         return quad(self, norm_r[0], norm_r[1])[0]
 
     def mean(self):
-        """ The mean value of the function.
+        """Return the mean value of the function.
         """
         return self._mu
 
     def sigma(self):
-        """ The 'width' of the function.
+        """Return the 'width' of the function.
         What this means depend on the function being used.
         """
         return self._sigma
 
     def log_value(self, x):
-        """
+        """"Return the log of the function value
+
+        Parameters
+        ----------
+
+        x :`numpy.ndarray`
+            Input values
+
+        Returns
+        -------
+
+        y : `numpy.ndarray`
+            Output values, same shape as x
+
         """
         if self._lnfn is None:
             return np.log(self._fn(x, self._mu, self._sigma))
         return self._lnfn(x, self._mu, self._sigma)
 
     def __call__(self, x):
-        """ Normal function from scipy """
+        """Return the Prior value
+
+        Parameters
+        ----------
+
+        x :`numpy.ndarray`
+            Input values
+
+        Returns
+        -------
+
+        y : `numpy.ndarray`
+            Output values, same shape as x
+
+        """
         return self._fn(x, self._mu, self._sigma)
 
 
 class GaussPrior(FunctionPrior):
+    """Implemenation of a Prior that wraps a Gaussian
     """
-    """
+
     def __init__(self, mu, sigma):
+        """C'tor
+
+        Parameters
+        ----------
+
+        mu : float
+            Central value of the Gaussian
+
+        sigma : float
+             Sigma of the Gaussian
+
         """
-        """
-        super(GaussPrior, self).__init__("gauss", mu, sigma, fn=stat_funcs.gauss, lnfn=stat_funcs.lngauss)
-  
+        super(GaussPrior, self).__init__("gauss", mu, sigma,
+                                         fn=stat_funcs.gauss,
+                                         lnfn=stat_funcs.lngauss)
+
+
 class LGaussPrior(FunctionPrior):
-    """
+    """Implemenation of a Prior that wraps a log Gaussian
     """
     def __init__(self, mu, sigma):
+        """C'tor
+
+        Parameters
+        ----------
+
+        mu : float
+            Central value of the log Gaussian
+
+        sigma : float
+             Sigma of the Gaussian
+
         """
-        """
-        super(LGaussPrior, self).__init__("lgauss", mu, sigma, fn=stat_funcs.lgauss, lnfn=stat_funcs.lnlgauss)
-  
+        super(LGaussPrior, self).__init__("lgauss", mu, sigma,
+                                          fn=stat_funcs.lgauss,
+                                          lnfn=stat_funcs.lnlgauss)
+
+
 class LGaussLikePrior(FunctionPrior):
-    """
+    """Implemenation of a Prior that wraps the
+    inverse of the log of a Gaussian (i.e., x and y axes are swapped)
     """
     def __init__(self, mu, sigma):
+        """C'tor
+
+        Parameters
+        ----------
+
+        mu : float
+            Central value of the underlying Gaussian
+
+        sigma : float
+             Sigma of the underlying Gaussian
+
         """
-        """
-        def fn(x, y, s): return stat_funcs.lgauss(y, x, s)        
-        def lnfn(x, y, s): return stat_funcs.lnlgauss(y, x, s)
+        def fn(x, y, s):
+            """Swap the axes of the lgauss function"""
+            return stat_funcs.lgauss(y, x, s)
+        def lnfn(x, y, s):
+            """Swap the axes of the lnlgauss function"""
+            return stat_funcs.lnlgauss(y, x, s)
         super(LGaussLikePrior, self).__init__("lgauss_like", mu, sigma, fn=fn, lnfn=lnfn)
- 
+
+
 class LGaussLogPrior(FunctionPrior):
+    """Implemenation of a Prior that wraps the
+    inverse of the log of a Gaussian (i.e., x and y axes are swapped)
+    The prior is implemented in log-space.
     """
-    """
+
     def __init__(self, mu, sigma):
+        """C'tor
+
+        Parameters
+        ----------
+        
+        mu : float
+            Central value of the underlying Gaussian
+
+        sigma : float
+             Sigma of the underlying Gaussian
+
         """
-        """
-        def fn(x, y, s): return stat_funcs.lgauss(x, y, s, logpdf=True)
-        def lnfn(x, y, s): return stat_funcs.lnlgauss(x, y, s, logpdf=True)
-        super(LGaussLogPrior, self).__init__("lgauss_log", mu, sigma, fn=fn, lnfn=lnfn)
-  
+        def fn(x, y, s):
+            """Swap the axes of the lgauss function and work in log space"""
+            return stat_funcs.lgauss(x, y, s, logpdf=True)
+
+        def lnfn(x, y, s):
+            """Swap the axes of the lnlgauss function and work in log space"""
+            return stat_funcs.lnlgauss(x, y, s, logpdf=True)
+        super(LGaussLogPrior, self).__init__("lgauss_log", mu, sigma,
+                                             fn=fn, lnfn=lnfn)
+
 
 class LognormPrior(PriorFunctor):
     """ A wrapper around the lognormal function.
 
     A note on the highly confusing scipy.stats.lognorm function...
     The three inputs to this function are:
-    s           : This is the variance of the underlying 
+    s           : This is the variance of the underlying
                   gaussian distribution
-    scale = 1.0 : This is the mean of the linear-space 
+    scale = 1.0 : This is the mean of the linear-space
                   lognormal distribution.
                   The mean of the underlying normal distribution
                   occurs at ln(scale)
     loc = 0     : This linearly shifts the distribution in x (DO NOT USE)
 
     The convention is different for numpy.random.lognormal
-    mean        : This is the mean of the underlying 
+    mean        : This is the mean of the underlying
                   normal distribution (so mean = log(scale))
-    sigma       : This is the standard deviation of the 
+    sigma       : This is the standard deviation of the
                   underlying normal distribution (so sigma = s)
 
     For random sampling:
     numpy.random.lognormal(mean, sigma, size)
-    mean        : This is the mean of the underlying 
+    mean        : This is the mean of the underlying
                   normal distribution (so mean = exp(scale))
-    sigma       : This is the standard deviation of the 
+    sigma       : This is the standard deviation of the
                   underlying normal distribution (so sigma = s)
 
     scipy.stats.lognorm.rvs(s, scale, loc, size)
-    s           : This is the standard deviation of the 
+    s           : This is the standard deviation of the
                   underlying normal distribution
-    scale       : This is the mean of the generated 
+    scale       : This is the mean of the generated
                   random sample scale = exp(mean)
 
     Remember, pdf in log space is
@@ -197,6 +350,18 @@ class LognormPrior(PriorFunctor):
     """
 
     def __init__(self, mu, sigma):
+        """C'tor
+
+        Parameters
+        ----------
+
+        mu : float
+            Mean value of the function
+
+        sigma : float
+            Variance of the underlying gaussian distribution
+
+        """
         super(LognormPrior, self).__init__('lognorm')
         self._mu = mu
         self._sigma = sigma
@@ -213,22 +378,48 @@ class LognormPrior(PriorFunctor):
         return self._sigma
 
     def __call__(self, x):
-        """ Log-normal function from scipy """
+        """Return the Prior value
+
+        Parameters
+        ----------
+
+        x :`numpy.ndarray`
+            Input values
+
+        Returns
+        -------
+
+        y : `numpy.ndarray`
+            Output values, same shape as x
+
+        """
         return stats.lognorm(self._sigma, scale=self._mu).pdf(x)
 
 
 class NormPrior(PriorFunctor):
     """ A wrapper around the normal function.
+
     Parameters
     ----------
     mu : float
         Mean value of the function
+
     sigma : float
         Variance of the underlying gaussian distribution
     """
 
     def __init__(self, mu, sigma):
-        """
+        """C'tor
+
+        Parameters
+        ----------
+
+        mu : float
+            Mean value of the function
+
+        sigma : float
+            Variance of the underlying gaussian distribution
+
         """
         super(NormPrior, self).__init__('norm')
         self._mu = mu
@@ -246,20 +437,42 @@ class NormPrior(PriorFunctor):
         return self._sigma
 
     def __call__(self, x):
-        """Normal function from scipy """
+        """Return the Prior value
+
+        Parameters
+        ----------
+
+        x :`numpy.ndarray`
+            Input values
+
+        Returns
+        -------
+
+        y : `numpy.ndarray`
+            Output values, same shape as x
+
+        """
         return stats.norm(loc=self._mu, scale=self._sigma).pdf(x)
 
 
 class FileFuncPrior(PriorFunctor):
     """ A wrapper around the interpolated function.
+
     Parameters
     ----------
     filename : string
         File with the function parameters
-    """
 
+    """
     def __init__(self, filename):
-        """
+        """C'tor
+
+        Parameters
+        ----------
+
+        filename : string
+            File with the function parameters
+
         """
         super(FileFuncPrior, self).__init__('file')
         self._filename = filename
@@ -285,7 +498,21 @@ class FileFuncPrior(PriorFunctor):
         return self._sigma
 
     def __call__(self, x):
-        """Normal function from scipy """
+        """Return the Prior value
+
+        Parameters
+        ----------
+
+        x :`numpy.ndarray`
+            Input values
+
+        Returns
+        -------
+
+        y : `numpy.ndarray`
+            Output values, same shape as x
+
+        """
         return self._interpfunc(x)
 
 
@@ -296,7 +523,7 @@ def create_prior_functor(d):
     ----------
     d     :  A dictionary, it must contain:
        d['functype'] : a recognized function type
-                       and all of the required parameters for the 
+                       and all of the required parameters for the
                        prior_functor of the desired type
 
     Returns
@@ -309,7 +536,7 @@ def create_prior_functor(d):
     'norm'          : Scipy normal distribution
     'gauss'         : Gaussian truncated at zero
     'lgauss'        : Gaussian in log-space
-    'lgauss_like'   : Gaussian in log-space, with arguments reversed. 
+    'lgauss_like'   : Gaussian in log-space, with arguments reversed.
     'lgauss_logpdf' : ???
     """
     functype = d.pop('functype', 'lgauss_like')
@@ -318,19 +545,13 @@ def create_prior_functor(d):
     elif functype == 'lognorm':
         return LognormPrior(**d)
     elif functype == 'gauss':
-        return FunctionPrior(functype, d['mu'], d['sigma'], stat_funcs.gauss, stat_funcs.lngauss)
+        return GaussPrior(d['mu'], d['sigma'])
     elif functype == 'lgauss':
-        return FunctionPrior(functype, d['mu'], d['sigma'], stat_funcs.lgauss, stat_funcs.lnlgauss)
+        return LGaussPrior(d['mu'], d['sigma'])
     elif functype in ['lgauss_like', 'lgauss_lik']:
-        def fn(x, y, s): return stat_funcs.lgauss(y, x, s)
-
-        def lnfn(x, y, s): return stat_funcs.lnlgauss(y, x, s)
-        return FunctionPrior(functype, d['mu'], d['sigma'], fn, lnfn)
+        return LGaussLikePrior(d['mu'], d['sigma'])
     elif functype == 'lgauss_log':
-        def fn(x, y, s): return stat_funcs.lgauss(x, y, s, logpdf=True)
-
-        def lnfn(x, y, s): return stat_funcs.lnlgauss(x, y, s, logpdf=True)
-        return FunctionPrior(functype, d['mu'], d['sigma'], fn, lnfn)
+        return LGaussLogPrior(d['mu'], d['sigma'])
     elif functype == 'interp':
         return FileFuncPrior(d['filename'])
     else:
@@ -338,7 +559,23 @@ def create_prior_functor(d):
 
 
 def factory(ptype, **kwargs):
+    """Factor method to create Priors
+    Keyword arguments are passed to class c'tor
+
+    Parameters
+    ----------
+
+    ptype : str
+        Prior type
+
+    Returns
+    -------
+
+    prior : `PriorFunctor`
+        Newly created object
+
+    """
     import dmsky.factory
 
-    prior_copy = kwargs.copy()            
-    return dmsky.factory.factory(ptype, module=__name__,**prior_copy)
+    prior_copy = kwargs.copy()
+    return dmsky.factory.factory(ptype, module=__name__, **prior_copy)
