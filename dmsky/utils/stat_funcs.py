@@ -11,6 +11,7 @@ def norm(x, mu, sigma=1.0):
     """ Scipy norm function """
     return stats.norm(loc=mu, scale=sigma).pdf(x)
 
+
 def ln_norm(x, mu, sigma=1.0):
     """ Natural log of scipy norm function truncated at zero """
     return np.log(stats.norm(loc=mu, scale=sigma).pdf(x))
@@ -36,11 +37,13 @@ def ln_log10norm(x, mu, sigma=1.0):
 
 
 def gauss(x, mu, sigma=1.0):
+    """Gaussian """
     s2 = sigma * sigma
     return 1. / np.sqrt(2 * s2 * np.pi) * np.exp(-(x - mu) * (x - mu) / (2 * s2))
 
 
 def lngauss(x, mu, sigma=1.0):
+    """Natural log of a Gaussian"""
     s2 = sigma * sigma
     return -0.5 * np.log(2 * s2 * np.pi) - np.power(x - mu, 2) / (2 * s2)
 
@@ -74,7 +77,8 @@ def lgauss(x, mu, sigma=1.0, logpdf=False):
 
 
 def lnlgauss(x, mu, sigma=1.0, logpdf=False):
-
+    """Log-likelihood of the natural log of a Gaussian
+    """
     x = np.array(x, ndmin=1)
 
     lmu = np.log10(mu)
@@ -96,4 +100,3 @@ def lnlgauss(x, mu, sigma=1.0, logpdf=False):
         v[inv_mask] = -np.inf
 
     return v
-

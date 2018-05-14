@@ -11,6 +11,7 @@ from astropy.wcs import WCS
 from astropy.io import fits
 from astropy.coordinates import SkyCoord
 
+
 def create_wcs(skydir, coordsys='CEL', projection='AIT',
                cdelt=1.0, crpix=1., naxis=2, energies=None):
     """Create a WCS object.
@@ -47,7 +48,7 @@ def create_wcs(skydir, coordsys='CEL', projection='AIT',
     try:
         w.wcs.crpix[0] = crpix[0]
         w.wcs.crpix[1] = crpix[1]
-    except:
+    except IndexError:
         w.wcs.crpix[0] = crpix
         w.wcs.crpix[1] = crpix
     w.wcs.cdelt[0] = -cdelt
@@ -63,32 +64,46 @@ def create_wcs(skydir, coordsys='CEL', projection='AIT',
 
     return w
 
+
 def create_image_wcs(skydir, cdelt, npix, coordsys='CEL', projection='AIT'):
-    if np.isscalar(npix): npix = [npix,npix]
+    """Create a blank image and associated WCS object
+    """
+    if np.isscalar(npix):
+        npix = [npix, npix]
     crpix = np.array([n / 2. + 0.5 for n in npix])
     wcs = create_wcs(skydir, coordsys, projection, cdelt, crpix)
     return np.zeros(npix).T, wcs
 
-def get_pixel_skydirs(npix,wcs):
+
+def get_pixel_skydirs(npix, wcs):
     """Get a list of sky coordinates for the centers of every pixel.
     """
-    if np.isscalar(npix): npix = [npix,npix]
+    if np.isscalar(npix):
+        npix = [npix, npix]
     xpix = np.linspace(0, npix[0] - 1., npix[0])
     ypix = np.linspace(0, npix[1] - 1., npix[1])
     xypix = np.meshgrid(xpix, ypix, indexing='ij')
     return SkyCoord.from_pixel(np.ravel(xypix[0]),
                                np.ravel(xypix[1]), wcs)
 
-def create_image_hdu(data, wcs, name=None, **kwargs):
+
+def create_image_hdu(data, wcs, name=None):
+    """Create a `astropy.io.fits.ImageHDU` object
+    """
+    if name is None:
+        return fits.PrimaryHDU(data, header=wcs.to_header())
     return fits.ImageHDU(data, header=wcs.to_header(),
                          name=name)
 
-def write_image_hdu(filename,data,wcs,name=None,clobber=False,**kwargs):
-    hdu = create_image_hdu(data,wcs,name,**kwargs)
-    hdu.writeto(filename,clobber=clobber)
+
+def write_image_hdu(filename, data, wcs, name=None, clobber=False):
+    """Write an image to a file
+    """
+    hdu = create_image_hdu(data, wcs, name)
+    hdu.writeto(filename, clobber=clobber)
+
 
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description=__doc__)
     args = parser.parse_args()
-

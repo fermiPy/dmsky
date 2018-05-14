@@ -26,13 +26,10 @@ def test_skymap_from_roster():
 
     nside = 128
     skymap = dmsky.skymap.Skymap(r, nside=nside)
-    skymap.fill()
 
     gc_skymap = dmsky.skymap.Skymap(gc, nside=nside)
-    gc_skymap.fill()
 
     dsphs_skymap = dmsky.skymap.Skymap(dsphs, nside=nside)
-    dsphs_skymap.fill()
 
     hp.mollview(np.log10(skymap.values))
     plt.savefig('dsphs_gc_skymap.png',bbox_inches='tight')
