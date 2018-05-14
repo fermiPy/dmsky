@@ -751,4 +751,5 @@ class TargetLibrary(ObjectLibrary):
 
         """
         kw = self.get_target_dict(name, version, **kwargs)
-        return factory(**kw)
+        ttype = kw.get('type')
+        return factory(ttype, **kw)
