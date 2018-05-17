@@ -10,13 +10,17 @@ def gal2cel(glon, glat):
     Convert Galactic coordinates to celestial coordinates
     (J2000). (Much faster than astropy for small arrays.)
 
-    Parameters:
-    -----------
-    glon, glat:  Galactic coordinates (deg)
+    Parameters
+    ----------
+    glon : `numpy.array`
+    glat : `numpy.array`
+        Galactic Coordinates (in degrees)
 
-    Returns:
-    --------
-    ra, dec: Celestial coordinates (deg)
+    Returns
+    -------
+    ra : `numpy.array`
+    dec : `numpy.array`
+        Celestical Coordinates (in degrees)
 
     """
     glat = np.radians(glat)
@@ -46,13 +50,18 @@ def cel2gal(ra, dec):
     Convert celestial coordinates (J2000) to Galactic
     coordinates. (Much faster than astropy for small arrays.)
 
-    Parameters:
-    -----------
-    ra, dec:  Celestial coordinates (deg)
+    Parameters
+    ----------
+    ra : `numpy.array`
+    dec : `numpy.array`
+        Celestical Coordinates (in degrees)
 
-    Returns:
-    --------
-    glon, glat: Galactic coordinates (deg)
+
+    Returns
+    -------
+    glon : `numpy.array`
+    glat : `numpy.array`
+        Galactic Coordinates (in degrees)
 
     """
     dec = np.radians(dec)
@@ -107,9 +116,3 @@ def angsep(lon1, lat1, lon2, lat2):
     denominator = slat1 * slat2 + clat1 * clat2 * cdlon
 
     return np.degrees(np.arctan2(np.hypot(num1, num2), denominator))
-
-if __name__ == "__main__":
-    import argparse
-    description = __doc__
-    parser = argparse.ArgumentParser(description=description)
-    args = parser.parse_args()

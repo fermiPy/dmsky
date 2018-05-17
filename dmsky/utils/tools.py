@@ -42,14 +42,11 @@ def update_dict(d0, d1, add_keys=True, append=False):
     """Recursively update the contents of dictionary d0 with
     the contents of python dictionary d1.
 
-    Input:
-    ------
+    Parameters
+    ----------
     d0: Base dictionary
     d1: Update dictionary
 
-    Returns:
-    -------
-    None
     """
     # Also see:
     # http://stackoverflow.com/questions/3232943/
@@ -83,12 +80,13 @@ def merge_dict(d0, d1, add_keys=True, append=False):
     """
     Merge two target dicts into a new dict.
 
-    Input:
-    ------
+    Parameters
+    ----------
     d0: Base dictionary
     d1: Update dictionary
 
-    return:
+    Returns
+    -------
     d: A new dictionary merging d and u
     """
     d = copy.copy(d0)
