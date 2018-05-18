@@ -7,3 +7,10 @@
 build/
 dist/
 dmsky.egg-info/
+
+### sphinx
+_build/
+_static/
+_templates/
+
+.cache/
