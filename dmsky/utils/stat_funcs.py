@@ -51,10 +51,28 @@ def lngauss(x, mu, sigma=1.0):
 def lgauss(x, mu, sigma=1.0, logpdf=False):
     """ Log10 normal distribution...
 
-    x     : Parameter of interest for scanning the pdf
-    mu    : Peak of the lognormal distribution (mean of the underlying
-            normal distribution is log10(mu)
-    sigma : Standard deviation of the underlying normal distribution
+    Parameters
+    ----------
+
+    x     : `numpy.array` or list
+        Parameter of interest for scanning the pdf
+
+    mu    : float
+        Peak of the lognormal distribution (mean of the underlying
+        normal distribution is log10(mu)
+
+    sigma : float
+        Standard deviation of the underlying normal distribution
+
+    logpdf : bool
+        Define the PDF in log space
+
+    Returns
+    -------
+
+    vals : `numpy.array`
+        Output values, same shape as x
+
     """
     x = np.array(x, ndmin=1)
 
