@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Module file IO using astropy.table class.
+Module that handles file IO using `astropy.table.Table` class.
 """
 
 from astropy import table
@@ -12,7 +12,24 @@ NullTarget = Target(title='Null', name='Null', abbr='Nul', profile={})
 
 
 def get_column_kwargs(name, prop):
-    """Get keyword arguments needed to build a column for a `Property` object
+    """Get keyword arguments needed to build a column for a `dmsky.Property` object
+
+    Parameters
+    ----------
+
+    name : str
+        Name of the Column we will build
+
+    prop : `dmsky.Property`
+        Property object we are building the column for
+
+
+    Returns
+    -------
+    
+    opt_keys : dict
+        A dictionary we can use to constuct a `astropy.table.Column`
+
     """
     opt_keys = ['data', 'unit', 'shape', 'length']
     d = dict(data=None,
@@ -36,6 +53,23 @@ def get_column_kwargs(name, prop):
 
 def get_row_values(model, keys):
     """Get the values needed to fill a row in the table
+
+    Parameters
+    ----------
+
+    model : `dmsky.Model`
+        Model that we are getting the data from
+
+    keys : list
+        Names of the properties we are reading
+
+
+    Returns
+    -------
+    
+    vals : dict
+        A dictionary we can use to fill an `astropy.table.Column` row
+
     """
     d = {}
     for k in keys:
@@ -44,14 +78,50 @@ def get_row_values(model, keys):
 
 
 def columns_from_property(name, prop):
-    """Build a set of `Columns` objects for a `Property` object
+    """Build some of `astropy.table.Column` objects for a `dmsky.Property` object
+
+    In this case we only build a single column
+
+    Parameters
+    ----------
+
+    name : str
+        Name of the Column we will build
+
+    prop : `dmsky.Property`
+        Property object we are building the column for
+   
+    Returns
+    -------
+    
+    cols : list
+        A list of `astropy.table.Column` 
+
     """
     d = get_column_kwargs(name, prop)
     return [table.Column(**d)]
 
 
 def columns_from_parameter(name, prop):
-    """Build a set of `Column` objects for a `Parameter` object
+    """Build a set of `astropy.table.Column` objects for a `dmsky.Parameter` object
+
+    In this case we build a several columns
+
+    Parameters
+    ----------
+
+    name : str
+        Base of the names of the Column we will build
+
+    prop : `dmsky.Property`
+        Property object we are building the column for
+   
+    Returns
+    -------
+    
+    cols : list
+        A list of `astropy.table.Column` 
+
     """
     d = get_column_kwargs(name, prop)
     c_val = table.Column(**d)
@@ -66,14 +136,48 @@ def columns_from_parameter(name, prop):
 
 def columns_from_derived(name, prop):
     """Build a set of `Column` objects for a `Derived` object
+
+    In this case we only build a single column
+
+    Parameters
+    ----------
+
+    name : str
+        Name of the Column we will build
+
+    prop : `dmsky.Property`
+        Property object we are building the column for
+   
+    Returns
+    -------
+    
+    cols : list
+        A list of `astropy.table.Column` 
+
     """
     d = get_column_kwargs(name, prop)
     return [table.Column(**d)]
 
 
 def make_columns_for_prop(name, prop):
-    """Generic function to make a set of `Column` objects
-    for any `Property` sub-class
+    """Generic function to make a set of `astropy.table.Column` objects
+    for any `dmsky.Property` sub-class
+
+    Parameters
+    ----------
+
+    name : str
+        Name of the Column we will build
+
+    prop : `dmsky.Property`
+        Property object we are building the column for
+   
+    Returns
+    -------
+    
+    cols : list
+        A list of `astropy.table.Column` 
+
     """
     if isinstance(prop, Derived):
         return columns_from_derived(name, prop)
@@ -89,6 +193,23 @@ def make_columns_for_prop(name, prop):
 def make_columns_for_model(names, model):
     """Make a set of `Column` objects needed to
     describe a `Model` object.
+
+    Parameters
+    ----------
+
+    names : list
+        List of the names of the properties to convert
+
+    model : `dmsky.Model`
+        Model that we are getting the data from
+
+
+    Returns
+    -------
+    
+    clist : list
+        A list of `astropy.table.Column` 
+
     """
     clist = []
     for n in names:
@@ -98,16 +219,43 @@ def make_columns_for_model(names, model):
 
 
 def fill_table_from_targetlist(tab, targetList):
-    """Fill a table for a set of `Target` objects
+    """Fill a table for a set of `dmsky.Target` objects
+
+    Parameters
+    ----------
+
+    tab : `astropy.table.Table`
+        The table we are filling
+
+    targetList : list
+        List of 'dmsky.Target' object used to fill the table
+
     """
     cnames = tab.colnames
     for t in targetList:
         tab.add_row(get_row_values(t, cnames))
-    return
+
 
 
 def make_table_for_targetlist(colNames, targetList):
     """Build a table for a set of `Target` objects
+
+    Parameters
+    ----------
+
+    colNames : list
+        The names of the properties to include in the table
+
+    targetList : list
+        List of 'dmsky.Target' object used to fill the table
+
+
+    Returns
+    -------
+
+    table : `astropy.table.Table`
+        A table with the data from those targets
+
     """
     clist = make_columns_for_model(colNames, NullTarget)
     tab = table.Table(data=clist)
@@ -117,6 +265,24 @@ def make_table_for_targetlist(colNames, targetList):
 
 def make_table_for_roster(colNames, roster):
     """Make a table for a `Roster` object
+
+    Parameters
+    ----------
+
+    colNames : list
+        The names of the properties to include in the table
+
+    roster : `dmsky.Roster`
+        Roster used to fill the table
+
+
+    Returns
+    -------
+
+    table : `astropy.table.Table`
+        A table with the data from that Roster
+
+
     """
     clist = make_columns_for_model(colNames, NullTarget)
     tab = table.Table(data=clist)

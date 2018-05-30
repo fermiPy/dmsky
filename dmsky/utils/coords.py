@@ -92,6 +92,19 @@ def angsep(lon1, lat1, lon2, lat2):
     Angular separation (deg) between two sky coordinates.
     Faster than creating astropy coordinate objects.
 
+    Parameters
+    ----------
+    lon1 : `numpy.array`
+    lat1 : `numpy.array`
+    lon2 : `numpy.array`
+    lat2 : `numpy.array`
+        Coordinates (in degrees)
+
+    Returns
+    -------
+    dist : `numpy.array`
+        Angular seperations (in degrees)
+
     Notes
     -----
     The angular separation is calculated using the Vincenty formula [1],

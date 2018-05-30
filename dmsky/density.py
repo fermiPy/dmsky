@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
 """
+
 Density profiles need to be set by:
+
 1) rhos and rs
 2) Integrated J-factor at a given radius and scale radius
 3) Ingegrated J-factor only (need to approximate scale radius)
@@ -24,7 +26,12 @@ from dmsky.utils.units import Units
 
 
 class DensityProfile(Model):
-    """A DM density profile"""
+    """Am abstract base class for DM density profiles
+
+    At a minimum sub-classes need to implement the self._rho(r) method
+    to compute the density as a function of radius from the center of the halo
+
+    """
     _params = odict([
         ('rs', Parameter(default=1.0)),
         ('rhos', Parameter(default=1.0)),
