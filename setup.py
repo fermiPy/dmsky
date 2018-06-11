@@ -62,7 +62,7 @@ setup(
         'numpy >= 1.9.0',
         'scipy >= 0.14.0',
         'healpy >= 1.6.0',
-        'pyyaml >= 3.10',
+        'pyyaml >= 3.12',
         'pymodeler >= 0.1.0',
     ],
     packages=find_packages(),
