@@ -321,11 +321,11 @@ class LGaussLogPrior(FunctionPrior):
 
         """
         def fn(x, y, s):
-            """Swap the axes of the lgauss function and work in log space"""
+            """Take the lgauss function and work in log space"""
             return stat_funcs.lgauss(x, y, s, logpdf=True)
 
         def lnfn(x, y, s):
-            """Swap the axes of the lnlgauss function and work in log space"""
+            """Take the nlgauss function and work in log space"""
             return stat_funcs.lnlgauss(x, y, s, logpdf=True)
         super(LGaussLogPrior, self).__init__("lgauss_log", mu, sigma,
                                              fn=fn, lnfn=lnfn, scale=scale)
