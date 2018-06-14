@@ -174,7 +174,7 @@ class Target(Model):
         """Compute the integrated D-factor
         """
         dprof = self.d_profile
-        units = self.getp('j_integ').unit
+        units = self.getp('d_integ').unit
         return Units.convert_to(dprof.angularIntegral(self.psi_max)[0], units)
 
     def _d_sigma(self):
@@ -208,10 +208,10 @@ class Target(Model):
         """
         if self.mode == 'interp':
             return LoSIntegralInterp(self.density, self.distance *
-                                     Units.kpc, ann=True, derivPar=derivPar)
+                                     Units.kpc, ann=ann, derivPar=derivPar)
         elif self.mode == 'fast':
             return LoSIntegralFast(self.density, self.distance *
-                                   Units.kpc, ann=True, derivPar=derivPar)
+                                   Units.kpc, ann=ann, derivPar=derivPar)
         return LoSIntegral(self.density, self.distance * Units.kpc, ann=ann, derivPar=derivPar)
 
     def _j_profile(self):
@@ -268,8 +268,8 @@ class Target(Model):
            Object that compute Prior value
 
         """
-        prior_copy = self.j_like_def.copy()
-        prior_type = prior_copy.pop('type', 'l')
+        prior_copy = self.j_prior_def.copy()
+        prior_type = prior_copy.pop('functype', 'lgauss_like')
         the_prior = prior_factory(prior_type, **prior_copy)
         return the_prior
 
@@ -283,8 +283,8 @@ class Target(Model):
            Object that compute Prior value
 
         """
-        prior_copy = self.d_like_def.copy()
-        prior_type = prior_copy.pop('type', 'l')
+        prior_copy = self.d_prior_def.copy()
+        prior_type = prior_copy.pop('functype', 'lgauss_like')
         the_prior = prior_factory(prior_type, **prior_copy)
         return the_prior
 
