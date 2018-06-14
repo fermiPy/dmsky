@@ -1,6 +1,22 @@
 # Default set of dwarf characterisitcs.
 # All dwarfs should appear in this file.
 # $Format:%d$
+#
+#key:
+#  default:
+#    type:         dwarf or cluster
+#    title:        full name
+#    abbr:         IAU abbreviation
+#    name:         codename
+#    color:        display color
+#    ra:           right ascension (deg)
+#    dec:          declination (deg)
+#    distance:     distance (kpc)
+#    dsigma:       distance uncertainty (kpc)
+#    major_axis:   semi-major half-light radius (arcmin)
+#    ellipticity:  ellipticity
+
+
 bootes_I:
   default:
     type:         dwarf
@@ -778,6 +794,102 @@ aquarius_II:
     major_axis: 5.1
     ellipticity: 0.4
     abs_mag: -4.2
+
+# 1609.02148
+pictor_II:
+  default:
+    type:       dwarf
+    title:      'Pictor II'
+    abbr:       'Pic II'
+    name:       'pictor_II'
+    color:      'cyan'
+    ra: 101.180
+    dec: -59.897
+    distance: 45.
+    dsigma: 5.
+    major_axis: 3.8
+    ellipticity: 0.13
+    abs_mag: -3.2
+
+# 1609.04346
+virgo_I:
+  default:
+    type:       dwarf
+    title:      'Virgo I'
+    abbr:       'Vir I'
+    name:       'virgo_I'
+    color:      'cyan'
+    ra: 180.04
+    dec: -0.68
+    distance: 87.
+    dsigma: 29.
+    major_axis: 1.5
+    ellipticity: 0.44
+    abs_mag: -0.8
+
+# 1704.05977
+cetus_III:
+  default:
+    type:       dwarf
+    title:      'Cetus III'
+    abbr:       'Cet III'
+    name:       'cetus_III'
+    color:      'cyan'
+    ra: 31.331
+    dec: -4.270
+    distance: 251
+    dsigma: 17.5
+    major_axis: 1.23
+    ellipticity: 0.44
+    abs_mag: -2.45
+
+# 1801.07279
+carina_II:
+  default:
+    type:       dwarf
+    title:      'Carina II'
+    abbr:       'Car II'
+    name:       'carina_II'
+    color:      'cyan'
+    ra: 114.1066
+    dec: −57.9991
+    distance: 36.2
+    dsigma: 0.6
+    major_axis: 8.69
+    ellipticity: 0.34
+    abs_mag: -4.5
+
+# 1801.07279
+carina_III:
+  default:
+    type:       dwarf
+    title:      'Carina III'
+    abbr:       'Car III'
+    name:       'carina_III'
+    color:      'cyan'
+    ra: 114.6298
+    dec: −57.8997
+    distance: 27.8
+    dsigma: 0.6
+    major_axis: 3.75
+    ellipticity: 0.55
+    abs_mag: -2.4
+
+# 1804.06430
+hydrus_I:
+  default:
+    type:       dwarf
+    title:      'Hydrus I'
+    abbr:       'Hyi I'
+    name:       'hydrus_I'
+    color:      'cyan'
+    ra: 37.389
+    dec: -79.3089
+    distance: 27.8
+    dsigma: 0.6
+    major_axis: 7.42
+    ellipticity: 0.21
+    abs_mag: -4.71
       
 # NED object query names
 #bootes I
