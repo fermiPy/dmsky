@@ -12,6 +12,10 @@ from scipy.integrate import quad
 from dmsky.utils import stat_funcs
 from dmsky.utils import tools
 
+from dmsky.library import FileLibrary
+
+global filelib
+filelib = FileLibrary()
 
 class PriorFunctor(object):
     """A functor class that wraps simple functions we use to
@@ -531,7 +535,10 @@ class FileFuncPrior(PriorFunctor):
         """
         super(FileFuncPrior, self).__init__('file')
         self._filename = filename
-        d = tools.yaml_load(self._filename)
+        self._fullpath = filelib.get_filepath(filename)
+        if self._fullpath is None:
+            raise ValueError("Could not find file %s in path %s " % (filename, filelib.paths))
+        d = tools.yaml_load(self._fullpath)
         self._mu = d['mean']
         self._sigma = d['sigma']
         self._x = d['x']
