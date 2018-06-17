@@ -15,7 +15,8 @@
 #    dsigma:       distance uncertainty (kpc)
 #    major_axis:   semi-major half-light radius (arcmin)
 #    ellipticity:  ellipticity
-
+#    abs_mag:      absolute magnitude (mag)
+#    profile:      density profile type
 
 bootes_I:
   default:
@@ -30,6 +31,7 @@ bootes_I:
     dsigma: 2.
     major_axis: 12.60 # arcmin
     ellipticity: 0.39
+    abs_mag: -6.31
 
 bootes_II:
   default:
@@ -44,6 +46,7 @@ bootes_II:
     dsigma: 1.
     major_axis: 4.20 # arcmin
     ellipticity: 0.21
+    abs_mag: -2.70
 
 bootes_III:
   default:
@@ -58,6 +61,7 @@ bootes_III:
     dsigma: 2.
     major_axis: .nan
     ellipticity: 0.50
+    abs_mag: -5.8
 
 canes_venatici_I:
   default:
@@ -72,6 +76,7 @@ canes_venatici_I:
     dsigma: 10.
     major_axis: 8.90
     ellipticity: 0.39
+    abs_mag: -8.59
 
 canes_venatici_II:
   default:
@@ -87,6 +92,7 @@ canes_venatici_II:
     dsigma: 4.
     major_axis: 1.60
     ellipticity: 0.52
+    abs_mag: -4.92
 
 canis_major:
   default:
@@ -101,6 +107,7 @@ canis_major:
     dsigma: 1.
     major_axis: .nan
     ellipticity: 0.80
+    abs_mag: -14.4
 
 carina:
   default:
@@ -115,6 +122,7 @@ carina:
     dsigma: 6.
     major_axis: 8.20 # arcmin
     ellipticity: 0.33 
+    abs_mag: -9.11
 
 coma_berenices:
   default:
@@ -129,6 +137,7 @@ coma_berenices:
     dsigma: 4.
     major_axis: 6.0
     ellipticity: 0.38
+    abs_mag: -4.10
 
 draco:
   default:
@@ -144,6 +153,7 @@ draco:
     dsigma: 6.
     major_axis: 10.00
     ellipticity: 0.31
+    abs_mag: -8.80
 
 fornax:
   default:
@@ -158,6 +168,7 @@ fornax:
     dsigma: 12.
     major_axis: 16.60
     ellipticity: 0.30
+    abs_mag: -13.44
 
 hercules:
   default:
@@ -172,6 +183,7 @@ hercules:
     dsigma: 12.
     major_axis: 8.60
     ellipticity: 0.68
+    abs_mag: -6.60
 
 leo_I:
   default:
@@ -186,6 +198,7 @@ leo_I:
     dsigma: 15.
     major_axis: 3.40
     ellipticity: 0.21
+    abs_mag: -12.02
 
 leo_II:
   default:
@@ -200,6 +213,7 @@ leo_II:
     dsigma: 14.
     major_axis: 2.60
     ellipticity: 0.13
+    abs_mag: -9.84
 
 leo_IV:
   default:
@@ -214,6 +228,7 @@ leo_IV:
     dsigma: 6.
     major_axis: 4.60
     ellipticity: 0.49
+    abs_mag: -5.84
 
 leo_T:
   default:
@@ -242,6 +257,7 @@ leo_V:
     dsigma: 10.
     major_axis: 2.6
     ellipticity: 0.5
+    abs_mag: -5.25
 
 pisces_II:
   default:
@@ -256,6 +272,7 @@ pisces_II:
     dsigma: .nan
     major_axis: 1.10
     ellipticity: 0.40
+    abs_mag: -5.00
  
 sagittarius:
   default:
@@ -271,6 +288,7 @@ sagittarius:
     dsigma: 2.
     major_axis: 342.0
     ellipticity: 0.64
+    abs_mag: -13.5
 
 sculptor:
   default:
@@ -285,6 +303,7 @@ sculptor:
     dsigma: 6.
     major_axis: 11.30
     ellipticity: 0.32
+    abs_mag: -11.07
  
 segue_1:
   default:
@@ -300,6 +319,7 @@ segue_1:
     dsigma: 2.
     major_axis: 4.40
     ellipticity: 0.48
+    abs_mag: -1.50
 
 segue_2:
   default:
@@ -314,6 +334,7 @@ segue_2:
     dsigma: 2.
     major_axis: 3.40
     ellipticity: 0.15
+    abs_mag: -2.5
 
 sextans:
   default:
@@ -328,6 +349,7 @@ sextans:
     dsigma: 4.
     major_axis: 27.80
     ellipticity: 0.35
+    abs_mag: -9.27
 
 ursa_major_I:
   default:
@@ -343,6 +365,7 @@ ursa_major_I:
     dsigma: 4.
     major_axis: 11.30
     ellipticity: 0.80
+    abs_mag: -5.53
 
 ursa_major_II:
   default:
@@ -358,6 +381,7 @@ ursa_major_II:
     dsigma: 4.
     major_axis: 16.00
     ellipticity: 0.63
+    abs_mag: -4.20
 
 ursa_minor:
   default:
@@ -372,6 +396,7 @@ ursa_minor:
     dsigma: 3.
     major_axis: 8.20
     ellipticity: 0.56
+    abs_mag: -8.80
 
 willman_1: 
   default:
@@ -386,6 +411,7 @@ willman_1:
     dsigma: 7.
     major_axis: 2.30
     ellipticity: 0.47
+    abs_mag: -2.70
 
 eridanus_II:
   default:
@@ -394,7 +420,7 @@ eridanus_II:
     abbr:         'Eri II'
     name:         'eridanus_II'
     nickname:     'EriII'
-    names:        ['des_j0344.3-4331']
+    altnames:     ['des_j0344.3-4331']
     color:        'crimson'
     ra: 56.09
     dec: -43.53
@@ -402,6 +428,7 @@ eridanus_II:
     dsigma: 30.
     major_axis: 1.80
     ellipticity: 0.19
+    abs_mag: -7.40
 
 
   
@@ -419,6 +446,7 @@ eridanus_III:
     dsigma: 10.
     major_axis: 0.42 
     ellipticity: .nan
+    abs_mag: -2.39
 
 grus_I:
   default:
@@ -434,6 +462,7 @@ grus_I:
     dsigma: 12
     major_axis: 2.23
     ellipticity: 0.41
+    abs_mag: -3.4
       
 horologium_I:
   default:
@@ -450,6 +479,7 @@ horologium_I:
     dsigma: 8.
     major_axis: 2.40
     ellipticity: .nan
+    abs_mag: -3.52
 
 horologium_II:
   default:
@@ -464,6 +494,7 @@ horologium_II:
     dsigma: 8.
     major_axis: 2.09
     ellipticity: 0.52
+    abs_mag: -2.6
 
 pegasus_III:
   default:
@@ -478,6 +509,7 @@ pegasus_III:
     dsigma: 20.
     major_axis: 1.30
     ellipticity: 0.46
+    abs_mag: -4.1
 
 pictor_I:
   default:
@@ -493,6 +525,7 @@ pictor_I:
     dsigma: 12.
     major_axis: 1.20
     ellipticity: .nan
+    abs_mag: -3.68
 
 phoenix_II:
   default:
@@ -508,6 +541,7 @@ phoenix_II:
     dsigma: 10.
     major_axis: 1.20
     ellipticity: .nan
+    abs_mag: -3.72
 
 hydra_II:
   default:
@@ -523,6 +557,7 @@ hydra_II:
     dsigma: 10
     major_axis: 1.70
     ellipticity: 0.01
+    abs_mag: -4.80
 
 reticulum_II:
   default:
@@ -530,7 +565,7 @@ reticulum_II:
     title:        'Reticulum II'
     abbr:         'Ret II'
     name:         'reticulum_II'
-    names:       ['reticulum_II','des_j0335.6-5403']
+    altnames:     ['reticulum_II','des_j0335.6-5403']
     color:        'violet'
     ra: 53.92
     dec: -54.05
@@ -539,21 +574,6 @@ reticulum_II:
     major_axis: 6.00
     ellipticity: 0.6
 
-horologium_I:
-  default:
-    type:         dwarf
-    title:        'Horologium I'
-    abbr:         'Hor I'
-    name:         'horologium_I'
-    nickname:     'HorI'
-    color:        'tan'
-    ra: 43.87
-    dec: -54.11
-    distance: 87.1
-    dsigma: 8.
-    major_axis: 2.40
-    ellipticity: .nan
-      
 triangulum_II:
   default:
     type:         dwarf
@@ -567,6 +587,7 @@ triangulum_II:
     dsigma: 2.
     major_axis: 3.90
     ellipticity: 0.21
+    abs_mag: -1.80
 
 laevens_3:
   default:
@@ -581,6 +602,7 @@ laevens_3:
     dsigma: 3
     major_axis: 0.40
     ellipticity: 0.21
+    abs_mag: -4.4
 
 draco_II:
   default:
@@ -595,6 +617,7 @@ draco_II:
     dsigma: 3
     major_axis: 2.70
     ellipticity: 0.24
+    abs_mag: -2.9
 
 sagittarius_II:
   default:
@@ -609,6 +632,7 @@ sagittarius_II:
     dsigma: 5
     major_axis: 2.00
     ellipticity: 0.23
+    abs_mag: -5.2
 
 kim_2:
   default:
@@ -624,6 +648,7 @@ kim_2:
     dsigma: 7.
     major_axis: 0.42
     ellipticity: 0.12
+    abs_mag: -1.5
 
 tucana_II:
   default:
@@ -639,6 +664,7 @@ tucana_II:
     dsigma: 8.
     major_axis: 7.20
     ellipticity: .nan
+    abs_mag: -3.90
 
 tucana_III:
   default:
@@ -654,6 +680,7 @@ tucana_III:
     dsigma: 2.
     major_axis: 6.00
     ellipticity: .nan
+    abs_mag: -2.36
 
 tucana_IV:
   default:
@@ -670,6 +697,7 @@ tucana_IV:
     dsigma: 4.
     major_axis: 11.80
     ellipticity: 0.40
+    abs_mag: -3.46
 
 tucana_V:
   default:
@@ -685,6 +713,7 @@ tucana_V:
     dsigma: 9.
     major_axis: 1.80
     ellipticity: 0.70
+    abs_mag: -1.62
       
 columba_I:
   default:
@@ -701,6 +730,7 @@ columba_I:
     dsigma: 18.
     major_axis: 1.90
     ellipticity: .nan
+    abs_mag: -4.54
 
 grus_II:
   default:
@@ -717,6 +747,7 @@ grus_II:
     dsigma: 5.
     major_axis: 6.0
     ellipticity: 0.0
+    abs_mag: -3.90
 
 reticulum_III:
   default:
@@ -733,6 +764,7 @@ reticulum_III:
     dsigma: 13.
     major_axis: 2.40
     ellipticity: .nan
+    abs_mag: -3.30
       
 indus_II:
   default:
@@ -748,6 +780,7 @@ indus_II:
     dsigma: 16.
     major_axis: 2.90
     ellipticity: .nan
+    abs_mag: -4.27
 
 cetus_II:
   default:
@@ -763,6 +796,7 @@ cetus_II:
     dsigma: 3.
     major_axis: 1.9
     ellipticity: .nan
+    abs_mag: 0.0
 
 crater_II:
   default:
@@ -837,7 +871,7 @@ cetus_III:
     color:      'cyan'
     ra: 31.331
     dec: -4.270
-    distance: 251
+    distance: 251.
     dsigma: 17.5
     major_axis: 1.23
     ellipticity: 0.44
@@ -852,7 +886,7 @@ carina_II:
     name:       'carina_II'
     color:      'cyan'
     ra: 114.1066
-    dec: −57.9991
+    dec: -57.9991
     distance: 36.2
     dsigma: 0.6
     major_axis: 8.69
