@@ -49,6 +49,11 @@ carina_II:
     j_integ: 1.74e+18
     j_sigma: 0.53
     profile: {type: NFW}
+#carina_III:
+#  pace2018_photoj_nfw:
+#    j_integ: 1.62e+19 # Eq. 12
+#    j_sigma: .nan
+#    profile: {type: NFW}
 cetus_II:
   pace2018_photoj_nfw:
     j_integ: 1.26e+19
@@ -69,9 +74,14 @@ coma_berenices:
     j_integ: 1.0e+19
     j_sigma: 0.355
     profile: {type: NFW}
+#crater_II:
+#  pace2018_nfw:
+#    j_integ: .nan
+#    j_sigma: .nan
+#    profile: {type: NFW}
 draco:
   pace2018_nfw:
-    j_integ: 6.76e18
+    j_integ: 6.76e+18
     j_sigma: 0.1
     profile: {type: NFW}
 draco_II:
@@ -123,9 +133,9 @@ horologium_II:
     j_integ: 2.00e+18
     j_sigma: .nan
     profile: {type: NFW}
-#hydra_II:
+#hydra_II: # upper limit
 #  pace2018_nfw:
-#    j_integ: <5.13e+17
+#    j_integ: 5.13e+17
 #    j_sigma: .nan
 #    profile: {type: NFW}
 indus_II:
@@ -232,7 +242,7 @@ segue_1:
     j_integ: 1.38e+19
     j_sigma: 0.555
     profile: {type: NFW}
-#segue_2:
+#segue_2: # upper limit
 #  pace2018_nfw:
 #    j_integ: 1.48e+18
 #    j_sigma: .nan
@@ -242,7 +252,7 @@ sextans:
     j_integ: 5.37e+17
     j_sigma: 0.125
     profile: {type: NFW}
-#triangulum_II:
+#triangulum_II: # upper limit
 #  pace2018_nfw:
 #    j_integ: 5.25e+19
 #    j_sigma: .nan
@@ -256,13 +266,13 @@ tucana_II:
     j_integ: 1.05e+19
     j_sigma: 0.545
     profile: {type: NFW}
-#tucana_III:
+#tucana_III: # upper limit
 #  pace2018_nfw:
 #    j_integ: 4.79e+17
 #    j_sigma: .nan
 #    profile: {type: NFW}
 tucana_IV:
-  pace2018_nfw:
+  pace2018_photoj_nfw:
     j_integ: 2.51e+18
     j_sigma: .nan
     profile: {type: NFW}
