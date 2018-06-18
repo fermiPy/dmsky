@@ -71,9 +71,9 @@ def test_profiles_2d():
         fast = LoSIntegralFast(dp,dhalo)
         itrp = LoSIntegralInterp(dp,dhalo)
 
-        slow_jval = slow(_psi,_dhalo)
-        fast_jval = fast(_psi,_dhalo)
-        itrp_jval = itrp(_psi,_dhalo)
+        slow_jval = slow(_psi,_dhalo).clip(1e-99, np.inf)
+        fast_jval = fast(_psi,_dhalo).clip(1e-99, np.inf)
+        itrp_jval = itrp(_psi,_dhalo).clip(1e-99, np.inf)
 
         fast_vs_slow = (fast_jval-slow_jval)/slow_jval
         itrp_vs_slow = (itrp_jval-slow_jval)/slow_jval

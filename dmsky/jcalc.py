@@ -578,9 +578,8 @@ class LoSIntegralInterp(LoSIntegralFast):
             nsteps = self.nsteps
         dhalo = np.unique(np.atleast_1d(dhalo))
         psi = np.logspace(np.log10(1e-7), np.log10(np.pi), nsteps)
-
         _dhalo, _psi = np.meshgrid(dhalo, psi)
-        _jval = super(LoSIntegralInterp, self)._integrate(_psi, _dhalo)
+        _jval = super(LoSIntegralInterp, self)._integrate(_psi, _dhalo).clip(1e-99, np.inf)
         return np.log10([_dhalo, _psi, _jval])
 
     def create_func(self, dhalo):
