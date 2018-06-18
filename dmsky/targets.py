@@ -567,12 +567,15 @@ class Target(Model):
 
         # Trapezoid summation
         norm = ((x_vals[1:] - x_vals[0:-1]) * (y_vals[1:] + y_vals[0:-1]) / 2.).sum()
-
         prof_vals /= norm
+
 
         if filepath is None:
             fout = sys.stdout
         else:
+            # Protect against writing out nans, as those will cause problems latter.
+            if not np.isfinite(prof_vals).all():
+                raise ValueError('One of more values in the radial profile %s is not finite.' % filepath)
             fout = open(filepath, 'w!')
         for psi, prof in zip(psi_vals, prof_vals):
             fout.write("%0.3e %0.3e\n" % (psi, prof))
