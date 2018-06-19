@@ -76,6 +76,12 @@ class LoSFn(object):
             alpha = self.alpha
         x = xp**alpha
         r = np.sqrt(x**2 + self.d2 * self.sinxi2)
+        try:
+            if (x <= 0.).all():
+                raise ValueError("Tried to compute _rho at x=0")
+        except AttributeError:
+            if x <= 0.:
+                raise ValueError("Tried to compute _rho at x=0")
         return self.func(r) * alpha * xp**(alpha - 1.0)
 
     def func(self, r):
@@ -549,6 +555,12 @@ class LoSIntegralInterp(LoSIntegralFast):
 
         """
         super(LoSIntegralInterp, self).__init__(density, dhalo, alpha, ann, nsteps, derivPar)
+        try:
+            if (self.dhalo <= 0).any():
+                raise ValueError("dhalo == 0")
+        except AttributeError:
+            if self.dhalo <= 0:
+                raise ValueError("dhalo == 0")
         self.func = self.create_func(self.dhalo)
 
     def create_profile(self, dhalo, nsteps=None):
@@ -577,9 +589,15 @@ class LoSIntegralInterp(LoSIntegralFast):
         if not nsteps:
             nsteps = self.nsteps
         dhalo = np.unique(np.atleast_1d(dhalo))
+        if (dhalo <= 0.).any():
+            raise ValueError("Halo distance == 0")
         psi = np.logspace(np.log10(1e-7), np.log10(np.pi), nsteps)
         _dhalo, _psi = np.meshgrid(dhalo, psi)
-        _jval = super(LoSIntegralInterp, self)._integrate(_psi, _dhalo).clip(1e-99, np.inf)
+        _jval = super(LoSIntegralInterp, self)._integrate(_psi, _dhalo)
+        mask = np.isfinite(_jval) * (_jval > 0.)
+        if mask.sum() < 4:
+            raise ValueError('Failed to compute grid for density values.  Is profile well defined')
+
         return np.log10([_dhalo, _psi, _jval])
 
     def create_func(self, dhalo):
