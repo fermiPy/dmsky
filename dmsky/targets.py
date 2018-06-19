@@ -54,9 +54,9 @@ class Target(Model):
                      ('distance', Property(dtype=float, format='%.1f',
                                            default=0.0, unit='kpc',
                                            help='Distance')),
-                     ('dist_err', Property(dtype=float, format='%.1f',
-                                           default=0.0, unit='kpc',
-                                           help='Distance Uncertainty')),
+                     ('dsigma', Property(dtype=float, format='%.1f',
+                                         default=0.0, unit='kpc',
+                                         help='Distance Uncertainty')),
                      ('major_axis', Property(dtype=float, format='%.3f',
                                              default=np.nan, unit='kpc',
                                              help='Major axis')),
@@ -206,13 +206,22 @@ class Target(Model):
            Object that caculates line-of-sight integrals
 
         """
-        if self.mode == 'interp':
-            return LoSIntegralInterp(self.density, self.distance *
-                                     Units.kpc, ann=ann, derivPar=derivPar)
-        elif self.mode == 'fast':
-            return LoSIntegralFast(self.density, self.distance *
-                                   Units.kpc, ann=ann, derivPar=derivPar)
-        return LoSIntegral(self.density, self.distance * Units.kpc, ann=ann, derivPar=derivPar)
+        if self.distance == 0.:
+            raise ValueError("Requested integration for LoSIntegral with distance = 0. %s " % self)
+
+        try:
+            if self.mode == 'interp':
+                return LoSIntegralInterp(self.density, self.distance *
+                                         Units.kpc, ann=ann, derivPar=derivPar)
+            elif self.mode == 'fast':
+                return LoSIntegralFast(self.density, self.distance *
+                                       Units.kpc, ann=ann, derivPar=derivPar)
+            return LoSIntegral(self.density, self.distance * Units.kpc, ann=ann, derivPar=derivPar)
+        except ValueError as err:
+            msg = str(err)
+            msg += " for source %s: %s" % (self.name, str(self.profile))
+            raise ValueError(msg)
+
 
     def _j_profile(self):
         """Return an object that compute the J-factor at any direction
@@ -755,4 +764,5 @@ class TargetLibrary(ObjectLibrary):
         """
         kw = self.get_target_dict(name, version, **kwargs)
         ttype = kw.pop('type')
+
         return factory(ttype, **kw)
