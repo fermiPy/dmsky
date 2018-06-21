@@ -1,6 +1,6 @@
 # Dwarf characterisitcs from:
-# Pace & Strigari  (2018) (arXiv:1802.06811)
-# Values have been taken from Tables 2 and A1
+# Pace & Strigari (2018) (arXiv:1802.06811)
+# Values have been taken from Table 2 and Table A1
 # $Format:%d$
 
 # Photoj comes from Eq. 12 using input from Table A1
@@ -351,6 +351,11 @@ sextans:
     j_integ: 6.05e+17
     j_sigma: .nan
     profile: {type: NFW}
+#smc:
+#  pace2018_nfw:
+#    j_integ: .nan
+#    j_sigma: .nan
+#    profile: {type: NFW}
 #triangulum_II: # upper limit
 #  pace2018_nfw:
 #    j_integ: 5.25e+19
@@ -413,7 +418,7 @@ ursa_minor:
     profile: {type: NFW}
 virgo_I:
   pace2018_photoj_nfw:
-    j_integ: 7.94e+19
+    j_integ: 7.94e+17
     j_sigma: .nan
     profile: {type: NFW}
 willman_1:
