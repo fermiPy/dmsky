@@ -123,6 +123,9 @@ class DensityProfile(Model):
         deltaParVals = initParVals * 0.001
 
         init_r = self._rho(r)
+        mask = np.invert(np.isfinite(init_r))
+        if mask.any():
+            raise ValueError('Tried to get dervatives for infinte rho')
 
         derivs = []
 

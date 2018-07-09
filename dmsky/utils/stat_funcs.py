@@ -89,7 +89,8 @@ def lgauss(x, mu, sigma=1.0, logpdf=False):
     if not logpdf:
         v /= (x * np.log(10.))
 
-    v[x <= 0] = -np.inf
+    if x.size > 1:
+        v[x <= 0] = -np.inf
 
     return v
 

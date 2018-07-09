@@ -54,9 +54,9 @@ class Target(Model):
                      ('distance', Property(dtype=float, format='%.1f',
                                            default=0.0, unit='kpc',
                                            help='Distance')),
-                     ('dist_err', Property(dtype=float, format='%.1f',
-                                           default=0.0, unit='kpc',
-                                           help='Distance Uncertainty')),
+                     ('dsigma', Property(dtype=float, format='%.1f',
+                                         default=0.0, unit='kpc',
+                                         help='Distance Uncertainty')),
                      ('major_axis', Property(dtype=float, format='%.3f',
                                              default=np.nan, unit='kpc',
                                              help='Major axis')),
@@ -174,7 +174,7 @@ class Target(Model):
         """Compute the integrated D-factor
         """
         dprof = self.d_profile
-        units = self.getp('j_integ').unit
+        units = self.getp('d_integ').unit
         return Units.convert_to(dprof.angularIntegral(self.psi_max)[0], units)
 
     def _d_sigma(self):
@@ -206,13 +206,22 @@ class Target(Model):
            Object that caculates line-of-sight integrals
 
         """
-        if self.mode == 'interp':
-            return LoSIntegralInterp(self.density, self.distance *
-                                     Units.kpc, ann=True, derivPar=derivPar)
-        elif self.mode == 'fast':
-            return LoSIntegralFast(self.density, self.distance *
-                                   Units.kpc, ann=True, derivPar=derivPar)
-        return LoSIntegral(self.density, self.distance * Units.kpc, ann=ann, derivPar=derivPar)
+        if self.distance == 0.:
+            raise ValueError("Requested integration for LoSIntegral with distance = 0. %s " % self)
+
+        try:
+            if self.mode == 'interp':
+                return LoSIntegralInterp(self.density, self.distance *
+                                         Units.kpc, ann=ann, derivPar=derivPar)
+            elif self.mode == 'fast':
+                return LoSIntegralFast(self.density, self.distance *
+                                       Units.kpc, ann=ann, derivPar=derivPar)
+            return LoSIntegral(self.density, self.distance * Units.kpc, ann=ann, derivPar=derivPar)
+        except ValueError as err:
+            msg = str(err)
+            msg += " for source %s: %s" % (self.name, str(self.profile))
+            raise ValueError(msg)
+
 
     def _j_profile(self):
         """Return an object that compute the J-factor at any direction
@@ -268,8 +277,8 @@ class Target(Model):
            Object that compute Prior value
 
         """
-        prior_copy = self.j_like_def.copy()
-        prior_type = prior_copy.pop('type', 'l')
+        prior_copy = self.j_prior_def.copy()
+        prior_type = prior_copy.pop('functype', 'lgauss_like')
         the_prior = prior_factory(prior_type, **prior_copy)
         return the_prior
 
@@ -283,8 +292,8 @@ class Target(Model):
            Object that compute Prior value
 
         """
-        prior_copy = self.d_like_def.copy()
-        prior_type = prior_copy.pop('type', 'l')
+        prior_copy = self.d_prior_def.copy()
+        prior_type = prior_copy.pop('functype', 'lgauss_like')
         the_prior = prior_factory(prior_type, **prior_copy)
         return the_prior
 
@@ -567,12 +576,15 @@ class Target(Model):
 
         # Trapezoid summation
         norm = ((x_vals[1:] - x_vals[0:-1]) * (y_vals[1:] + y_vals[0:-1]) / 2.).sum()
-
         prof_vals /= norm
+
 
         if filepath is None:
             fout = sys.stdout
         else:
+            # Protect against writing out nans, as those will cause problems latter.
+            if not np.isfinite(prof_vals).all():
+                raise ValueError('One of more values in the radial profile %s is not finite.' % filepath)
             fout = open(filepath, 'w!')
         for psi, prof in zip(psi_vals, prof_vals):
             fout.write("%0.3e %0.3e\n" % (psi, prof))
@@ -752,4 +764,5 @@ class TargetLibrary(ObjectLibrary):
         """
         kw = self.get_target_dict(name, version, **kwargs)
         ttype = kw.pop('type')
+
         return factory(ttype, **kw)

@@ -8,6 +8,11 @@ build/
 dist/
 dmsky.egg-info/
 
+### unit tests
+.pytest_cache/
+dsphs_gc_skymap.png
+gc_region.png
+
 ### sphinx
 _build/
 _static/
