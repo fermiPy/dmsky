@@ -25,11 +25,11 @@ bootes_I:
     j_integ: 1.46e+18
     j_sigma: .nan
     profile: {type: NFW}
-#bootes_II:
-#  pace2018_nfw:
-#    j_integ: 7.079e+18
-#    j_sigma: 0.6
-#    profile: {type: NFW}
+bootes_II:
+  pace2018_photoj_nfw:
+    j_integ: 7.41e+18 # Eq. 12
+    j_sigma: .nan
+    profile: {type: NFW}
 #bootes_III:
 #  pace2018_nfw:
 #    j_integ: 5.754e+18
@@ -76,11 +76,11 @@ carina_II:
     j_integ: 6.38e+18
     j_sigma: .nan
     profile: {type: NFW}
-#carina_III:
-#  pace2018_photoj_nfw:
-#    j_integ: 1.62e+19 # Eq. 12
-#    j_sigma: .nan
-#    profile: {type: NFW}
+carina_III:
+  pace2018_photoj_nfw:
+    j_integ: 2.42e+19 # Eq. 12
+    j_sigma: .nan
+    profile: {type: NFW}
 cetus_II:
   pace2018_photoj_nfw:
     j_integ: 1.26e+19
