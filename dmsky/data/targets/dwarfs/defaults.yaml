@@ -919,8 +919,8 @@ hydrus_I:
     color:      'cyan'
     ra: 37.389
     dec: -79.3089
-    distance: 27.8
-    dsigma: 0.6
+    distance: 27.6
+    dsigma: 0.5
     major_axis: 7.42
     ellipticity: 0.21
     abs_mag: -4.71

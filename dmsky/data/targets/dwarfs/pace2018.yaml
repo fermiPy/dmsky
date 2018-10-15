@@ -197,6 +197,15 @@ horologium_II:
 #    j_integ: 5.13e+17
 #    j_sigma: .nan
 #    profile: {type: NFW}
+hydrus_I: 
+  # Eq. 9 of Pace & Strigari with values from Table 1 of Koposov et al. 2018
+  # sigma = 2.69 km/s
+  # d = 27.6 kpc
+  # rhalf = 53.3 pc
+  pace2018_nfw:
+    j_integ: 1.08e+18
+    j_sigma: .nan
+    profile: {type: NFW}
 indus_II:
   pace2018_photoj_nfw:
     j_integ: 7.94e+16
