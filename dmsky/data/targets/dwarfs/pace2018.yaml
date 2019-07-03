@@ -1,0 +1,441 @@
+# Dwarf characterisitcs from:
+# Pace & Strigari (2018) (arXiv:1802.06811)
+# Values have been taken from Table 2 and Table A1
+# $Format:%d$
+
+# Photoj comes from Eq. 12 using input from Table A1
+# Lv = 10**( (Mv - 4.83)/-2.5 ) Lsun
+# photoj = 10^17.93 * ( Lv/1e4 Lsun)^0.32 * (d/100 kpc)^-2 * (rhalf/100 pc)^-1
+
+aquarius_II:
+  pace2018_nfw:
+    j_integ: 1.86e+18
+    j_sigma: 0.62
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 4.68e+17
+    j_sigma: .nan
+    profile: {type: NFW}
+bootes_I:
+  pace2018_nfw:
+    j_integ: 1.45e+18
+    j_sigma: 0.29
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 1.46e+18
+    j_sigma: .nan
+    profile: {type: NFW}
+bootes_II:
+  pace2018_photoj_nfw:
+    j_integ: 7.41e+18 # Eq. 12
+    j_sigma: .nan
+    profile: {type: NFW}
+#bootes_III:
+#  pace2018_nfw:
+#    j_integ: 5.754e+18
+#    j_sigma: 0.6
+#    profile: {type: NFW}
+canes_venatici_I:
+  pace2018_nfw:
+    j_integ: 2.63e+17
+    j_sigma: 0.16
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 1.25e+17
+    j_sigma: .nan
+    profile: {type: NFW}
+canes_venatici_II:
+  pace2018_nfw:
+    j_integ: 6.61e+17
+    j_sigma: 0.46
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 4.13e+17
+    j_sigma: .nan
+    profile: {type: NFW}
+#canis_major:
+#  pace2018_nfw:
+#    j_integ: .nan
+#    j_sigma: .nan
+#    profile: {type: NFW}
+carina:
+  pace2018_nfw:
+    j_integ: 8.13e+17
+    j_sigma: 0.095
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 1.20e+18
+    j_sigma: .nan
+    profile: {type: NFW}
+carina_II:
+  pace2018_nfw:
+    j_integ: 1.74e+18
+    j_sigma: 0.53
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 6.38e+18
+    j_sigma: .nan
+    profile: {type: NFW}
+carina_III:
+  pace2018_photoj_nfw:
+    j_integ: 2.42e+19 # Eq. 12
+    j_sigma: .nan
+    profile: {type: NFW}
+cetus_II:
+  pace2018_photoj_nfw:
+    j_integ: 1.26e+19
+    j_sigma: .nan
+    profile: {type: NFW}
+cetus_III:
+  pace2018_photoj_nfw:
+    j_integ: 1.58e+17
+    j_sigma: .nan
+    profile: {type: NFW}
+columba_I:
+  pace2018_photoj_nfw:
+    j_integ: 2.00e+17
+    j_sigma: .nan
+    profile: {type: NFW}
+coma_berenices:
+  pace2018_nfw:
+    j_integ: 1.0e+19
+    j_sigma: 0.355
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 5.82e+18
+    j_sigma: .nan
+    profile: {type: NFW}
+#crater_II:
+#  pace2018_nfw:
+#    j_integ: .nan
+#    j_sigma: .nan
+#    profile: {type: NFW}
+draco:
+  pace2018_nfw:
+    j_integ: 6.76e+18
+    j_sigma: 0.1
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 2.33e+18
+    j_sigma: .nan
+    profile: {type: NFW}
+draco_II:
+  pace2018_nfw:
+    j_integ: 9.33e+18
+    j_sigma: 1.49
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 9.08e+19
+    j_sigma: .nan
+    profile: {type: NFW}
+eridanus_II:
+  pace2018_nfw:
+    j_integ: 1.38e+17
+    j_sigma: 0.275
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 6.38e+16
+    j_sigma: .nan
+    profile: {type: NFW}
+#eridanus_III:
+#  pace2018_nfw:
+#    j_integ: .nan
+#    j_sigma: .nan
+#    profile: {type: NFW}
+fornax:
+  pace2018_nfw:
+    j_integ: 1.17e+18
+    j_sigma: 0.105
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 7.31e+17
+    j_sigma: .nan
+    profile: {type: NFW}
+grus_I:
+  pace2018_nfw:
+    j_integ: 7.41e+16
+    j_sigma: 1.6
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 6.72e+17
+    j_sigma: .nan
+    profile: {type: NFW}
+grus_II:
+  pace2018_photoj_nfw:
+    j_integ: 2.51e+18
+    j_sigma: .nan
+    profile: {type: NFW}
+hercules:
+  pace2018_nfw:
+    j_integ: 2.14e+17
+    j_sigma: 0.52
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 7.02e+17
+    j_sigma: .nan
+    profile: {type: NFW}
+horologium_I:
+  pace2018_nfw:
+    j_integ: 1.78e+19
+    j_sigma: 0.745
+    profile: {type: NFW}
+  pace2018_aj_nfw:
+    j_integ: 6.92e+18
+    j_sigma: 0.845
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 2.15e+18
+    j_sigma: .nan
+    profile: {type: NFW}
+horologium_II:
+  pace2018_photoj_nfw:
+    j_integ: 2.00e+18
+    j_sigma: .nan
+    profile: {type: NFW}
+#hydra_II: # upper limit
+#  pace2018_nfw:
+#    j_integ: 5.13e+17
+#    j_sigma: .nan
+#    profile: {type: NFW}
+hydrus_I: 
+  # Eq. 9 of Pace & Strigari with values from Table 1 of Koposov et al. 2018
+  # sigma = 2.69 km/s
+  # d = 27.6 kpc
+  # rhalf = 53.3 pc
+  pace2018_nfw:
+    j_integ: 1.08e+18
+    j_sigma: .nan
+    profile: {type: NFW}
+indus_II:
+  pace2018_photoj_nfw:
+    j_integ: 7.94e+16
+    j_sigma: .nan
+    profile: {type: NFW}
+#kim_2:
+#  pace2018_nfw:
+#    j_integ: .nan
+#    j_sigma: .nan
+#    profile: {type: NFW}
+#laevens_3:
+#  pace2018_nfw:
+#    j_integ: .nan
+#    j_sigma: .nan
+#    profile: {type: NFW}
+leo_I:
+  pace2018_nfw:
+    j_integ: 4.47e+17
+    j_sigma: 0.125
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 3.27e+17
+    j_sigma: .nan
+    profile: {type: NFW}
+leo_II:
+  pace2018_nfw:
+    j_integ: 5.75e+17
+    j_sigma: 0.2
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 3.97e+17
+    j_sigma: .nan
+    profile: {type: NFW}
+leo_IV:
+  pace2018_nfw:
+    j_integ: 3.16e+16
+    j_sigma: 1.055
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 3.00e+17
+    j_sigma: .nan
+    profile: {type: NFW}
+leo_T:
+  pace2018_nfw:
+    j_integ: 7.244e+16
+    j_sigma: 0.475
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 6.39e+16
+    j_sigma: .nan
+    profile: {type: NFW}
+leo_V:
+  pace2018_nfw:
+    j_integ: 4.9e+17
+    j_sigma: 0.96
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 6.92e+17
+    j_sigma: .nan
+    profile: {type: NFW}
+#lmc:
+#  pace2018_nfw:
+#    j_integ: .nan
+#    j_sigma: .nan
+#    profile: {type: NFW}
+pegasus_III:
+  pace2018_nfw:
+    j_integ: 2.57e+18
+    j_sigma: 0.965
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 2.95e+17
+    j_sigma: .nan
+    profile: {type: NFW}
+phoenix_II:
+  pace2018_photoj_nfw:
+    j_integ: 2.00e+18
+    j_sigma: .nan
+    profile: {type: NFW}
+pictor_I:
+  pace2018_photoj_nfw:
+    j_integ: 7.943e+17
+    j_sigma: .nan
+    profile: {type: NFW}
+pictor_II:
+  pace2018_photoj_nfw:
+    j_integ: 5.01e+18
+    j_sigma: .nan
+    profile: {type: NFW}
+pisces_II:
+  pace2018_photoj_nfw:
+    j_integ: 2.04e+17
+    j_sigma: 1.02
+    profile: {type: NFW}
+reticulum_II:
+  pace2018_nfw:
+    j_integ: 7.41e+18
+    j_sigma: 0.38
+    profile: {type: NFW}
+  pace2018_aj_nfw:
+    j_integ: 8.91e+18
+    j_sigma: 0.375
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 1.54e+19
+    j_sigma: .nan
+    profile: {type: NFW}
+reticulum_III:
+  pace2018_photoj_nfw:
+    j_integ: 1.00e+18
+    j_sigma: .nan
+    profile: {type: NFW}
+#sagittarius:
+#  pace2018_nfw:
+#    j_integ: .nan
+#    j_sigma: .nan
+#    profile: {type: NFW}
+sagittarius_II:
+  pace2018_photoj_nfw:
+    j_integ: 5.01e+18
+    j_sigma: .nan
+    profile: {type: NFW}
+sculptor:
+  pace2018_nfw:
+    j_integ: 3.72e+18
+    j_sigma: 0.075
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 2.97e+18
+    j_sigma: .nan
+    profile: {type: NFW}
+segue_1:
+  pace2018_nfw:
+    j_integ: 1.38e+19
+    j_sigma: 0.555
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 2.60e+19
+    j_sigma: .nan
+    profile: {type: NFW}
+#segue_2: # upper limit
+#  pace2018_nfw:
+#    j_integ: 1.48e+18
+#    j_sigma: .nan
+#    profile: {type: NFW}
+sextans:
+  pace2018_nfw:
+    j_integ: 5.37e+17
+    j_sigma: 0.125
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 6.05e+17
+    j_sigma: .nan
+    profile: {type: NFW}
+#smc:
+#  pace2018_nfw:
+#    j_integ: .nan
+#    j_sigma: .nan
+#    profile: {type: NFW}
+#triangulum_II: # upper limit
+#  pace2018_nfw:
+#    j_integ: 5.25e+19
+#    j_sigma: .nan
+#    profile: {type: NFW}
+tucana_II:
+  pace2018_nfw:
+    j_integ: 6.92e+18
+    j_sigma: 0.52
+    profile: {type: NFW}
+  pace2018_an_nfw:
+    j_integ: 1.05e+19
+    j_sigma: 0.545
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 1.06e+18
+    j_sigma: .nan
+    profile: {type: NFW}
+#tucana_III: # upper limit
+#  pace2018_nfw:
+#    j_integ: 4.79e+17
+#    j_sigma: .nan
+#    profile: {type: NFW}
+tucana_IV:
+  pace2018_photoj_nfw:
+    j_integ: 2.51e+18
+    j_sigma: .nan
+    profile: {type: NFW}
+tucana_V:
+  pace2018_photoj_nfw:
+    j_integ: 1.00e+19
+    j_sigma: .nan
+    profile: {type: NFW}
+ursa_major_I:
+  pace2018_nfw:
+    j_integ: 1.78e+18
+    j_sigma: 0.29
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 4.95e+17
+    j_sigma: .nan
+    profile: {type: NFW}
+ursa_major_II:
+  pace2018_nfw:
+    j_integ: 2.75e+19
+    j_sigma: 0.415
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 5.36e+18
+    j_sigma: .nan
+    profile: {type: NFW}
+ursa_minor:
+  pace2018_nfw:
+    j_integ: 7.76e+18
+    j_sigma: 0.12
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 2.14e+18
+    j_sigma: .nan
+    profile: {type: NFW}
+virgo_I:
+  pace2018_photoj_nfw:
+    j_integ: 7.94e+17
+    j_sigma: .nan
+    profile: {type: NFW}
+willman_1:
+  pace2018_nfw:
+    j_integ: 3.24e+19
+    j_sigma: 0.49
+    profile: {type: NFW}
+  pace2018_photoj_nfw:
+    j_integ: 1.58e+19
+    j_sigma: .nan
+    profile: {type: NFW}
