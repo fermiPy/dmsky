@@ -84,7 +84,11 @@ class FileLibrary(object):
         for path in paths:
             # Should use logging
             print("Using %s for %s" % (path, cls.__name__))
-            subdirs = [path] + next(os.walk(path))[1]
+            try:
+                subdirs = [path] + next(os.walk(path))[1]
+            except StopIteration:
+                print("Path %s does have any subdirectories" % path)
+                pass
             for subdir in subdirs:
                 infiles = glob.glob(join(path, subdir) + '/*.yaml')
                 for f in infiles:
