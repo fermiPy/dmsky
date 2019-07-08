@@ -31,15 +31,13 @@ def test_densities():
         if cls == 'DensityProfile': continue
         dp = dmsky.density.factory(cls)
         dp.set_rho_r(1,dp.rs)
-        denp = dp(radius)
-        y_min = min(y_min, denp.min())
+        denp = dp(radius).clip(y_min, np.inf)
         print(dp)
         # Small offset for visualization
         epsilon = i*0.2e-1
         #epsilon = 0
         plt.plot(radius, denp * (1+epsilon),'-',label=cls)
         print('')
-    ax.set_ymin(
     ax.set_yscale('log')
     ax.set_xscale('log')
     plt.xlabel("Radius")
