@@ -26,16 +26,20 @@ radius = np.linspace(0.001,5,1000)
 # Plot the different profiles
 def test_densities():
     fig,ax = plt.subplots()
+    y_min = 1e-4
     for i,cls in enumerate(classes):
         if cls == 'DensityProfile': continue
         dp = dmsky.density.factory(cls)
         dp.set_rho_r(1,dp.rs)
+        denp = dp(radius)
+        y_min = min(y_min, denp.min())
         print(dp)
         # Small offset for visualization
         epsilon = i*0.2e-1
         #epsilon = 0
-        plt.plot(radius,dp(radius) * (1+epsilon),'-',label=cls)
+        plt.plot(radius, denp * (1+epsilon),'-',label=cls)
         print('')
+    ax.set_ymin(
     ax.set_yscale('log')
     ax.set_xscale('log')
     plt.xlabel("Radius")
