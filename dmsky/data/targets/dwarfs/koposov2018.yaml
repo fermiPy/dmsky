@@ -1,7 +1,7 @@
 # https://arxiv.org/abs/1804.06430
 hydrus_I: 
   # Table 1 in Koposov et al. 2018
-  # log10(J(0.5deg)) = 18.33 [+0.38,−0.34]
+  # log10(J(0.5deg)) = 18.33 [+0.38,0.34]
   koposov2018_nfw:
     j_integ: 2.14e18
     j_sigma: 0.36

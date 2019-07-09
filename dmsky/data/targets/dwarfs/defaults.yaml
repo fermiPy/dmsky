@@ -902,7 +902,7 @@ carina_III:
     name:       'carina_III'
     color:      'cyan'
     ra: 114.6298
-    dec: −57.8997
+    dec: 57.8997
     distance: 27.8
     dsigma: 0.6
     major_axis: 3.75
