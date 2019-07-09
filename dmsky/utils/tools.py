@@ -14,7 +14,7 @@ def yaml_load(filename):
         raise Exception('File does not exist: %s' % (filename))
     try:
         ret = yaml.load(open(filename), Loader=yaml.CLoader)
-    except IOError:
+    except (IOError, AttributeError):
         ret = yaml.load(open(filename), Loader=yaml.Loader)
     return ret
 
@@ -33,7 +33,7 @@ def yaml_dump(x, filename):
 
     try:
         out.write(yaml.dump(x, Dumper=yaml.CDumper))
-    except IOError:
+    except (IOError, AttributeError):
         out.write(yaml.dump(x, Dumper=yaml.Dumper))
     out.close()
 
