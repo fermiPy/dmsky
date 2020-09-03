@@ -183,7 +183,10 @@ class Target(Model):
     def _d_sigma(self):
         """Compute the uncertaintiy on the integrated D-factor
         """
-        dd = self.d_derivs
+        try:
+            dd = self.d_derivs
+        except ValueError:
+            return None
         den = self.density
         dv = np.matrix(np.zeros((len(den.deriv_params))))
         for i, pname in enumerate(den.deriv_params):
@@ -625,10 +628,14 @@ class Target(Model):
         self.setp('j_map_file', value=filename)
         return hdu.writeto(filename, clobber=clobber, **file_kwargs)
 
-    #def write_jmap_hpx(self, filename):
-    #    """Write the J-factor to a template map.
-    #    """
-    #    raise RuntimeError('write_jmap_hpx not implemented')
+    def write_jmap_hpx(self, filename):
+        """Write the J-factor to a template map.
+        """
+        from dmsky.skymap import Skymap
+        themap = Skymap([self], ann=True)
+        themap.write_fits(filename)
+        return themap
+
 
     write_jmap = write_jmap_wcs
 
@@ -663,10 +670,13 @@ class Target(Model):
         self.setp('d_map_file', value=filename)
         return hdu.writeto(filename, clobber=clobber, **file_kwargs)
 
-    #def write_dmap_hpx(self, filename):
-    #    """Write the D-factor to a template map.
-    #    """
-    #    raise RuntimeError('write_dmap_hpx not implemented')
+    def write_dmap_hpx(self, filename):
+        """Write the D-factor to a template map.
+        """
+        from dmsky.skymap import Skymap
+        themap = Skymap([self], ann=False)
+        themap.write_fits(filename)
+
 
     write_dmap = write_dmap_wcs
 
