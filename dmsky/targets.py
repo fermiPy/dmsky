@@ -183,7 +183,10 @@ class Target(Model):
     def _d_sigma(self):
         """Compute the uncertaintiy on the integrated D-factor
         """
-        dd = self.d_derivs
+        try:
+            dd = self.d_derivs
+        except ValueError:
+            return None
         den = self.density
         dv = np.matrix(np.zeros((len(den.deriv_params))))
         for i, pname in enumerate(den.deriv_params):
