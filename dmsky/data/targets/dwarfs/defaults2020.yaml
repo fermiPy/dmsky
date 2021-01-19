@@ -1,0 +1,1010 @@
+# Default set of dwarf characterisitcs.
+# All dwarfs should appear in this file.
+#
+#key:
+#  default:
+#    type:         dwarf or cluster
+#    title:        full name
+#    abbr:         IAU abbreviation
+#    name:         codename
+#    color:        display color
+#    ra:           right ascension (deg)
+#    dec:          declination (deg)
+#    distance:     distance (kpc)
+#    dsigma:       distance uncertainty (kpc)
+#    major_axis:   semi-major half-light radius (arcmin)
+#    ellipticity:  ellipticity
+#    abs_mag:      absolute magnitude (mag)
+#    profile:      density profile type
+
+antlia_II:
+  default:
+    type:         dwarf
+    title:        'Antlia II'
+    abbr:         'Ant I'
+    name:         'antlia_II'
+    color:        'blue'
+    ra:  143.8868
+    dec: -36.7673
+    distance: 131.8
+    dsigma: 6.0
+    major_axis: 76.2
+    ellipticity: 0.38
+    abs_mag: -9.03
+    profile: {type: NFW}
+
+aquarius_II:
+  default:
+    type:         dwarf
+    title:        'Aquarius II'
+    abbr:         'Aqr II'
+    name:         'aquarius_II'
+    color:        'cyan'
+    ra:  338.4813
+    dec: -9.3274
+    distance: 107.6
+    dsigma: 3.3
+    major_axis: 5.1
+    ellipticity: 0.39
+    abs_mag: -4.4
+    profile: {type: NFW}
+
+bootes_I:
+  default:
+    type:         dwarf
+    title:        'Bootes I'
+    abbr:         'Boo I'
+    name:         'bootes_I'
+    color:        'blue'
+    ra:  210.02
+    dec: 14.5135
+    distance: 66.1
+    dsigma: 2.0
+    major_axis: 9.97
+    ellipticity: 0.3
+    abs_mag: -6.02
+    profile: {type: NFW}
+
+bootes_II:
+  default:
+    type:         dwarf
+    title:        'Bootes II'
+    abbr:         'Boo II'
+    name:         'bootes_II'
+    color:        'mediumblue'
+    ra:  209.5141
+    dec: 12.8553
+    distance: 41.7
+    dsigma: 1.0
+    major_axis: 3.17
+    ellipticity: 0.25
+    abs_mag: -2.94
+    profile: {type: NFW}
+
+bootes_III:
+  default:
+    type:         dwarf
+    title:        'Bootes III'
+    abbr:         'Boo III'
+    name:         'bootes_III'
+    color:        'darkblue'
+    ra:  209.3
+    dec: 26.8
+    distance: 46.8
+    dsigma: 2.0
+    major_axis: 30
+    ellipticity: 0.5
+    abs_mag: -5.75
+    profile: {type: NFW}
+
+bootes_IV:
+  default:
+    type:         dwarf
+    title:        'Bootes IV'
+    abbr:         'Boo IV'
+    name:         'bootes_IV'
+    color:        'darkblue'
+    ra:  233.689
+    dec: 43.726
+    distance: 208.9
+    dsigma: 19.0
+    major_axis: 7.6
+    ellipticity: 0.64
+    abs_mag: -4.53
+    profile: {type: NFW}
+
+canis_major:
+  default:
+    type:         dwarf
+    title:        'Canis Major'
+    abbr:         'CMa'
+    name:         'canis_major'
+    color:        'SlateBlue'
+    ra:  108.1458333
+    dec: -27.66666667
+    distance: 7.2
+    dsigma: 1.0
+    major_axis: .nan
+    ellipticity: .nan
+    abs_mag: -14.39
+    profile: {type: NFW}
+
+canes_venatici_I:
+  default:
+    type:         dwarf
+    title:        'Canes Venatici I'
+    abbr:         'CVn I'
+    name:         'canes_venatici_I'
+    color:        'dodgerblue'
+    ra:  202.0091
+    dec: 33.5521
+    distance: 217.8
+    dsigma: 10.0
+    major_axis: 7.12
+    ellipticity: 0.44
+    abs_mag: -8.8
+    profile: {type: NFW}
+
+canes_venatici_II:
+  default:
+    type:         dwarf
+    title:        'Canes Venatici II'
+    abbr:         'CVn II'
+    name:         'canes_venatici_II'
+    color:        'steelblue'
+    ra:  194.2927
+    dec: 34.3226
+    distance: 160.0
+    dsigma: 4.0
+    major_axis: 1.52
+    ellipticity: 0.4
+    abs_mag: -5.17
+    profile: {type: NFW}
+
+carina:
+  default:
+    type:         dwarf
+    title:        'Carina'
+    abbr:         'Car'
+    name:         'carina'
+    color:        'mediumslateblue'
+    ra:  100.4065
+    dec: -50.9593
+    distance: 105.0
+    dsigma: 6.0
+    major_axis: 10.1
+    ellipticity: 0.36
+    abs_mag: -9.43
+    profile: {type: NFW}
+
+carina_II:
+  default:
+    type:         dwarf
+    title:        'Carina II'
+    abbr:         'Car II'
+    name:         'carina_II'
+    color:        'cyan'
+    ra:  114.1066
+    dec: -57.9991
+    distance: 36.1
+    dsigma: 0.6
+    major_axis: 8.69
+    ellipticity: 0.34
+    abs_mag: -4.5
+    profile: {type: NFW}
+
+carina_III:
+  default:
+    type:         dwarf
+    title:        'Carina III'
+    abbr:         'Car III'
+    name:         'carina_III'
+    color:        'cyan'
+    ra:  114.6298
+    dec: -57.8997
+    distance: 27.8
+    dsigma: 0.6
+    major_axis: 3.75
+    ellipticity: 0.55
+    abs_mag: -2.4
+    profile: {type: NFW}
+
+centaurus_I:
+  default:
+    type:         dwarf
+    title:        'Centarus I'
+    abbr:         'Cen I'
+    name:         'centaurus_I'
+    color:        'cyan'
+    ra:  189.585
+    dec: -40.902
+    distance: 116.4
+    dsigma: 1.1
+    major_axis: 2.9
+    ellipticity: 0.4
+    abs_mag: -5.55
+    profile: {type: NFW}
+
+cetus_II:
+  default:
+    type:         dwarf
+    title:        'Cetus II'
+    abbr:         'Cet II'
+    name:         'cetus_II'
+    color:        'cyan'
+    ra:  19.47
+    dec: -17.42
+    distance: 29.9
+    dsigma: 3.0
+    major_axis: 1.9
+    ellipticity: 0 # < 0.4
+    abs_mag: 0.0
+    profile: {type: NFW}
+
+cetus_III:
+  default:
+    type:         dwarf
+    title:        'Cetus III'
+    abbr:         'Cet III'
+    name:         'cetus_III'
+    color:        'cyan'
+    ra:  31.331
+    dec: -4.27
+    distance: 251.2
+    dsigma: 17.5
+    major_axis: 1.23
+    ellipticity: 0.76
+    abs_mag: -2.5
+    profile: {type: NFW}
+
+columba_I:
+  default:
+    type:         dwarf
+    title:        'Columba I'
+    abbr:         'Col I'
+    name:         'columba_I'
+    color:        'gray'
+    ra:  82.86
+    dec: -28.01
+    distance: 182.8
+    dsigma: 18.0
+    major_axis: 2.2
+    ellipticity: 0.3
+    abs_mag: -4.2
+    profile: {type: NFW}
+
+coma_berenices:
+  default:
+    type:         dwarf
+    title:        'Coma Berenices'
+    abbr:         'Com'
+    name:         'coma_berenices'
+    color:        'green'
+    ra:  186.7454
+    dec: 23.9069
+    distance: 44.1
+    dsigma: 4.0
+    major_axis: 5.64
+    ellipticity: 0.37
+    abs_mag: -4.38
+    profile: {type: NFW}
+
+crater_II:
+  default:
+    type:         dwarf
+    title:        'Crater II'
+    abbr:         'Crt II'
+    name:         'crater_II'
+    color:        'cyan'
+    ra:  177.31
+    dec: -18.413
+    distance: 117.5
+    dsigma: 1.1
+    major_axis: 31.2
+    ellipticity: 0 # < 0.1
+    abs_mag: -8.2
+    profile: {type: NFW}
+
+draco:
+  default:
+    type:         dwarf
+    title:        'Draco'
+    abbr:         'Dra'
+    name:         'draco'
+    color:        'chartreuse'
+    ra:  260.0684
+    dec: 57.9185
+    distance: 75.9
+    dsigma: 6.0
+    major_axis: 9.67
+    ellipticity: 0.29
+    abs_mag: -8.71
+    profile: {type: NFW}
+
+draco_II:
+  default:
+    type:         dwarf
+    title:        'Draco II'
+    abbr:         'Dra II'
+    name:         'draco_II'
+    color:        'dodgerblue'
+    ra:  238.174
+    dec: 64.579
+    distance: 21.6
+    dsigma: 3
+    major_axis: 3
+    ellipticity: 0.23
+    abs_mag: -0.8
+    profile: {type: NFW}
+
+eridanus_II:
+  default:
+    type:         dwarf
+    title:        'Eridanus II'
+    abbr:         'Eri II'
+    name:         'eridanus_II'
+    color:        'crimson'
+    ra:  56.0925
+    dec: -43.5329
+    distance: 380.2
+    dsigma: 30.0
+    major_axis: 1.77
+    ellipticity: 0.35
+    abs_mag: -7.21
+    profile: {type: NFW}
+
+eridanus_III:
+  default:
+    type:         dwarf
+    title:        'Eridanus III'
+    abbr:         'Eri III'
+    name:         'eridanus_III'
+    color:        'slategrey'
+    ra:  35.6952
+    dec: -52.2838
+    distance: 87.1
+    dsigma: 10.0
+    major_axis: 0.3
+    ellipticity: 0.58
+    abs_mag: -2.37
+    profile: {type: NFW}
+
+fornax:
+  default:
+    type:         dwarf
+    title:        'Fornax'
+    abbr:         'For'
+    name:         'fornax'
+    color:        'magenta'
+    ra:  39.9583
+    dec: -34.4997
+    distance: 147.2
+    dsigma: 12.0
+    major_axis: 19.6
+    ellipticity: 0.29
+    abs_mag: -13.46
+    profile: {type: NFW}
+
+grus_I:
+  default:
+    type:         dwarf
+    title:        'Grus I'
+    abbr:         'Gru I'
+    name:         'grus_I'
+    color:        'purple'
+    ra:  344.1797
+    dec: -50.18
+    distance: 120.2
+    dsigma: 12
+    major_axis: 0.81
+    ellipticity: 0.45
+    abs_mag: -3.47
+    profile: {type: NFW}
+
+grus_II:
+  default:
+    type:         dwarf
+    title:        'Grus II'
+    abbr:         'Gru II'
+    name:         'grus_II'
+    color:        'magenta'
+    ra:  331.02
+    dec: -46.44
+    distance: 53.0
+    dsigma: 5.0
+    major_axis: 6
+    ellipticity: 0 # < 0.2
+    abs_mag: -3.9
+    profile: {type: NFW}
+
+hercules:
+  default:
+    type:         dwarf
+    title:        'Hercules'
+    abbr:         'Her'
+    name:         'hercules'
+    color:        'orchid'
+    ra:  247.7722
+    dec: 12.7852
+    distance: 131.8
+    dsigma: 12.0
+    major_axis: 5.63
+    ellipticity: 0.69
+    abs_mag: -5.83
+    profile: {type: NFW}
+
+horologium_I:
+  default:
+    type:         dwarf
+    title:        'Horologium I'
+    abbr:         'Hor I'
+    name:         'horologium_I'
+    color:        'tan'
+    ra:  43.8813
+    dec: -54.116
+    distance: 79.0
+    dsigma: 8.0
+    major_axis: 1.59
+    ellipticity: 0.27
+    abs_mag: -3.55
+    profile: {type: NFW}
+
+horologium_II:
+  default:
+    type:         dwarf
+    title:        'Horologium II'
+    abbr:         'Hor II'
+    name:         'horologium_II'
+    color:        'gold'
+    ra:  49.1077
+    dec: -50.0486
+    distance: 78.0
+    dsigma: 8.0
+    major_axis: 2.09
+    ellipticity: 0.52
+    abs_mag: -2.6
+    profile: {type: NFW}
+
+hydra_II:
+  default:
+    type:         dwarf
+    title:        'Hydra II'
+    abbr:         'Hya II'
+    name:         'hydra_II'
+    color:        'dodgerblue'
+    ra:  185.4251
+    dec: -31.986
+    distance: 150.7
+    dsigma: 10
+    major_axis: 1.52
+    ellipticity: 0.24
+    abs_mag: -4.6
+    profile: {type: NFW}
+
+hydrus_I:
+  default:
+    type:         dwarf
+    title:        'Hydrus I'
+    abbr:         'Hyi I'
+    name:         'hydrus_I'
+    color:        'cyan'
+    ra:  37.389
+    dec: -79.3089
+    distance: 27.5
+    dsigma: 0.5
+    major_axis: 7.42
+    ellipticity: 0.21
+    abs_mag: -4.71
+    profile: {type: NFW}
+
+indus_II:
+  default:
+    type:         dwarf
+    title:        'Indus II'
+    abbr:         'Ind II'
+    name:         'indus_II'
+    color:        'indigo'
+    ra:  309.72
+    dec: -46.16
+    distance: 213.8
+    dsigma: 16.0
+    major_axis: 2.9
+    ellipticity: 0 # < 0.4
+    abs_mag: -4.3
+    profile: {type: NFW}
+
+kim_2:
+  default:
+    type:         dwarf
+    title:        'Kim 2'
+    abbr:         'Kim2'
+    name:         'kim_2'
+    color:        'indianred'
+    ra:  317.202
+    dec: -51.1671
+    distance: 100.0
+    dsigma: 7.0
+    major_axis: 0.48
+    ellipticity: 0.32
+    abs_mag: -3.32
+    profile: {type: NFW}
+
+laevens_1:
+  default:
+    type:         dwarf
+    title:        'Laevens 1'
+    abbr:         'Lae 1'
+    name:         'laevens_1'
+    color:        'dodgerblue'
+    ra:  174.0668
+    dec: -10.8772
+    distance: 145.0
+    dsigma: 17.0
+    major_axis: 0.51
+    ellipticity: 0.17
+    abs_mag: -4.8
+    profile: {type: NFW}
+
+laevens_3:
+  default:
+    type:         dwarf
+    title:        'Laevens 3'
+    abbr:         'Lae 3'
+    name:         'laevens_3'
+    color:        'dodgerblue'
+    ra:  316.7263
+    dec: 14.98
+    distance: 67.3
+    dsigma: 3
+    major_axis: 0.4
+    ellipticity: 0.21
+    abs_mag: -4.4
+    profile: {type: NFW}
+
+leo_I:
+  default:
+    type:         dwarf
+    title:        'Leo I'
+    abbr:         'Leo I'
+    name:         'leo_I'
+    color:        'gold'
+    ra:  152.1146
+    dec: 12.3059
+    distance: 254.0
+    dsigma: 15.0
+    major_axis: 3.65
+    ellipticity: 0.3
+    abs_mag: -11.78
+    profile: {type: NFW}
+
+leo_II:
+  default:
+    type:         dwarf
+    title:        'Leo II'
+    abbr:         'Leo II'
+    name:         'leo_II'
+    color:        'goldenrod'
+    ra:  168.3627
+    dec: 22.1529
+    distance: 233.3
+    dsigma: 14.0
+    major_axis: 2.52
+    ellipticity: 0.07
+    abs_mag: -9.74
+    profile: {type: NFW}
+
+leo_IV:
+  default:
+    type:         dwarf
+    title:        'Leo IV'
+    abbr:         'Leo IV'
+    name:         'leo_IV'
+    color:        '#C58917'
+    ra:  173.2405
+    dec: -0.5453
+    distance: 154.2
+    dsigma: 6.0
+    major_axis: 2.54
+    ellipticity: 0.17
+    abs_mag: -4.99
+    profile: {type: NFW}
+
+leo_V:
+  default:
+    type:         dwarf
+    title:        'Leo V'
+    abbr:         'Leo V'
+    name:         'leo_V'
+    color:        'Peru'
+    ra:  172.7857
+    dec: 2.2194
+    distance: 177.8
+    dsigma: 10.0
+    major_axis: 1
+    ellipticity: 0.43
+    abs_mag: -4.4
+    profile: {type: NFW}
+
+leo_T:
+  default:
+    type:         dwarf
+    title:        'Leo T'
+    abbr:         'Leo T'
+    name:         'leo_T'
+    color:        'gold2'
+    ra: 143.7225
+    dec: 17.05139
+    distance: 417.0
+    dsigma: 19.
+    major_axis: 0.99
+    ellipticity: 0.0
+    abs_mag: -8.0
+    profile: {type: NFW}
+
+pegasus_III:
+  default:
+    type:         dwarf
+    title:        'Pegasus III'
+    abbr:         'Peg III'
+    name:         'pegasus_III'
+    color:        'black'
+    ra:  336.102
+    dec: 5.405
+    distance: 214.8
+    dsigma: 20.0
+    major_axis: 0.85
+    ellipticity: 0.38
+    abs_mag: -3.4
+    profile: {type: NFW}
+
+phoenix_II:
+  default:
+    type:         dwarf
+    title:        'Phoenix II'
+    abbr:         'Phe II'
+    name:         'phoenix_II'
+    color:        'indigo'
+    ra:  354.996
+    dec: -54.4115
+    distance: 83.0
+    dsigma: 10.0
+    major_axis: 1.49
+    ellipticity: 0.67
+    abs_mag: -3.3
+    profile: {type: NFW}
+
+pictor_I:
+  default:
+    type:         dwarf
+    title:        'Pictor I'
+    abbr:         'Pic I'
+    name:         'pictor_I'
+    color:        'saddlebrown'
+    ra:  70.949
+    dec: -50.2854
+    distance: 113.8
+    dsigma: 12.0
+    major_axis: 0.88
+    ellipticity: 0.63
+    abs_mag: -3.45
+    profile: {type: NFW}
+
+pictor_II:
+  default:
+    type:         dwarf
+    title:        'Pictor II'
+    abbr:         'Pic II'
+    name:         'pictor_II'
+    color:        'cyan'
+    ra:  101.18
+    dec: -59.897
+    distance: 45.7
+    dsigma: 5.0
+    major_axis: 3.8
+    ellipticity: 0.13
+    abs_mag: -3.2
+    profile: {type: NFW}
+
+pisces_II:
+  default:
+    type:         dwarf
+    title:        'Pisces II'
+    abbr:         'Psc II'
+    name:         'pisces_II'
+    color:        'chocolate'
+    ra:  344.6345
+    dec: 5.9526
+    distance: 182.0
+    dsigma: .nan
+    major_axis: 1.12
+    ellipticity: 0.34
+    abs_mag: -4.22
+    profile: {type: NFW}
+
+reticulum_II:
+  default:
+    type:         dwarf
+    title:        'Reticulum II'
+    abbr:         'Ret II'
+    name:         'reticulum_II'
+    color:        'violet'
+    ra:  53.9203
+    dec: -54.0513
+    distance: 30.2
+    dsigma: 3.0
+    major_axis: 5.52
+    ellipticity: 0.58
+    abs_mag: -3.88
+    profile: {type: NFW}
+
+reticulum_III:
+  default:
+    type:         dwarf
+    title:        'Reticulum III'
+    abbr:         'Ret III'
+    name:         'reticulum_III'
+    color:        'red'
+    ra:  56.36
+    dec: -60.45
+    distance: 91.6
+    dsigma: 13.0
+    major_axis: 2.4
+    ellipticity: 0 # < 0.4
+    abs_mag: -3.3
+    profile: {type: NFW}
+
+sagittarius:
+  default:
+    type:         dwarf
+    title:        'Sagittarius'
+    abbr:         'Sgr'
+    name:         'sagittarius'
+    color:        'BlueViolet'
+    ra:  283.83125
+    dec: -30.545278
+    distance: 26.3
+    dsigma: 2.0
+    major_axis: 342
+    ellipticity: 0.64
+    abs_mag: -13.5
+    profile: {type: NFW}
+
+sagittarius_II:
+  default:
+    type:         dwarf
+    title:        'Sagittarius II'
+    abbr:         'Sgr II'
+    name:         'sagittarius_II'
+    color:        'dodgerblue'
+    ra:  298.1647083
+    dec: -22.0650528
+    distance: 69.2
+    dsigma: 5
+    major_axis: 1.6
+    ellipticity: 0 # < 0.1
+    abs_mag: -5.2
+    profile: {type: NFW}
+
+sculptor:
+  default:
+    type:         dwarf
+    title:        'Sculptor'
+    abbr:         'Scl'
+    name:         'sculptor'
+    color:        'sienna'
+    ra:  15.0183
+    dec: -33.7186
+    distance: 83.9
+    dsigma: 6.0
+    major_axis: 11.17
+    ellipticity: 0.33
+    abs_mag: -10.82
+    profile: {type: NFW}
+
+segue_1:
+  default:
+    type:         dwarf
+    title:        'Segue 1'
+    abbr:         'Seg 1'
+    name:         'segue_1'
+    color:        'tomato'
+    ra:  151.7504
+    dec: 16.0756
+    distance: 22.9
+    dsigma: 2.0
+    major_axis: 3.62
+    ellipticity: 0.33
+    abs_mag: -1.3
+    profile: {type: NFW}
+
+segue_2:
+  default:
+    type:         dwarf
+    title:        'Segue 2'
+    abbr:         'Seg 2'
+    name:         'segue_2'
+    color:        'darkorange'
+    ra:  34.8226
+    dec: 20.1624
+    distance: 35.0
+    dsigma: 2.0
+    major_axis: 3.76
+    ellipticity: 0.22
+    abs_mag: -1.86
+    profile: {type: NFW}
+
+sextans:
+  default:
+    type:         dwarf
+    title:        'Sextans'
+    abbr:         'Sex'
+    name:         'sextans'
+    color:        'silver'
+    ra:  153.2628
+    dec: -1.6133
+    distance: 85.9
+    dsigma: 4.0
+    major_axis: 16.5
+    ellipticity: 0.3
+    abs_mag: -8.72
+    profile: {type: NFW}
+
+triangulum_II:
+  default:
+    type:         dwarf
+    title:        'Triangulum II'
+    abbr:         'Tri II'
+    name:         'triangulum_II'
+    color:        'darkblue'
+    ra:  33.3252
+    dec: 36.1702
+    distance: 30.1
+    dsigma: 2.0
+    major_axis: 1.99
+    ellipticity: 0.46
+    abs_mag: -1.6
+    profile: {type: NFW}
+
+tucana_II:
+  default:
+    type:         dwarf
+    title:        'Tucana II'
+    abbr:         'Tuc II'
+    name:         'tucana_II'
+    color:        'royalblue'
+    ra:  342.9796
+    dec: -58.5689
+    distance: 57.5
+    dsigma: 8.0
+    major_axis: 12.586
+    ellipticity: 0.39
+    abs_mag: -3.8
+    profile: {type: NFW}
+
+tucana_III:
+  default:
+    type:         dwarf
+    title:        'Tucana III'
+    abbr:         'Tuc III'
+    name:         'tucana_III'
+    color:        'red'
+    ra:  359.15
+    dec: -59.6
+    distance: 25.2
+    dsigma: 2.0
+    major_axis: 6
+    ellipticity: 0
+    abs_mag: -2.4
+    profile: {type: NFW}
+
+tucana_IV:
+  default:
+    type:         dwarf
+    title:        'Tucana IV'
+    abbr:         'Tuc IV'
+    name:         'tucana_IV'
+    color:        'green'
+    ra:  0.73
+    dec: -60.85
+    distance: 48.1
+    dsigma: 4.0
+    major_axis: 11.8
+    ellipticity: 0.4
+    abs_mag: -3.5
+    profile: {type: NFW}
+
+tucana_V:
+  default:
+    type:         dwarf
+    title:        'Tucana V'
+    abbr:         'Tuc V'
+    name:         'tucana_V'
+    color:        'blue'
+    ra:  354.35
+    dec: -63.27
+    distance: 55.2
+    dsigma: 9.0
+    major_axis: 1.8
+    ellipticity: 0.7
+    abs_mag: -1.6
+    profile: {type: NFW}
+
+ursa_major_I:
+  default:
+    type:         dwarf
+    title:        'Ursa Major I'
+    abbr:         'UMa I'
+    name:         'ursa_major_I'
+    color:        'purple'
+    ra:  158.7706
+    dec: 51.9479
+    distance: 97.3
+    dsigma: 4.0
+    major_axis: 8.31
+    ellipticity: 0.59
+    abs_mag: -5.12
+    profile: {type: NFW}
+
+ursa_major_II:
+  default:
+    type:         dwarf
+    title:        'Ursa Major II'
+    abbr:         'UMa II'
+    name:         'ursa_major_II'
+    color:        'indigo'
+    ra:  132.8726
+    dec: 63.1335
+    distance: 32.1
+    dsigma: 4.0
+    major_axis: 13.8
+    ellipticity: 0.56
+    abs_mag: -4.25
+    profile: {type: NFW}
+
+ursa_minor:
+  default:
+    type:         dwarf
+    title:        'Ursa Minor'
+    abbr:         'UMi'
+    name:         'ursa_minor'
+    color:        'red'
+    ra:  227.242
+    dec: 67.2221
+    distance: 76.2
+    dsigma: 3.0
+    major_axis: 18.3
+    ellipticity: 0.55
+    abs_mag: -9.03
+    profile: {type: NFW}
+
+virgo_I:
+  default:
+    type:         dwarf
+    title:        'Virgo I'
+    abbr:         'Vir I'
+    name:         'virgo_I'
+    color:        'cyan'
+    ra:  180.038
+    dec: -0.681
+    distance: 91.2
+    dsigma: 29.0
+    major_axis: 1.76
+    ellipticity: 0.59
+    abs_mag: -0.33
+    profile: {type: NFW}
+
+willman_1:
+  default:
+    type:         dwarf
+    title:        'Willman 1'
+    abbr:         'Wil 1'
+    name:         'willman_1'
+    color:        'cyan'
+    ra:  162.3436
+    dec: 51.0501
+    distance: 38.0
+    dsigma: 7.0
+    major_axis: 2.51
+    ellipticity: 0.47
+    abs_mag: -2.53
+    profile: {type: NFW}
