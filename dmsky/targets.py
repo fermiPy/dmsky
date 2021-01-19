@@ -742,7 +742,11 @@ class TargetLibrary(ObjectLibrary):
         name = n
 
         # Start with the target:version requested
-        ret = self.library[name][version]
+        try:
+            ret = self.library[name][version]
+        except KeyError as e:
+            msg = "Couldn't find name=%s, version=%s"%(name,version)
+            raise KeyError(msg)
 
         # Walk down the chain until we either return None or the
         # 'default' version
@@ -765,7 +769,7 @@ class TargetLibrary(ObjectLibrary):
             A name for the `Target`
 
         version : str
-            Key that species which set of parameters to used
+            Key that specifies which set of parameters to used
             for this target
 
         Returns
