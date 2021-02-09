@@ -20,32 +20,34 @@ class Roster(odict):
     for any given target.
 
     """
-    def __init__(self, *targets):
-        """C'tor
+    def __init__(self, *targets, **kwargs):
+        """Constructor.
 
         Targets can be passed either:
         1) As string elements of `targets` (looked up in target library)
         2) As object elements of `targets` (name taken from the target)
         3) As a list in args
         4) As an existing Roster
+
+        kwargs : passed to the create_target if target is a string
         """
         super(Roster, self).__init__()
-        self._parse_args(targets)
+        self._parse_args(targets,**kwargs)
 
-    def _parse_args(self, targets):
+    def _parse_args(self, targets, **kwargs):
         """Internal function to parse all the various possible
         type of inputs to the c'tor of this class
         """
         for arg in targets:
             if isinstance(arg, str):
-                target = targetlib.create_target(arg)
+                target = targetlib.create_target(arg, **kwargs)
                 self[target.name] = target
             elif isinstance(arg, Target):
                 self[arg.name] = arg
             elif isinstance(arg, Roster):
-                self._parse_args(arg.values())
+                self._parse_args(arg.values(), **kwargs)
             elif hasattr(arg, '__iter__'):
-                self._parse_args(arg)
+                self._parse_args(arg, **kwargs)
             else:
                 msg = "Unrecognized argument type: %s" % (type(arg))
                 raise ValueError(msg)
@@ -73,11 +75,11 @@ class Roster(odict):
                 raise e
 
 
-def factory(*targets):
+def factory(*targets, **kwargs):
     """Factory for creating a roster. Arguments are passed directly to
     the Roster constructor.
     """
-    return Roster(*targets)
+    return Roster(*targets, **kwargs)
 
 
 class RosterLibrary(ObjectLibrary):
@@ -123,7 +125,7 @@ class RosterLibrary(ObjectLibrary):
 
         return ret
 
-    def create_roster(self, name, *targets):
+    def create_roster(self, name, *targets, **kwargs):
         """Create a roster
 
         Parameters
@@ -144,4 +146,4 @@ class RosterLibrary(ObjectLibrary):
 
         """
         ar = self.get_roster_list(name, *targets)
-        return factory(*ar)
+        return factory(*ar, **kwargs)
