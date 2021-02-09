@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Generic python script.
+Test the density creation
 """
 __author__ = "Alex Drlica-Wagner"
 import os,sys
