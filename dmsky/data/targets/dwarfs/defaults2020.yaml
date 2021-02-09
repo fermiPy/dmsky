@@ -2,7 +2,7 @@
 # All dwarfs should appear in this file.
 #
 #key:
-#  default:
+#  default2020:
 #    type:         dwarf or cluster
 #    title:        full name
 #    abbr:         IAU abbreviation
@@ -18,7 +18,7 @@
 #    profile:      density profile type
 
 antlia_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Antlia II'
     abbr:         'Ant I'
@@ -34,7 +34,7 @@ antlia_II:
     profile: {type: NFW}
 
 aquarius_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Aquarius II'
     abbr:         'Aqr II'
@@ -50,7 +50,7 @@ aquarius_II:
     profile: {type: NFW}
 
 bootes_I:
-  default:
+  default2020:
     type:         dwarf
     title:        'Bootes I'
     abbr:         'Boo I'
@@ -66,7 +66,7 @@ bootes_I:
     profile: {type: NFW}
 
 bootes_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Bootes II'
     abbr:         'Boo II'
@@ -82,7 +82,7 @@ bootes_II:
     profile: {type: NFW}
 
 bootes_III:
-  default:
+  default2020:
     type:         dwarf
     title:        'Bootes III'
     abbr:         'Boo III'
@@ -98,7 +98,7 @@ bootes_III:
     profile: {type: NFW}
 
 bootes_IV:
-  default:
+  default2020:
     type:         dwarf
     title:        'Bootes IV'
     abbr:         'Boo IV'
@@ -114,7 +114,7 @@ bootes_IV:
     profile: {type: NFW}
 
 canis_major:
-  default:
+  default2020:
     type:         dwarf
     title:        'Canis Major'
     abbr:         'CMa'
@@ -130,7 +130,7 @@ canis_major:
     profile: {type: NFW}
 
 canes_venatici_I:
-  default:
+  default2020:
     type:         dwarf
     title:        'Canes Venatici I'
     abbr:         'CVn I'
@@ -146,7 +146,7 @@ canes_venatici_I:
     profile: {type: NFW}
 
 canes_venatici_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Canes Venatici II'
     abbr:         'CVn II'
@@ -162,7 +162,7 @@ canes_venatici_II:
     profile: {type: NFW}
 
 carina:
-  default:
+  default2020:
     type:         dwarf
     title:        'Carina'
     abbr:         'Car'
@@ -178,7 +178,7 @@ carina:
     profile: {type: NFW}
 
 carina_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Carina II'
     abbr:         'Car II'
@@ -194,7 +194,7 @@ carina_II:
     profile: {type: NFW}
 
 carina_III:
-  default:
+  default2020:
     type:         dwarf
     title:        'Carina III'
     abbr:         'Car III'
@@ -210,7 +210,7 @@ carina_III:
     profile: {type: NFW}
 
 centaurus_I:
-  default:
+  default2020:
     type:         dwarf
     title:        'Centarus I'
     abbr:         'Cen I'
@@ -226,7 +226,7 @@ centaurus_I:
     profile: {type: NFW}
 
 cetus_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Cetus II'
     abbr:         'Cet II'
@@ -242,7 +242,7 @@ cetus_II:
     profile: {type: NFW}
 
 cetus_III:
-  default:
+  default2020:
     type:         dwarf
     title:        'Cetus III'
     abbr:         'Cet III'
@@ -258,7 +258,7 @@ cetus_III:
     profile: {type: NFW}
 
 columba_I:
-  default:
+  default2020:
     type:         dwarf
     title:        'Columba I'
     abbr:         'Col I'
@@ -274,7 +274,7 @@ columba_I:
     profile: {type: NFW}
 
 coma_berenices:
-  default:
+  default2020:
     type:         dwarf
     title:        'Coma Berenices'
     abbr:         'Com'
@@ -290,7 +290,7 @@ coma_berenices:
     profile: {type: NFW}
 
 crater_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Crater II'
     abbr:         'Crt II'
@@ -306,7 +306,7 @@ crater_II:
     profile: {type: NFW}
 
 draco:
-  default:
+  default2020:
     type:         dwarf
     title:        'Draco'
     abbr:         'Dra'
@@ -322,7 +322,7 @@ draco:
     profile: {type: NFW}
 
 draco_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Draco II'
     abbr:         'Dra II'
@@ -338,7 +338,7 @@ draco_II:
     profile: {type: NFW}
 
 eridanus_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Eridanus II'
     abbr:         'Eri II'
@@ -354,7 +354,7 @@ eridanus_II:
     profile: {type: NFW}
 
 eridanus_III:
-  default:
+  default2020:
     type:         dwarf
     title:        'Eridanus III'
     abbr:         'Eri III'
@@ -370,7 +370,7 @@ eridanus_III:
     profile: {type: NFW}
 
 fornax:
-  default:
+  default2020:
     type:         dwarf
     title:        'Fornax'
     abbr:         'For'
@@ -386,7 +386,7 @@ fornax:
     profile: {type: NFW}
 
 grus_I:
-  default:
+  default2020:
     type:         dwarf
     title:        'Grus I'
     abbr:         'Gru I'
@@ -402,7 +402,7 @@ grus_I:
     profile: {type: NFW}
 
 grus_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Grus II'
     abbr:         'Gru II'
@@ -418,7 +418,7 @@ grus_II:
     profile: {type: NFW}
 
 hercules:
-  default:
+  default2020:
     type:         dwarf
     title:        'Hercules'
     abbr:         'Her'
@@ -434,7 +434,7 @@ hercules:
     profile: {type: NFW}
 
 horologium_I:
-  default:
+  default2020:
     type:         dwarf
     title:        'Horologium I'
     abbr:         'Hor I'
@@ -450,7 +450,7 @@ horologium_I:
     profile: {type: NFW}
 
 horologium_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Horologium II'
     abbr:         'Hor II'
@@ -466,7 +466,7 @@ horologium_II:
     profile: {type: NFW}
 
 hydra_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Hydra II'
     abbr:         'Hya II'
@@ -482,7 +482,7 @@ hydra_II:
     profile: {type: NFW}
 
 hydrus_I:
-  default:
+  default2020:
     type:         dwarf
     title:        'Hydrus I'
     abbr:         'Hyi I'
@@ -498,7 +498,7 @@ hydrus_I:
     profile: {type: NFW}
 
 indus_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Indus II'
     abbr:         'Ind II'
@@ -514,7 +514,7 @@ indus_II:
     profile: {type: NFW}
 
 kim_2:
-  default:
+  default2020:
     type:         dwarf
     title:        'Kim 2'
     abbr:         'Kim2'
@@ -530,7 +530,7 @@ kim_2:
     profile: {type: NFW}
 
 laevens_1:
-  default:
+  default2020:
     type:         dwarf
     title:        'Laevens 1'
     abbr:         'Lae 1'
@@ -546,7 +546,7 @@ laevens_1:
     profile: {type: NFW}
 
 laevens_3:
-  default:
+  default2020:
     type:         dwarf
     title:        'Laevens 3'
     abbr:         'Lae 3'
@@ -562,7 +562,7 @@ laevens_3:
     profile: {type: NFW}
 
 leo_I:
-  default:
+  default2020:
     type:         dwarf
     title:        'Leo I'
     abbr:         'Leo I'
@@ -578,7 +578,7 @@ leo_I:
     profile: {type: NFW}
 
 leo_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Leo II'
     abbr:         'Leo II'
@@ -594,7 +594,7 @@ leo_II:
     profile: {type: NFW}
 
 leo_IV:
-  default:
+  default2020:
     type:         dwarf
     title:        'Leo IV'
     abbr:         'Leo IV'
@@ -610,7 +610,7 @@ leo_IV:
     profile: {type: NFW}
 
 leo_V:
-  default:
+  default2020:
     type:         dwarf
     title:        'Leo V'
     abbr:         'Leo V'
@@ -626,7 +626,7 @@ leo_V:
     profile: {type: NFW}
 
 leo_T:
-  default:
+  default2020:
     type:         dwarf
     title:        'Leo T'
     abbr:         'Leo T'
@@ -642,7 +642,7 @@ leo_T:
     profile: {type: NFW}
 
 pegasus_III:
-  default:
+  default2020:
     type:         dwarf
     title:        'Pegasus III'
     abbr:         'Peg III'
@@ -658,7 +658,7 @@ pegasus_III:
     profile: {type: NFW}
 
 phoenix_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Phoenix II'
     abbr:         'Phe II'
@@ -674,7 +674,7 @@ phoenix_II:
     profile: {type: NFW}
 
 pictor_I:
-  default:
+  default2020:
     type:         dwarf
     title:        'Pictor I'
     abbr:         'Pic I'
@@ -690,7 +690,7 @@ pictor_I:
     profile: {type: NFW}
 
 pictor_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Pictor II'
     abbr:         'Pic II'
@@ -706,7 +706,7 @@ pictor_II:
     profile: {type: NFW}
 
 pisces_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Pisces II'
     abbr:         'Psc II'
@@ -722,7 +722,7 @@ pisces_II:
     profile: {type: NFW}
 
 reticulum_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Reticulum II'
     abbr:         'Ret II'
@@ -738,7 +738,7 @@ reticulum_II:
     profile: {type: NFW}
 
 reticulum_III:
-  default:
+  default2020:
     type:         dwarf
     title:        'Reticulum III'
     abbr:         'Ret III'
@@ -754,7 +754,7 @@ reticulum_III:
     profile: {type: NFW}
 
 sagittarius:
-  default:
+  default2020:
     type:         dwarf
     title:        'Sagittarius'
     abbr:         'Sgr'
@@ -770,7 +770,7 @@ sagittarius:
     profile: {type: NFW}
 
 sagittarius_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Sagittarius II'
     abbr:         'Sgr II'
@@ -786,7 +786,7 @@ sagittarius_II:
     profile: {type: NFW}
 
 sculptor:
-  default:
+  default2020:
     type:         dwarf
     title:        'Sculptor'
     abbr:         'Scl'
@@ -802,7 +802,7 @@ sculptor:
     profile: {type: NFW}
 
 segue_1:
-  default:
+  default2020:
     type:         dwarf
     title:        'Segue 1'
     abbr:         'Seg 1'
@@ -818,7 +818,7 @@ segue_1:
     profile: {type: NFW}
 
 segue_2:
-  default:
+  default2020:
     type:         dwarf
     title:        'Segue 2'
     abbr:         'Seg 2'
@@ -834,7 +834,7 @@ segue_2:
     profile: {type: NFW}
 
 sextans:
-  default:
+  default2020:
     type:         dwarf
     title:        'Sextans'
     abbr:         'Sex'
@@ -850,7 +850,7 @@ sextans:
     profile: {type: NFW}
 
 triangulum_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Triangulum II'
     abbr:         'Tri II'
@@ -866,7 +866,7 @@ triangulum_II:
     profile: {type: NFW}
 
 tucana_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Tucana II'
     abbr:         'Tuc II'
@@ -882,7 +882,7 @@ tucana_II:
     profile: {type: NFW}
 
 tucana_III:
-  default:
+  default2020:
     type:         dwarf
     title:        'Tucana III'
     abbr:         'Tuc III'
@@ -898,7 +898,7 @@ tucana_III:
     profile: {type: NFW}
 
 tucana_IV:
-  default:
+  default2020:
     type:         dwarf
     title:        'Tucana IV'
     abbr:         'Tuc IV'
@@ -914,7 +914,7 @@ tucana_IV:
     profile: {type: NFW}
 
 tucana_V:
-  default:
+  default2020:
     type:         dwarf
     title:        'Tucana V'
     abbr:         'Tuc V'
@@ -930,7 +930,7 @@ tucana_V:
     profile: {type: NFW}
 
 ursa_major_I:
-  default:
+  default2020:
     type:         dwarf
     title:        'Ursa Major I'
     abbr:         'UMa I'
@@ -946,7 +946,7 @@ ursa_major_I:
     profile: {type: NFW}
 
 ursa_major_II:
-  default:
+  default2020:
     type:         dwarf
     title:        'Ursa Major II'
     abbr:         'UMa II'
@@ -962,7 +962,7 @@ ursa_major_II:
     profile: {type: NFW}
 
 ursa_minor:
-  default:
+  default2020:
     type:         dwarf
     title:        'Ursa Minor'
     abbr:         'UMi'
@@ -978,7 +978,7 @@ ursa_minor:
     profile: {type: NFW}
 
 virgo_I:
-  default:
+  default2020:
     type:         dwarf
     title:        'Virgo I'
     abbr:         'Vir I'
@@ -994,7 +994,7 @@ virgo_I:
     profile: {type: NFW}
 
 willman_1:
-  default:
+  default2020:
     type:         dwarf
     title:        'Willman 1'
     abbr:         'Wil 1'
