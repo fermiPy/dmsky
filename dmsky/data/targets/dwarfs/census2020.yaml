@@ -1,0 +1,375 @@
+# Photo-J calculated from Pace & Strigari 2018 Eq 14:
+# photo-J = 10**18.17 * (Lv/1e4 Lsun)**0.23 * (d/100kpc)**-2 * (rh/100pc)**-0.5
+# j_sigma = 0.3 is the scatter of the Pace & Strigari fit
+
+antlia_II:
+  census2020_photoj_nfw:
+    j_integ: 4.022e+17
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+aquarius_II:
+  census2020_photoj_nfw:
+    j_integ: 9.720e+17
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+bootes_I:
+  census2020_photoj_nfw:
+    j_integ: 3.200e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+bootes_II:
+  census2020_photoj_nfw:
+    j_integ: 9.191e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+bootes_III:
+  census2020_photoj_nfw:
+    j_integ: 4.493e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+bootes_IV:
+  census2020_photoj_nfw:
+    j_integ: 1.778e+17
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+canes_venatici_I:
+  census2020_photoj_nfw:
+    j_integ: 3.662e+17
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+canes_venatici_II:
+  census2020_photoj_nfw:
+    j_integ: 7.805e+17
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+canis_major:
+  census2020_photoj_nfw:
+    j_integ: nan
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+carina:
+  census2020_photoj_nfw:
+    j_integ: 2.106e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+carina_II:
+  census2020_photoj_nfw:
+    j_integ: 1.144e+19
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+carina_III:
+  census2020_photoj_nfw:
+    j_integ: 2.360e+19
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+centaurus_I:
+  census2020_photoj_nfw:
+    j_integ: 1.357e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+cetus_II:
+  census2020_photoj_nfw:
+    j_integ: 1.361e+19
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+cetus_III:
+  census2020_photoj_nfw:
+    j_integ: 2.007e+17
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+columba_I:
+  census2020_photoj_nfw:
+    j_integ: 3.643e+17
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+coma_berenices:
+  census2020_photoj_nfw:
+    j_integ: 8.490e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+crater_II:
+  census2020_photoj_nfw:
+    j_integ: 6.233e+17
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+draco:
+  census2020_photoj_nfw:
+    j_integ: 4.052e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+draco_II:
+  census2020_photoj_nfw:
+    j_integ: 3.089e+19
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+eridanus_II:
+  census2020_photoj_nfw:
+    j_integ: 1.255e+17
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+eridanus_III:
+  census2020_photoj_nfw:
+    j_integ: 4.854e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+fornax:
+  census2020_photoj_nfw:
+    j_integ: 1.486e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+grus_I:
+  census2020_photoj_nfw:
+    j_integ: 1.558e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+grus_II:
+  census2020_photoj_nfw:
+    j_integ: 4.183e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+hercules:
+  census2020_photoj_nfw:
+    j_integ: 8.933e+17
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+horologium_I:
+  census2020_photoj_nfw:
+    j_integ: 3.010e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+horologium_II:
+  census2020_photoj_nfw:
+    j_integ: 2.461e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+hydra_II:
+  census2020_photoj_nfw:
+    j_integ: 7.573e+17
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+hydrus_I:
+  census2020_photoj_nfw:
+    j_integ: 2.443e+19
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+indus_II:
+  census2020_photoj_nfw:
+    j_integ: 2.004e+17
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+kim_2:
+  census2020_photoj_nfw:
+    j_integ: 2.946e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+laevens_1:
+  census2020_photoj_nfw:
+    j_integ: 1.469e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+laevens_3:
+  census2020_photoj_nfw:
+    j_integ: 1.052e+19
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+leo_I:
+  census2020_photoj_nfw:
+    j_integ: 6.191e+17
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+leo_II:
+  census2020_photoj_nfw:
+    j_integ: 5.571e+17
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+leo_IV:
+  census2020_photoj_nfw:
+    j_integ: 5.877e+17
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+leo_T:
+  census2020_photoj_nfw:
+    j_integ: 1.414e+17
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+leo_V:
+  census2020_photoj_nfw:
+    j_integ: 6.361e+17
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+pegasus_III:
+  census2020_photoj_nfw:
+    j_integ: 3.407e+17
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+phoenix_II:
+  census2020_photoj_nfw:
+    j_integ: 3.178e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+pictor_I:
+  census2020_photoj_nfw:
+    j_integ: 1.885e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+pictor_II:
+  census2020_photoj_nfw:
+    j_integ: 6.797e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+pisces_II:
+  census2020_photoj_nfw:
+    j_integ: 5.261e+17
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+reticulum_II:
+  census2020_photoj_nfw:
+    j_integ: 2.201e+19
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+reticulum_III:
+  census2020_photoj_nfw:
+    j_integ: 1.483e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+sagittarius:
+  census2020_photoj_nfw:
+    j_integ: 3.153e+19
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+sagittarius_II:
+  census2020_photoj_nfw:
+    j_integ: 5.477e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+sculptor:
+  census2020_photoj_nfw:
+    j_integ: 4.656e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+segue_1:
+  census2020_photoj_nfw:
+    j_integ: 2.797e+19
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+segue_2:
+  census2020_photoj_nfw:
+    j_integ: 1.030e+19
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+sextans:
+  census2020_photoj_nfw:
+    j_integ: 2.289e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+triangulum_II:
+  census2020_photoj_nfw:
+    j_integ: 2.142e+19
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+tucana_II:
+  census2020_photoj_nfw:
+    j_integ: 2.610e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+tucana_III:
+  census2020_photoj_nfw:
+    j_integ: 1.953e+19
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+tucana_IV:
+  census2020_photoj_nfw:
+    j_integ: 3.969e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+tucana_V:
+  census2020_photoj_nfw:
+    j_integ: 5.727e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+ursa_major_I:
+  census2020_photoj_nfw:
+    j_integ: 1.260e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+ursa_major_II:
+  census2020_photoj_nfw:
+    j_integ: 1.278e+19
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+ursa_minor:
+  census2020_photoj_nfw:
+    j_integ: 3.498e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+virgo_I:
+  census2020_photoj_nfw:
+    j_integ: 1.167e+18
+    j_sigma: 0.3
+    profile: {type: NFW}
+
+willman_1:
+  census2020_photoj_nfw:
+    j_integ: 1.303e+19
+    j_sigma: 0.3
+    profile: {type: NFW}

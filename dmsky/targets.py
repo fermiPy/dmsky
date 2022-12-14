@@ -7,11 +7,11 @@ a given sky position. Classes inherit from the `Target` baseclass and
 can be created with the `factory` function.
 """
 import sys
+import copy
 from os.path import abspath, dirname, join
 from collections import OrderedDict as odict
 
 import numpy as np
-
 
 from dmsky.jcalc import LoSIntegral, LoSIntegralFast, LoSIntegralInterp
 from dmsky.utils import coords
@@ -724,11 +724,26 @@ class TargetLibrary(ObjectLibrary):
         ('path', join(dirname(abspath(__file__)), 'data', _suffix)),
     )
 
-    def get_target_dict(self, name, version=None, **kwargs):
+    def get_target_dict(self, name, version=None, default='default', **kwargs):
         """Step through the various levels of dependencies to get the
         full dictionary for a target.
 
         target: version -> ... -> target: default -> default: type
+
+        Parameters
+        ----------
+        name    : str
+            target name
+        version : str
+            version for target parameters
+        default : str
+            name of default parameters to use
+        kwargs  : dict
+            keyword arguments passed to target dict
+
+        Returns
+        -------
+        dict    : dictionary of target parameters
         """
         n, v = item_version(name)
         if version is not None and v is not None:
@@ -738,24 +753,28 @@ class TargetLibrary(ObjectLibrary):
         if v is not None:
             version = v
         if version is None:
-            version = 'default'
+            version = default
         name = n
 
         # Start with the target:version requested
-        ret = self.library[name][version]
+        try:
+            ret = self.library[name][version]
+        except KeyError as e:
+            msg = "Couldn't find name=%s, version=%s"%(name,version)
+            raise KeyError(msg)
 
-        # Walk down the chain until we either return None or the
+        # Walk down the chain until we either return 'None' or the
         # 'default' version
         ret['version'] = version
-        while (version is not None) and (version != 'default'):
-            version = ret.get('base', 'default')
+        while (version is not None) and (version != default):
+            version = ret.get('base', default)
             ret = merge_dict(self.library[name][version], ret)
         kwargs['name'] = name
         # And finally, overwrite with kwargs
         update_dict(ret, kwargs)
-        return ret
+        return copy.deepcopy(ret)
 
-    def create_target(self, name, version=None, **kwargs):
+    def create_target(self, name, version=None, default='default', **kwargs):
         """Create a `Target`
 
         Parameters
@@ -765,17 +784,19 @@ class TargetLibrary(ObjectLibrary):
             A name for the `Target`
 
         version : str
-            Key that species which set of parameters to used
+            Key that specifies which set of parameters to used
             for this target
+
+        default : str
+            Name of default parameter dictionary to use
 
         Returns
         -------
 
         target : `Target`
             The newly created Target
-
         """
-        kw = self.get_target_dict(name, version, **kwargs)
+        kw = self.get_target_dict(name, version, default, **kwargs)
         ttype = kw.pop('type')
 
         return factory(ttype, **kw)
