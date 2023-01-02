@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Test the creation of rosters
+Test the creation of rosters.
 """
 __author__ = "Alex Drlica-Wagner"
 
@@ -15,8 +15,6 @@ def test_create_roster():
     ackermann2015 = roster_library.create_roster('ackermann2015_dsphs')
     assert len(ackermann2015) == 15
     assert 'grus_II' not in ackermann2015
-
-    import pdb; pdb.set_trace()
 
     albert2017 = roster_library.create_roster('albert2017_dsphs')
     assert len(albert2017) == 41
@@ -34,4 +32,5 @@ def test_create_roster():
     test2020 = roster_library.create_roster('test2015',default='default2020')
     assert len(test2020) == 16
 
-test_create_roster()
+if __name__ == '__main__':
+    test_create_roster()
