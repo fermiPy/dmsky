@@ -1,0 +1,65 @@
+# Random assortment of J-factors
+# Sometimes from discovery/spectroscopy papers.
+
+crater_II:
+  # Table I from Boddy et al. 2020
+  # https://arxiv.org/abs/1909.13197
+  # log10(J(0.5deg)) = 15.35 [+0.27,-0.25]
+  boddy2020_nfw:
+    j_integ: 2.239e+15
+    j_sigma: 0.26
+    profile: {type: NFW}
+
+eridanus_II:
+  # Table 1 in Li et al. 2017
+  # https://arxiv.org/abs/1611.05052
+  # log10(J(0.5deg)) = 16.6 [+/-0.9]
+  li2016_nfw:
+    j_integ: 3.981e16
+    j_sigma: 0.9
+    profile: {type: NFW}
+
+hydrus_I: 
+  # Table 1 in Koposov et al. 2018
+  # https://arxiv.org/abs/1804.06430
+  # log10(J(0.5deg)) = 18.33 [+0.38,0.34]
+  koposov2018_nfw:
+    j_integ: 2.14e18
+    j_sigma: 0.36
+    profile: {type: NFW}
+  # Table I from Boddy et al. 2020
+  # https://arxiv.org/abs/1909.13197
+  # log10(J(0.5deg)) = 18.65 [+0.32,-0.31]
+  boddy2020_nfw:
+    j_integ: 4.47e18
+    j_sigma: 0.315
+    profile: {type: NFW}
+
+pegasus_IV:
+  # Table 1 from Cerny et al. 2022
+  # https://arxiv.org/abs/2203.11788
+  # log10(J(0.5deg)) = 17.9 [+/-0.8]
+  cerny2022_nfw:
+    j_integ: 7.94e17
+    j_sigma: 0.8
+    profile: {type: NFW}
+
+sagittarius_II:
+  # Table I from Boddy et al. 2020
+  # https://arxiv.org/abs/1909.13197
+  # log10(J(0.5deg)) = 17.35 [+1.36,-0.91]
+  boddy2020_nfw:
+    j_integ: 2.24e17
+    j_sigma: 1.135
+    profile: {type: NFW}
+
+tucana_IV: 
+  # Table 1 in Simon et al. 2020
+  # https://arxiv.org/abs/1911.08493
+  # log10(J(0.5deg)) = 18.4 [+0.6,-0.5]
+  # Also upper limits for Grus II and Tucana V
+  simon2020_nfw:
+    j_integ: 2.51e18
+    j_sigma: 0.55
+    profile: {type: NFW}
+
