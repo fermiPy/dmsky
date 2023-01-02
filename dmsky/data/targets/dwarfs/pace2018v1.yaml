@@ -1,12 +1,18 @@
 # Dwarf characterisitcs from:
 # Pace & Strigari (2018) (arXiv:1802.06811v1)
 # Values have been taken from Table 2 and Table A1
-# $Format:%d$
+# Note that equation and values are updated in published version (v2)
 
 # Photoj comes from Eq. 12 using input from Table A1
 # Lv = 10**( (Mv - 4.83)/-2.5 ) Lsun
 # photoj = 10^17.93 * ( Lv/1e4 Lsun)^0.32 * (d/100 kpc)^-2 * (rhalf/100 pc)^-1
 
+antlia_II:
+  # Derived from above
+  pace2018_photoj_nfw:
+    j_integ: 4.68e+17
+    j_sigma: .nan
+    profile: {type: NFW}
 aquarius_II:
   pace2018_nfw:
     j_integ: 1.86e+18
