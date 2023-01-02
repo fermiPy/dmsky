@@ -3,7 +3,7 @@
 # Values have been taken from Table 2 and Table A1
 # Note that equation and values are updated in published version (v2)
 
-# Photoj comes from Eq. 14 using input from Table A1
+# Photoj comes from Eq. 12 using input from Table A1
 # Lv = 10**( (Mv - 4.83)/-2.5 ) Lsun
 # photoj = 10^17.93 * ( Lv/1e4 Lsun)^0.32 * (d/100 kpc)^-2 * (rhalf/100 pc)^-1
 
