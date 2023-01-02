@@ -58,10 +58,10 @@ class Target(Model):
                                          default=0.0, unit='kpc',
                                          help='Distance Uncertainty')),
                      ('major_axis', Property(dtype=float, format='%.3f',
-                                             default=np.nan, unit='kpc',
+                                             default=np.nan, unit='arcmin',
                                              help='Major axis')),
                      ('ellipticity', Property(dtype=float, format='%.3f',
-                                              default=np.nan, unit='kpc',
+                                              default=np.nan, unit=None,
                                               help='Ellipticity (1 - b/a)')),
                      ('abs_mag', Property(dtype=float, format='%.3f',
                                           default=np.nan, unit='mag',
@@ -688,7 +688,29 @@ class Galactic(Target):
 
 class Dwarf(Target):
     """Class to add specifics for Dwarf Galaxy DM targets"""
-    pass
+
+    def j_photo(self, a=18.17, b=0.23):
+        """Photometric J-factor from Eq 14 of Pace & Strigari (2019) [1802.06811v2]
+
+          J = 10^{a} * (Lv / 1e4 Lsun)^{b} * (D/100 kpc)^-2 * (rhalf/100 pc)^-0.5
+
+        For Pace & Strigari (2019):       a = 18.17, b = 0.23
+        For Pace & Strigari 1802.06811v1: a = 17.93, b = 0.32
+
+        Parameters
+        ----------
+        a : normalization exponent
+        b : luminosity scaling
+
+        Returns
+        -------
+        J : photometric J-factor within 0.5 deg
+        """
+        Lv = 10**( (self.abs_mag - 4.83) / -2.5 ) # Lsun
+        rhalf = self.major_axis * np.sqrt(1 - self.ellipticity)
+        rhalf_physical = np.tan( np.radians(rhalf/60.) ) * self.distance * 1000 # pc
+        photo_j = 10**(18.17) * (Lv / 1e4)**0.23 * (self.distance/100.)**-2 * (rhalf_physical/100.)**(-0.5)
+        return photo_j
 
 
 class Galaxy(Target):
