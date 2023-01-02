@@ -2,6 +2,8 @@ Dark Matter Sky Maps
 ====================
 
 [![Build](https://img.shields.io/travis/fermiPy/dmsky.svg)](https://travis-ci.org/fermiPy/dmsky)
+[![Build](https://github.com/github/docs/actions/workflows/build.yml/badge.svg)](https://github.com/kadrlica/dmsky/actions)
+
 [![Release](https://img.shields.io/github/release/fermiPy/dmsky.svg)](../../releases)
 [![PyPI](https://img.shields.io/pypi/v/dmsky.svg)](https://pypi.python.org/pypi/dmsky)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](../../)
