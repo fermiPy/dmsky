@@ -94,7 +94,7 @@ class DensityProfile(Model):
             rho[rho > self.rhomax] = self.rhomax
 
         if scalar:
-            return np.asscalar(rho)
+            return np.ndarray.item(rho)
         return rho
 
     def rho_deriv(self, r, paramNames):
