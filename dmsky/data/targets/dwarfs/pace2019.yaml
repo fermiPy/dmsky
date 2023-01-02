@@ -234,7 +234,8 @@ grus_II:
     j_sigma: .nan
     profile: {type: NFW}
   pace2019_photoj_nfw:
-    # Correcting typo...
+    # Correcting typo in Pace & Strigari
+    # log10(J) = 18.6 instead of 18.4
     #j_integ: 2.51E+18
     j_integ: 4.17E+18
     j_sigma: .nan

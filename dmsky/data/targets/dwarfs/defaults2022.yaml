@@ -52,7 +52,7 @@ aquarius_II:
 balbinot_1:
   # Balbinot2013ApJ...767..101B
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'Balbinot 1'
     abbr:         'Bal 1'
     name:         'balbinot_1'
@@ -69,7 +69,7 @@ balbinot_1:
 bliss_1:
   # Mau2019ApJ...875..154M
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'BLISS 1'
     abbr:         'BLS 1'
     name:         'bliss_1'
@@ -359,7 +359,7 @@ crater_II:
 delve_1:
   # Mau2020ApJ...890..136M
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'DELVE 1'
     abbr:         'DEL 1'
     name:         'delve_1'
@@ -376,7 +376,7 @@ delve_1:
 delve_2:
   # 2021ApJ...910...18C
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'DELVE 2'
     abbr:         'DEL 2'
     name:         'delve_2'
@@ -393,7 +393,7 @@ delve_2:
 delve_3:
   # Cerny2022arXiv220912422C
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'DELVE 3'
     abbr:         'DEL 3'
     name:         'delve_3'
@@ -410,7 +410,7 @@ delve_3:
 delve_4:
   # Cerny2022arXiv220912422C
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'DELVE 4'
     abbr:         'DEL 4'
     name:         'delve_4'
@@ -427,7 +427,7 @@ delve_4:
 delve_5:
   # Cerny2022arXiv220912422C
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'DELVE 5'
     abbr:         'DEL 5'
     name:         'delve_5'
@@ -444,7 +444,7 @@ delve_5:
 des_1:
   # Conn2018ApJ...852...68C
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'DES 1'
     abbr:         'DES 1'
     name:         'des_1'
@@ -461,7 +461,7 @@ des_1:
 des_3:
   # Luque2018MNRAS.478.2006L
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'DES 3'
     abbr:         'DES 3'
     name:         'des_3'
@@ -478,7 +478,7 @@ des_3:
 des_4:
   # Torrealba2019MNRAS.484.2181T
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'DES 4'
     abbr:         'DES 4'
     name:         'des_4'
@@ -495,7 +495,7 @@ des_4:
 des_5:
   # Torrealba2019MNRAS.484.2181T
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'DES 5'
     abbr:         'DES 5'
     name:         'des_5'
@@ -512,7 +512,7 @@ des_5:
 des_sgr_1:
   # Luque2017MNRAS.468...97L
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'DES Sgr 1'
     abbr:         'DES S1'
     name:         'des_sgr_1'
@@ -529,7 +529,7 @@ des_sgr_1:
 des_sgr_2:
   # Luque2017MNRAS.468...97L
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'DES Sgr 2'
     abbr:         'DES S2'
     name:         'des_sgr_2'
@@ -560,6 +560,8 @@ draco:
     profile: {type: NFW}
 
 draco_II:
+  # Longeard et al. 2018
+  # https://arxiv.org/abs/1807.10655
   default2022:
     type:         dwarf
     title:        'Draco II'
@@ -568,8 +570,8 @@ draco_II:
     color:        'dodgerblue'
     ra:  238.174
     dec: 64.579
-    distance: 21.6
-    dsigma: 3.0
+    distance: 21.5
+    dsigma: 3.55
     major_axis: 3.0
     ellipticity: 0.23
     abs_mag: -0.8
@@ -594,7 +596,7 @@ eridanus_II:
 eridanus_III:
   # Conn2018ApJ...852...68C
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'Eridanus III'
     abbr:         'Eri III'
     name:         'eridanus_III'
@@ -644,7 +646,7 @@ fornax:
 gaia_3:
   # Torrealba2019MNRAS.484.2181T
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'Gaia 3'
     abbr:         'Gaia 3'
     name:         'gaia_3'
@@ -741,7 +743,7 @@ horologium_II:
 hsc_1:
   # Homma2019PASJ...71...94H
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'HSC 1'
     abbr:         'HSC 1'
     name:         'hsc_1'
@@ -806,7 +808,7 @@ indus_II:
 kim_1:
   # Kim2015ApJ...799...73K
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'Kim 1'
     abbr:         'Kim 1'
     name:         'kim_1'
@@ -822,7 +824,7 @@ kim_1:
 
 kim_2:
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'Kim 2'
     abbr:         'Kim 2'
     name:         'kim_2'
@@ -839,7 +841,7 @@ kim_2:
 kim_3:
   # Kim2016ApJ...820..119K
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'Kim 3'
     abbr:         'Kim 3'
     name:         'kim_3'
@@ -856,7 +858,7 @@ kim_3:
 koposov_1:
   # Munoz2018ApJ...860...66M
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'Koposov 1'
     abbr:         'Kop 1'
     name:         'koposov_1'
@@ -873,7 +875,7 @@ koposov_1:
 koposov_2:
   # Munoz2018ApJ...860...66M
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'Koposov 2'
     abbr:         'Kop 2'
     name:         'koposov_2'
@@ -906,7 +908,7 @@ laevens_1:
 laevens_3:
   #  Longeard2019MNRAS.490.1498L
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'Laevens 3'
     abbr:         'Lae 3'
     name:         'laevens_3'
@@ -1019,7 +1021,7 @@ leo_minor_I:
 munoz_1:
   # Munoz2012ApJ...753L..15M
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'Munoz 1'
     abbr:         'Mun 1'
     name:         'munoz_1'
@@ -1133,7 +1135,7 @@ pisces_II:
 ps1_1:
   # Torrealba2019MNRAS.484.2181T
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'PS1 1'
     abbr:         'PS1 1'
     name:         'ps1_1'
@@ -1262,7 +1264,7 @@ segue_2:
 segue_3:
   # Fadely2011AJ....142...88F
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'Segue 3'
     abbr:         'Seg 3'
     name:         'segue_3'
@@ -1295,7 +1297,7 @@ sextans:
 smash_1:
   # Martin2016ApJ...830L..10M
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'SMASH 1'
     abbr:         'SMA 1'
     name:         'smash_1'
@@ -1312,7 +1314,7 @@ smash_1:
 torrealba_1:
   # Torrealba2019MNRAS.484.2181T
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'Torrealba 1'
     abbr:         'To 1'
     name:         'torrealba_1'
@@ -1505,7 +1507,7 @@ willman_1:
 ymca_1:
   # Gatto2021RNAAS...5..159G
   default2022:
-    type:         star_cluster
+    type:         dwarf
     title:        'YMCA 1'
     abbr:         'YMCA 1'
     name:         'ymca_1'
@@ -1515,6 +1517,6 @@ ymca_1:
     distance: 105.0
     dsigma: .nan
     major_axis: 0.165
-    ellipticity: 0 # .nan
+    ellipticity: 0.0 # .nan
     abs_mag: -2.8
     profile: {type: NFW}
