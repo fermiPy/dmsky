@@ -19,6 +19,15 @@ eridanus_II:
     j_sigma: 0.9
     profile: {type: NFW}
 
+grus_I:
+  # Table 3 in Chiti et al. 2022
+  # https://arxiv.org/abs/2206.04580
+  # log10(J(0.5deg)) = 16.5 [+0.8/-0.7]
+  chiti2022_nfw:
+    j_integ: 3.162e16
+    j_sigma: 0.75
+    profile: {type: NFW}
+
 hydrus_I: 
   # Table 1 in Koposov et al. 2018
   # https://arxiv.org/abs/1804.06430
@@ -36,7 +45,7 @@ hydrus_I:
     profile: {type: NFW}
 
 pegasus_IV:
-  # Table 1 from Cerny et al. 2022
+  # Table 1 from Cerny et al. 2023
   # https://arxiv.org/abs/2203.11788
   # log10(J(0.5deg)) = 17.9 [+/-0.8]
   cerny2022_nfw:
