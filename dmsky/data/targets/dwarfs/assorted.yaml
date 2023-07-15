@@ -1,6 +1,24 @@
 # Random assortment of J-factors
 # Sometimes from discovery/spectroscopy papers.
 
+aquarius_II:
+  # Table 2 from Bruce et al. 2023
+  # https://arxiv.org/abs/2302.03708
+  # log10(J(0.5deg)) = 17.8 [+0.6, -0.5]
+  bruce2023_nfw:
+    j_integ: 6.310e+18
+    j_sigma: 0.55
+    profile: {type: NFW}
+    
+bootes_II:
+  # Table 2 from Bruce et al. 2023
+  # https://arxiv.org/abs/2302.03708
+  # log10(J(0.5deg)) = 18.3 [+0.8, −1.1]
+  bruce2023_nfw:
+    j_integ: 1.995e+18
+    j_sigma: 0.95
+    profile: {type: NFW}
+
 crater_II:
   # Table I from Boddy et al. 2020
   # https://arxiv.org/abs/1909.13197
