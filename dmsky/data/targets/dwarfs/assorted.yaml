@@ -71,6 +71,22 @@ pegasus_IV:
     j_sigma: 0.8
     profile: {type: NFW}
 
+sagittarius:
+  # Essig et al. 2009
+  # https://arxiv.org/abs/0902.4750
+  # log10(J(0.5deg)) = 19.35 [+/-1.66]
+  aharonian2008_nfw:
+    j_integ: 2.239e19
+    j_sigma: 1.66
+    profile: {type: NFW}
+  # Evans et al. 2022
+  # https://arxiv.org/abs/2212.08194
+  # log10(J(0.5deg)) = 19.6 [+/-0.2]
+  evans2023_nfw:
+    j_integ: 3.981e19
+    j_sigma: 0.2
+    profile: {type: NFW}
+    
 sagittarius_II:
   # Table I from Boddy et al. 2020
   # https://arxiv.org/abs/1909.13197
