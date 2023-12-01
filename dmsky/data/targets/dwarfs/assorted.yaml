@@ -63,3 +63,16 @@ tucana_IV:
     j_sigma: 0.55
     profile: {type: NFW}
 
+ursa_major_III:
+  # From Crnogorcevic & Linden 2023
+  # https://arxiv.org/abs/2311.14611
+  # Using Pace & Strigari vdisp scaling
+  crnogorcevic2023_nfw:
+    j_integ: 20.87
+    j_sigma: 0.59 # [+0.60, -0.58]
+    profile: {type: NFW}
+  ## Using Pace & Strigari photo-J scaling
+  #crnogorcevic2023_photoj_nfw:
+  #  j_integ: 20.36
+  #  j_sigma: 0.6
+  #  profile: {type: NFW}
