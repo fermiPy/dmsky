@@ -709,7 +709,7 @@ class Dwarf(Target):
         Lv = 10**( (self.abs_mag - 4.83) / -2.5 ) # Lsun
         rhalf = self.major_axis * np.sqrt(1 - self.ellipticity)
         rhalf_physical = np.tan( np.radians(rhalf/60.) ) * self.distance * 1000 # pc
-        photo_j = 10**(18.17) * (Lv / 1e4)**0.23 * (self.distance/100.)**-2 * (rhalf_physical/100.)**(-0.5)
+        photo_j = 10**(a) * (Lv / 1e4)**(b) * (self.distance/100.)**-2 * (rhalf_physical/100.)**(-0.5)
         return photo_j
 
 
