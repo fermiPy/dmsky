@@ -454,7 +454,7 @@ delve_6:
     distance: 80.0
     dsigma: 3.0
     major_axis: 0.43
-    ellipticity: .nan
+    ellipticity: 0.0 # < 0.56
     abs_mag: -1.5
     profile: {type: NFW}
 
